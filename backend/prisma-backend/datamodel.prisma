@@ -1,0 +1,57 @@
+type User {
+  id: ID! @unique
+  name: String!
+}
+type Student{
+  id: ID! @unique
+  phone: String! @unique
+  name: String!@unique
+  university: University!
+  email: String!
+  subjects:[Subject!]!
+  isauthoricated: Boolean! @default(value:"false")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  invitations:[Invitation!]@relation(name:"InviteForStudent")
+}
+type Subject{
+  name: SubjectName!
+  level:[Level!]! 
+}
+enum Level{
+  MIDDLE
+  MIDDLEHIGH
+  PRIMARY
+  UNI
+}
+enum University{
+  HUST
+  WHU
+}
+enum SubjectName{
+  CHINESE
+  MATH
+  ENGLISH
+}
+type Parents{
+  id: ID! @unique
+  phone: String! @unique
+  name: String!
+  address: String!
+  email: String!
+  subjects:[Subject!]!
+  isauthoricated: Boolean! @default(value:"false")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
+}
+type Invitation{
+  id: ID!@unique
+  stuednt: Student!@relation(name:"InviteForStudent")
+  parents: Parents!@relation(name:"InviteForParent")
+  status: Status!
+}
+enum Status{
+  WAITING
+  AGREED
+}

@@ -1,0 +1,9 @@
+endpoint: http://47.107.67.70:4466/prisma-backend/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client/
+hooks:
+  post-deploy:
+    - prisma generate
