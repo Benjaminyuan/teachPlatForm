@@ -15,6 +15,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   invitation: (where?: InvitationWhereInput) => Promise<boolean>;
+  order: (where?: OrderWhereInput) => Promise<boolean>;
   parents: (where?: ParentsWhereInput) => Promise<boolean>;
   student: (where?: StudentWhereInput) => Promise<boolean>;
   subject: (where?: SubjectWhereInput) => Promise<boolean>;
@@ -59,6 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => InvitationConnectionPromise;
+  order: (where: OrderWhereUniqueInput) => OrderPromise;
+  orders: (args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Order>;
+  ordersConnection: (args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => OrderConnectionPromise;
   parents: (where: ParentsWhereUniqueInput) => ParentsPromise;
   parentses: (args?: {
     where?: ParentsWhereInput;
@@ -156,6 +176,22 @@ export interface Prisma {
   }) => InvitationPromise;
   deleteInvitation: (where: InvitationWhereUniqueInput) => InvitationPromise;
   deleteManyInvitations: (where?: InvitationWhereInput) => BatchPayloadPromise;
+  createOrder: (data: OrderCreateInput) => OrderPromise;
+  updateOrder: (args: {
+    data: OrderUpdateInput;
+    where: OrderWhereUniqueInput;
+  }) => OrderPromise;
+  updateManyOrders: (args: {
+    data: OrderUpdateManyMutationInput;
+    where?: OrderWhereInput;
+  }) => BatchPayloadPromise;
+  upsertOrder: (args: {
+    where: OrderWhereUniqueInput;
+    create: OrderCreateInput;
+    update: OrderUpdateInput;
+  }) => OrderPromise;
+  deleteOrder: (where: OrderWhereUniqueInput) => OrderPromise;
+  deleteManyOrders: (where?: OrderWhereInput) => BatchPayloadPromise;
   createParents: (data: ParentsCreateInput) => ParentsPromise;
   updateParents: (args: {
     data: ParentsUpdateInput;
@@ -222,6 +258,9 @@ export interface Subscription {
   invitation: (
     where?: InvitationSubscriptionWhereInput
   ) => InvitationSubscriptionPayloadSubscription;
+  order: (
+    where?: OrderSubscriptionWhereInput
+  ) => OrderSubscriptionPayloadSubscription;
   parents: (
     where?: ParentsSubscriptionWhereInput
   ) => ParentsSubscriptionPayloadSubscription;
@@ -246,6 +285,8 @@ export interface ClientConstructor<T> {
 
 export type University = "HUST" | "WHU";
 
+export type authStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED";
+
 export type SubjectName = "CHINESE" | "MATH" | "ENGLISH";
 
 export type SubjectOrderByInput =
@@ -260,13 +301,27 @@ export type SubjectOrderByInput =
 
 export type Level = "MIDDLE" | "MIDDLEHIGH" | "PRIMARY" | "UNI";
 
-export type Status = "WAITING" | "AGREED";
+export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
+
+export type invitationStatus = "WAITING" | "AGREED" | "REJECTED";
 
 export type InvitationOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "status_ASC"
   | "status_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type OrderOrderByInput =
+  | "order_ASC"
+  | "order_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -283,8 +338,8 @@ export type ParentsOrderByInput =
   | "address_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "isauthoricated_ASC"
-  | "isauthoricated_DESC"
+  | "authstatus_ASC"
+  | "authstatus_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -301,8 +356,8 @@ export type StudentOrderByInput =
   | "university_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "isauthoricated_ASC"
-  | "isauthoricated_DESC"
+  | "authstatus_ASC"
+  | "authstatus_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -351,10 +406,10 @@ export interface InvitationWhereInput {
   id_not_ends_with?: ID_Input;
   stuednt?: StudentWhereInput;
   parents?: ParentsWhereInput;
-  status?: Status;
-  status_not?: Status;
-  status_in?: Status[] | Status;
-  status_not_in?: Status[] | Status;
+  status?: invitationStatus;
+  status_not?: invitationStatus;
+  status_in?: invitationStatus[] | invitationStatus;
+  status_not_in?: invitationStatus[] | invitationStatus;
   AND?: InvitationWhereInput[] | InvitationWhereInput;
   OR?: InvitationWhereInput[] | InvitationWhereInput;
   NOT?: InvitationWhereInput[] | InvitationWhereInput;
@@ -421,11 +476,13 @@ export interface StudentWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
+  authstatus?: authStatus;
+  authstatus_not?: authStatus;
+  authstatus_in?: authStatus[] | authStatus;
+  authstatus_not_in?: authStatus[] | authStatus;
   subjects_every?: SubjectWhereInput;
   subjects_some?: SubjectWhereInput;
   subjects_none?: SubjectWhereInput;
-  isauthoricated?: Boolean;
-  isauthoricated_not?: Boolean;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -445,9 +502,38 @@ export interface StudentWhereInput {
   invitations_every?: InvitationWhereInput;
   invitations_some?: InvitationWhereInput;
   invitations_none?: InvitationWhereInput;
+  order_every?: OrderWhereInput;
+  order_some?: OrderWhereInput;
+  order_none?: OrderWhereInput;
   AND?: StudentWhereInput[] | StudentWhereInput;
   OR?: StudentWhereInput[] | StudentWhereInput;
   NOT?: StudentWhereInput[] | StudentWhereInput;
+}
+
+export interface OrderWhereInput {
+  order?: String;
+  order_not?: String;
+  order_in?: String[] | String;
+  order_not_in?: String[] | String;
+  order_lt?: String;
+  order_lte?: String;
+  order_gt?: String;
+  order_gte?: String;
+  order_contains?: String;
+  order_not_contains?: String;
+  order_starts_with?: String;
+  order_not_starts_with?: String;
+  order_ends_with?: String;
+  order_not_ends_with?: String;
+  stuednt?: StudentWhereInput;
+  parents?: ParentsWhereInput;
+  status?: OrderStatus;
+  status_not?: OrderStatus;
+  status_in?: OrderStatus[] | OrderStatus;
+  status_not_in?: OrderStatus[] | OrderStatus;
+  AND?: OrderWhereInput[] | OrderWhereInput;
+  OR?: OrderWhereInput[] | OrderWhereInput;
+  NOT?: OrderWhereInput[] | OrderWhereInput;
 }
 
 export interface ParentsWhereInput {
@@ -524,8 +610,10 @@ export interface ParentsWhereInput {
   subjects_every?: SubjectWhereInput;
   subjects_some?: SubjectWhereInput;
   subjects_none?: SubjectWhereInput;
-  isauthoricated?: Boolean;
-  isauthoricated_not?: Boolean;
+  authstatus?: authStatus;
+  authstatus_not?: authStatus;
+  authstatus_in?: authStatus[] | authStatus;
+  authstatus_not_in?: authStatus[] | authStatus;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -545,10 +633,17 @@ export interface ParentsWhereInput {
   invitations_every?: InvitationWhereInput;
   invitations_some?: InvitationWhereInput;
   invitations_none?: InvitationWhereInput;
+  order_every?: OrderWhereInput;
+  order_some?: OrderWhereInput;
+  order_none?: OrderWhereInput;
   AND?: ParentsWhereInput[] | ParentsWhereInput;
   OR?: ParentsWhereInput[] | ParentsWhereInput;
   NOT?: ParentsWhereInput[] | ParentsWhereInput;
 }
+
+export type OrderWhereUniqueInput = AtLeastOne<{
+  order: String;
+}>;
 
 export type ParentsWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -602,7 +697,7 @@ export interface UserWhereInput {
 export interface InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
   parents: ParentsCreateOneWithoutInvitationsInput;
-  status: Status;
+  status: invitationStatus;
 }
 
 export interface StudentCreateOneWithoutInvitationsInput {
@@ -615,8 +710,9 @@ export interface StudentCreateWithoutInvitationsInput {
   name: String;
   university: University;
   email: String;
+  authstatus: authStatus;
   subjects?: SubjectCreateManyInput;
-  isauthoricated?: Boolean;
+  order?: OrderCreateManyWithoutStuedntInput;
 }
 
 export interface SubjectCreateManyInput {
@@ -632,6 +728,44 @@ export interface SubjectCreatelevelInput {
   set?: Level[] | Level;
 }
 
+export interface OrderCreateManyWithoutStuedntInput {
+  create?: OrderCreateWithoutStuedntInput[] | OrderCreateWithoutStuedntInput;
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+}
+
+export interface OrderCreateWithoutStuedntInput {
+  order: String;
+  parents: ParentsCreateOneWithoutOrderInput;
+  status: OrderStatus;
+}
+
+export interface ParentsCreateOneWithoutOrderInput {
+  create?: ParentsCreateWithoutOrderInput;
+  connect?: ParentsWhereUniqueInput;
+}
+
+export interface ParentsCreateWithoutOrderInput {
+  phone: String;
+  name: String;
+  address: String;
+  email: String;
+  subjects?: SubjectCreateManyInput;
+  authstatus: authStatus;
+  invitations?: InvitationCreateManyWithoutParentsInput;
+}
+
+export interface InvitationCreateManyWithoutParentsInput {
+  create?:
+    | InvitationCreateWithoutParentsInput[]
+    | InvitationCreateWithoutParentsInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+}
+
+export interface InvitationCreateWithoutParentsInput {
+  stuednt: StudentCreateOneWithoutInvitationsInput;
+  status: invitationStatus;
+}
+
 export interface ParentsCreateOneWithoutInvitationsInput {
   create?: ParentsCreateWithoutInvitationsInput;
   connect?: ParentsWhereUniqueInput;
@@ -643,13 +777,52 @@ export interface ParentsCreateWithoutInvitationsInput {
   address: String;
   email: String;
   subjects?: SubjectCreateManyInput;
-  isauthoricated?: Boolean;
+  authstatus: authStatus;
+  order?: OrderCreateManyWithoutParentsInput;
+}
+
+export interface OrderCreateManyWithoutParentsInput {
+  create?: OrderCreateWithoutParentsInput[] | OrderCreateWithoutParentsInput;
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+}
+
+export interface OrderCreateWithoutParentsInput {
+  order: String;
+  stuednt: StudentCreateOneWithoutOrderInput;
+  status: OrderStatus;
+}
+
+export interface StudentCreateOneWithoutOrderInput {
+  create?: StudentCreateWithoutOrderInput;
+  connect?: StudentWhereUniqueInput;
+}
+
+export interface StudentCreateWithoutOrderInput {
+  phone: String;
+  name: String;
+  university: University;
+  email: String;
+  authstatus: authStatus;
+  subjects?: SubjectCreateManyInput;
+  invitations?: InvitationCreateManyWithoutStuedntInput;
+}
+
+export interface InvitationCreateManyWithoutStuedntInput {
+  create?:
+    | InvitationCreateWithoutStuedntInput[]
+    | InvitationCreateWithoutStuedntInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+}
+
+export interface InvitationCreateWithoutStuedntInput {
+  parents: ParentsCreateOneWithoutInvitationsInput;
+  status: invitationStatus;
 }
 
 export interface InvitationUpdateInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
   parents?: ParentsUpdateOneRequiredWithoutInvitationsInput;
-  status?: Status;
+  status?: invitationStatus;
 }
 
 export interface StudentUpdateOneRequiredWithoutInvitationsInput {
@@ -664,8 +837,9 @@ export interface StudentUpdateWithoutInvitationsDataInput {
   name?: String;
   university?: University;
   email?: String;
+  authstatus?: authStatus;
   subjects?: SubjectUpdateManyInput;
-  isauthoricated?: Boolean;
+  order?: OrderUpdateManyWithoutStuedntInput;
 }
 
 export interface SubjectUpdateManyInput {
@@ -700,65 +874,48 @@ export interface SubjectUpdatelevelInput {
   set?: Level[] | Level;
 }
 
-export interface StudentUpsertWithoutInvitationsInput {
-  update: StudentUpdateWithoutInvitationsDataInput;
-  create: StudentCreateWithoutInvitationsInput;
+export interface OrderUpdateManyWithoutStuedntInput {
+  create?: OrderCreateWithoutStuedntInput[] | OrderCreateWithoutStuedntInput;
+  delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  update?:
+    | OrderUpdateWithWhereUniqueWithoutStuedntInput[]
+    | OrderUpdateWithWhereUniqueWithoutStuedntInput;
+  upsert?:
+    | OrderUpsertWithWhereUniqueWithoutStuedntInput[]
+    | OrderUpsertWithWhereUniqueWithoutStuedntInput;
+  deleteMany?: OrderScalarWhereInput[] | OrderScalarWhereInput;
+  updateMany?:
+    | OrderUpdateManyWithWhereNestedInput[]
+    | OrderUpdateManyWithWhereNestedInput;
 }
 
-export interface ParentsUpdateOneRequiredWithoutInvitationsInput {
-  create?: ParentsCreateWithoutInvitationsInput;
-  update?: ParentsUpdateWithoutInvitationsDataInput;
-  upsert?: ParentsUpsertWithoutInvitationsInput;
+export interface OrderUpdateWithWhereUniqueWithoutStuedntInput {
+  where: OrderWhereUniqueInput;
+  data: OrderUpdateWithoutStuedntDataInput;
+}
+
+export interface OrderUpdateWithoutStuedntDataInput {
+  order?: String;
+  parents?: ParentsUpdateOneRequiredWithoutOrderInput;
+  status?: OrderStatus;
+}
+
+export interface ParentsUpdateOneRequiredWithoutOrderInput {
+  create?: ParentsCreateWithoutOrderInput;
+  update?: ParentsUpdateWithoutOrderDataInput;
+  upsert?: ParentsUpsertWithoutOrderInput;
   connect?: ParentsWhereUniqueInput;
 }
 
-export interface ParentsUpdateWithoutInvitationsDataInput {
+export interface ParentsUpdateWithoutOrderDataInput {
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
   subjects?: SubjectUpdateManyInput;
-  isauthoricated?: Boolean;
-}
-
-export interface ParentsUpsertWithoutInvitationsInput {
-  update: ParentsUpdateWithoutInvitationsDataInput;
-  create: ParentsCreateWithoutInvitationsInput;
-}
-
-export interface InvitationUpdateManyMutationInput {
-  status?: Status;
-}
-
-export interface ParentsCreateInput {
-  phone: String;
-  name: String;
-  address: String;
-  email: String;
-  subjects?: SubjectCreateManyInput;
-  isauthoricated?: Boolean;
-  invitations?: InvitationCreateManyWithoutParentsInput;
-}
-
-export interface InvitationCreateManyWithoutParentsInput {
-  create?:
-    | InvitationCreateWithoutParentsInput[]
-    | InvitationCreateWithoutParentsInput;
-  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
-}
-
-export interface InvitationCreateWithoutParentsInput {
-  stuednt: StudentCreateOneWithoutInvitationsInput;
-  status: Status;
-}
-
-export interface ParentsUpdateInput {
-  phone?: String;
-  name?: String;
-  address?: String;
-  email?: String;
-  subjects?: SubjectUpdateManyInput;
-  isauthoricated?: Boolean;
+  authstatus?: authStatus;
   invitations?: InvitationUpdateManyWithoutParentsInput;
 }
 
@@ -788,7 +945,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutParentsInput {
 
 export interface InvitationUpdateWithoutParentsDataInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
-  status?: Status;
+  status?: invitationStatus;
 }
 
 export interface InvitationUpsertWithWhereUniqueWithoutParentsInput {
@@ -812,10 +969,10 @@ export interface InvitationScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  status?: Status;
-  status_not?: Status;
-  status_in?: Status[] | Status;
-  status_not_in?: Status[] | Status;
+  status?: invitationStatus;
+  status_not?: invitationStatus;
+  status_in?: invitationStatus[] | invitationStatus;
+  status_not_in?: invitationStatus[] | invitationStatus;
   AND?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   OR?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   NOT?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
@@ -827,46 +984,118 @@ export interface InvitationUpdateManyWithWhereNestedInput {
 }
 
 export interface InvitationUpdateManyDataInput {
-  status?: Status;
+  status?: invitationStatus;
 }
 
-export interface ParentsUpdateManyMutationInput {
+export interface ParentsUpsertWithoutOrderInput {
+  update: ParentsUpdateWithoutOrderDataInput;
+  create: ParentsCreateWithoutOrderInput;
+}
+
+export interface OrderUpsertWithWhereUniqueWithoutStuedntInput {
+  where: OrderWhereUniqueInput;
+  update: OrderUpdateWithoutStuedntDataInput;
+  create: OrderCreateWithoutStuedntInput;
+}
+
+export interface OrderScalarWhereInput {
+  order?: String;
+  order_not?: String;
+  order_in?: String[] | String;
+  order_not_in?: String[] | String;
+  order_lt?: String;
+  order_lte?: String;
+  order_gt?: String;
+  order_gte?: String;
+  order_contains?: String;
+  order_not_contains?: String;
+  order_starts_with?: String;
+  order_not_starts_with?: String;
+  order_ends_with?: String;
+  order_not_ends_with?: String;
+  status?: OrderStatus;
+  status_not?: OrderStatus;
+  status_in?: OrderStatus[] | OrderStatus;
+  status_not_in?: OrderStatus[] | OrderStatus;
+  AND?: OrderScalarWhereInput[] | OrderScalarWhereInput;
+  OR?: OrderScalarWhereInput[] | OrderScalarWhereInput;
+  NOT?: OrderScalarWhereInput[] | OrderScalarWhereInput;
+}
+
+export interface OrderUpdateManyWithWhereNestedInput {
+  where: OrderScalarWhereInput;
+  data: OrderUpdateManyDataInput;
+}
+
+export interface OrderUpdateManyDataInput {
+  order?: String;
+  status?: OrderStatus;
+}
+
+export interface StudentUpsertWithoutInvitationsInput {
+  update: StudentUpdateWithoutInvitationsDataInput;
+  create: StudentCreateWithoutInvitationsInput;
+}
+
+export interface ParentsUpdateOneRequiredWithoutInvitationsInput {
+  create?: ParentsCreateWithoutInvitationsInput;
+  update?: ParentsUpdateWithoutInvitationsDataInput;
+  upsert?: ParentsUpsertWithoutInvitationsInput;
+  connect?: ParentsWhereUniqueInput;
+}
+
+export interface ParentsUpdateWithoutInvitationsDataInput {
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  isauthoricated?: Boolean;
+  subjects?: SubjectUpdateManyInput;
+  authstatus?: authStatus;
+  order?: OrderUpdateManyWithoutParentsInput;
 }
 
-export interface StudentCreateInput {
-  phone: String;
-  name: String;
-  university: University;
-  email: String;
-  subjects?: SubjectCreateManyInput;
-  isauthoricated?: Boolean;
-  invitations?: InvitationCreateManyWithoutStuedntInput;
+export interface OrderUpdateManyWithoutParentsInput {
+  create?: OrderCreateWithoutParentsInput[] | OrderCreateWithoutParentsInput;
+  delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
+  update?:
+    | OrderUpdateWithWhereUniqueWithoutParentsInput[]
+    | OrderUpdateWithWhereUniqueWithoutParentsInput;
+  upsert?:
+    | OrderUpsertWithWhereUniqueWithoutParentsInput[]
+    | OrderUpsertWithWhereUniqueWithoutParentsInput;
+  deleteMany?: OrderScalarWhereInput[] | OrderScalarWhereInput;
+  updateMany?:
+    | OrderUpdateManyWithWhereNestedInput[]
+    | OrderUpdateManyWithWhereNestedInput;
 }
 
-export interface InvitationCreateManyWithoutStuedntInput {
-  create?:
-    | InvitationCreateWithoutStuedntInput[]
-    | InvitationCreateWithoutStuedntInput;
-  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+export interface OrderUpdateWithWhereUniqueWithoutParentsInput {
+  where: OrderWhereUniqueInput;
+  data: OrderUpdateWithoutParentsDataInput;
 }
 
-export interface InvitationCreateWithoutStuedntInput {
-  parents: ParentsCreateOneWithoutInvitationsInput;
-  status: Status;
+export interface OrderUpdateWithoutParentsDataInput {
+  order?: String;
+  stuednt?: StudentUpdateOneRequiredWithoutOrderInput;
+  status?: OrderStatus;
 }
 
-export interface StudentUpdateInput {
+export interface StudentUpdateOneRequiredWithoutOrderInput {
+  create?: StudentCreateWithoutOrderInput;
+  update?: StudentUpdateWithoutOrderDataInput;
+  upsert?: StudentUpsertWithoutOrderInput;
+  connect?: StudentWhereUniqueInput;
+}
+
+export interface StudentUpdateWithoutOrderDataInput {
   phone?: String;
   name?: String;
   university?: University;
   email?: String;
+  authstatus?: authStatus;
   subjects?: SubjectUpdateManyInput;
-  isauthoricated?: Boolean;
   invitations?: InvitationUpdateManyWithoutStuedntInput;
 }
 
@@ -896,7 +1125,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutStuedntInput {
 
 export interface InvitationUpdateWithoutStuedntDataInput {
   parents?: ParentsUpdateOneRequiredWithoutInvitationsInput;
-  status?: Status;
+  status?: invitationStatus;
 }
 
 export interface InvitationUpsertWithWhereUniqueWithoutStuedntInput {
@@ -905,12 +1134,103 @@ export interface InvitationUpsertWithWhereUniqueWithoutStuedntInput {
   create: InvitationCreateWithoutStuedntInput;
 }
 
+export interface StudentUpsertWithoutOrderInput {
+  update: StudentUpdateWithoutOrderDataInput;
+  create: StudentCreateWithoutOrderInput;
+}
+
+export interface OrderUpsertWithWhereUniqueWithoutParentsInput {
+  where: OrderWhereUniqueInput;
+  update: OrderUpdateWithoutParentsDataInput;
+  create: OrderCreateWithoutParentsInput;
+}
+
+export interface ParentsUpsertWithoutInvitationsInput {
+  update: ParentsUpdateWithoutInvitationsDataInput;
+  create: ParentsCreateWithoutInvitationsInput;
+}
+
+export interface InvitationUpdateManyMutationInput {
+  status?: invitationStatus;
+}
+
+export interface OrderCreateInput {
+  order: String;
+  stuednt: StudentCreateOneWithoutOrderInput;
+  parents: ParentsCreateOneWithoutOrderInput;
+  status: OrderStatus;
+}
+
+export interface OrderUpdateInput {
+  order?: String;
+  stuednt?: StudentUpdateOneRequiredWithoutOrderInput;
+  parents?: ParentsUpdateOneRequiredWithoutOrderInput;
+  status?: OrderStatus;
+}
+
+export interface OrderUpdateManyMutationInput {
+  order?: String;
+  status?: OrderStatus;
+}
+
+export interface ParentsCreateInput {
+  phone: String;
+  name: String;
+  address: String;
+  email: String;
+  subjects?: SubjectCreateManyInput;
+  authstatus: authStatus;
+  invitations?: InvitationCreateManyWithoutParentsInput;
+  order?: OrderCreateManyWithoutParentsInput;
+}
+
+export interface ParentsUpdateInput {
+  phone?: String;
+  name?: String;
+  address?: String;
+  email?: String;
+  subjects?: SubjectUpdateManyInput;
+  authstatus?: authStatus;
+  invitations?: InvitationUpdateManyWithoutParentsInput;
+  order?: OrderUpdateManyWithoutParentsInput;
+}
+
+export interface ParentsUpdateManyMutationInput {
+  phone?: String;
+  name?: String;
+  address?: String;
+  email?: String;
+  authstatus?: authStatus;
+}
+
+export interface StudentCreateInput {
+  phone: String;
+  name: String;
+  university: University;
+  email: String;
+  authstatus: authStatus;
+  subjects?: SubjectCreateManyInput;
+  invitations?: InvitationCreateManyWithoutStuedntInput;
+  order?: OrderCreateManyWithoutStuedntInput;
+}
+
+export interface StudentUpdateInput {
+  phone?: String;
+  name?: String;
+  university?: University;
+  email?: String;
+  authstatus?: authStatus;
+  subjects?: SubjectUpdateManyInput;
+  invitations?: InvitationUpdateManyWithoutStuedntInput;
+  order?: OrderUpdateManyWithoutStuedntInput;
+}
+
 export interface StudentUpdateManyMutationInput {
   phone?: String;
   name?: String;
   university?: University;
   email?: String;
-  isauthoricated?: Boolean;
+  authstatus?: authStatus;
 }
 
 export interface SubjectUpdateManyMutationInput {
@@ -939,6 +1259,17 @@ export interface InvitationSubscriptionWhereInput {
   AND?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
   OR?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
   NOT?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
+}
+
+export interface OrderSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: OrderWhereInput;
+  AND?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput;
+  OR?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput;
+  NOT?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput;
 }
 
 export interface ParentsSubscriptionWhereInput {
@@ -991,14 +1322,14 @@ export interface NodeNode {
 
 export interface Invitation {
   id: ID_Output;
-  status: Status;
+  status: invitationStatus;
 }
 
 export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
   stuednt: <T = StudentPromise>() => T;
   parents: <T = ParentsPromise>() => T;
-  status: () => Promise<Status>;
+  status: () => Promise<invitationStatus>;
 }
 
 export interface InvitationSubscription
@@ -1007,7 +1338,7 @@ export interface InvitationSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   stuednt: <T = StudentSubscription>() => T;
   parents: <T = ParentsSubscription>() => T;
-  status: () => Promise<AsyncIterator<Status>>;
+  status: () => Promise<AsyncIterator<invitationStatus>>;
 }
 
 export interface Student {
@@ -1016,7 +1347,7 @@ export interface Student {
   name: String;
   university: University;
   email: String;
-  isauthoricated: Boolean;
+  authstatus: authStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1027,6 +1358,7 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
   name: () => Promise<String>;
   university: () => Promise<University>;
   email: () => Promise<String>;
+  authstatus: () => Promise<authStatus>;
   subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
@@ -1036,12 +1368,20 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  isauthoricated: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   invitations: <T = FragmentableArray<Invitation>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  order: <T = FragmentableArray<Order>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1058,6 +1398,7 @@ export interface StudentSubscription
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
   email: () => Promise<AsyncIterator<String>>;
+  authstatus: () => Promise<AsyncIterator<authStatus>>;
   subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
@@ -1067,12 +1408,20 @@ export interface StudentSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  isauthoricated: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  order: <T = Promise<AsyncIterator<OrderSubscription>>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1098,13 +1447,34 @@ export interface SubjectSubscription
   level: () => Promise<AsyncIterator<Level[]>>;
 }
 
+export interface Order {
+  order: String;
+  status: OrderStatus;
+}
+
+export interface OrderPromise extends Promise<Order>, Fragmentable {
+  order: () => Promise<String>;
+  stuednt: <T = StudentPromise>() => T;
+  parents: <T = ParentsPromise>() => T;
+  status: () => Promise<OrderStatus>;
+}
+
+export interface OrderSubscription
+  extends Promise<AsyncIterator<Order>>,
+    Fragmentable {
+  order: () => Promise<AsyncIterator<String>>;
+  stuednt: <T = StudentSubscription>() => T;
+  parents: <T = ParentsSubscription>() => T;
+  status: () => Promise<AsyncIterator<OrderStatus>>;
+}
+
 export interface Parents {
   id: ID_Output;
   phone: String;
   name: String;
   address: String;
   email: String;
-  isauthoricated: Boolean;
+  authstatus: authStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1124,12 +1494,21 @@ export interface ParentsPromise extends Promise<Parents>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  isauthoricated: () => Promise<Boolean>;
+  authstatus: () => Promise<authStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   invitations: <T = FragmentableArray<Invitation>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  order: <T = FragmentableArray<Order>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1155,12 +1534,21 @@ export interface ParentsSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  isauthoricated: () => Promise<AsyncIterator<Boolean>>;
+  authstatus: () => Promise<AsyncIterator<authStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  order: <T = Promise<AsyncIterator<OrderSubscription>>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1244,6 +1632,60 @@ export interface AggregateInvitationPromise
 
 export interface AggregateInvitationSubscription
   extends Promise<AsyncIterator<AggregateInvitation>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface OrderConnection {
+  pageInfo: PageInfo;
+  edges: OrderEdge[];
+}
+
+export interface OrderConnectionPromise
+  extends Promise<OrderConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<OrderEdge>>() => T;
+  aggregate: <T = AggregateOrderPromise>() => T;
+}
+
+export interface OrderConnectionSubscription
+  extends Promise<AsyncIterator<OrderConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<OrderEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateOrderSubscription>() => T;
+}
+
+export interface OrderEdge {
+  node: Order;
+  cursor: String;
+}
+
+export interface OrderEdgePromise extends Promise<OrderEdge>, Fragmentable {
+  node: <T = OrderPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface OrderEdgeSubscription
+  extends Promise<AsyncIterator<OrderEdge>>,
+    Fragmentable {
+  node: <T = OrderSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateOrder {
+  count: Int;
+}
+
+export interface AggregateOrderPromise
+  extends Promise<AggregateOrder>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateOrderSubscription
+  extends Promise<AsyncIterator<AggregateOrder>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1524,21 +1966,65 @@ export interface InvitationSubscriptionPayloadSubscription
 
 export interface InvitationPreviousValues {
   id: ID_Output;
-  status: Status;
+  status: invitationStatus;
 }
 
 export interface InvitationPreviousValuesPromise
   extends Promise<InvitationPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  status: () => Promise<Status>;
+  status: () => Promise<invitationStatus>;
 }
 
 export interface InvitationPreviousValuesSubscription
   extends Promise<AsyncIterator<InvitationPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  status: () => Promise<AsyncIterator<Status>>;
+  status: () => Promise<AsyncIterator<invitationStatus>>;
+}
+
+export interface OrderSubscriptionPayload {
+  mutation: MutationType;
+  node: Order;
+  updatedFields: String[];
+  previousValues: OrderPreviousValues;
+}
+
+export interface OrderSubscriptionPayloadPromise
+  extends Promise<OrderSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = OrderPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = OrderPreviousValuesPromise>() => T;
+}
+
+export interface OrderSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<OrderSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = OrderSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = OrderPreviousValuesSubscription>() => T;
+}
+
+export interface OrderPreviousValues {
+  order: String;
+  status: OrderStatus;
+}
+
+export interface OrderPreviousValuesPromise
+  extends Promise<OrderPreviousValues>,
+    Fragmentable {
+  order: () => Promise<String>;
+  status: () => Promise<OrderStatus>;
+}
+
+export interface OrderPreviousValuesSubscription
+  extends Promise<AsyncIterator<OrderPreviousValues>>,
+    Fragmentable {
+  order: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<OrderStatus>>;
 }
 
 export interface ParentsSubscriptionPayload {
@@ -1572,7 +2058,7 @@ export interface ParentsPreviousValues {
   name: String;
   address: String;
   email: String;
-  isauthoricated: Boolean;
+  authstatus: authStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1585,7 +2071,7 @@ export interface ParentsPreviousValuesPromise
   name: () => Promise<String>;
   address: () => Promise<String>;
   email: () => Promise<String>;
-  isauthoricated: () => Promise<Boolean>;
+  authstatus: () => Promise<authStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -1598,7 +2084,7 @@ export interface ParentsPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  isauthoricated: () => Promise<AsyncIterator<Boolean>>;
+  authstatus: () => Promise<AsyncIterator<authStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1634,7 +2120,7 @@ export interface StudentPreviousValues {
   name: String;
   university: University;
   email: String;
-  isauthoricated: Boolean;
+  authstatus: authStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1647,7 +2133,7 @@ export interface StudentPreviousValuesPromise
   name: () => Promise<String>;
   university: () => Promise<University>;
   email: () => Promise<String>;
-  isauthoricated: () => Promise<Boolean>;
+  authstatus: () => Promise<authStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -1660,7 +2146,7 @@ export interface StudentPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
   email: () => Promise<AsyncIterator<String>>;
-  isauthoricated: () => Promise<AsyncIterator<Boolean>>;
+  authstatus: () => Promise<AsyncIterator<authStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1770,11 +2256,6 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1783,6 +2264,11 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 export type Long = string;
 
@@ -1800,11 +2286,15 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Parents",
+    name: "Order",
     embedded: false
   },
   {
-    name: "Status",
+    name: "OrderStatus",
+    embedded: false
+  },
+  {
+    name: "Parents",
     embedded: false
   },
   {
@@ -1825,6 +2315,14 @@ export const models: Model[] = [
   },
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "authStatus",
+    embedded: false
+  },
+  {
+    name: "invitationStatus",
     embedded: false
   }
 ];

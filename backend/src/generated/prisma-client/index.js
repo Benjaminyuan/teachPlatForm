@@ -13,11 +13,15 @@ var models = [
     embedded: false
   },
   {
-    name: "Parents",
+    name: "Order",
     embedded: false
   },
   {
-    name: "Status",
+    name: "OrderStatus",
+    embedded: false
+  },
+  {
+    name: "Parents",
     embedded: false
   },
   {
@@ -39,11 +43,19 @@ var models = [
   {
     name: "User",
     embedded: false
+  },
+  {
+    name: "authStatus",
+    embedded: false
+  },
+  {
+    name: "invitationStatus",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://47.107.67.70:4466/prisma-backend/dev`
+  endpoint: `http://47.107.67.70:4466/prisma-backend/dev-2`
 });
 exports.prisma = new exports.Prisma();

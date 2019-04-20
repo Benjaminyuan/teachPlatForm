@@ -4,26 +4,53 @@ type User {
 }
 type Student{
   id: ID! @unique
-  phone: String! @unique
+  phone: String!@unique
   name: String!@unique
   university: University!
   email: String!
-  subjects:[Subject!]!
-  isauthoricated: Boolean! @default(value:"false")
+  #可以发布的科目
+  authstatus: authStatus!
+  subjects:[Subject!]
+  #平台认证
   createdAt: DateTime!
   updatedAt: DateTime!
   invitations:[Invitation!]@relation(name:"InviteForStudent")
+  order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
 }
+type Parents{
+  id: ID! @unique
+  phone: String! @unique
+  name: String!
+  address: String!
+  email: String!
+  #想要找的学科
+  subjects: [Subject!]
+  #是否认证
+  authstatus: authStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  # 邀请
+  invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
+  order: [Order!]@relation(name:"OrderParents" onDelete:CASCADE)  
+}
+# 科目
 type Subject{
   name: SubjectName!
   level:[Level!]! 
 }
+enum authStatus{
+  UNCOMMITED
+  AUTHCOMMITED
+  AUTHED
+}
+# 学生等级
 enum Level{
   MIDDLE
   MIDDLEHIGH
   PRIMARY
   UNI
 }
+#学校
 enum University{
   HUST
   WHU
@@ -33,25 +60,26 @@ enum SubjectName{
   MATH
   ENGLISH
 }
-type Parents{
-  id: ID! @unique
-  phone: String! @unique
-  name: String!
-  address: String!
-  email: String!
-  subjects:[Subject!]!
-  isauthoricated: Boolean! @default(value:"false")
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
-}
+
 type Invitation{
   id: ID!@unique
   stuednt: Student!@relation(name:"InviteForStudent")
   parents: Parents!@relation(name:"InviteForParent")
-  status: Status!
+  status: invitationStatus!
 }
-enum Status{
+type Order{
+  order: String!@unique
+  stuednt: Student!@relation(name:"OrderStudent")
+  parents: Parents!@relation(name:"OrderParents")
+  status: OrderStatus!
+}
+enum OrderStatus{
+  PAIED
+  UNPAIED
+  FINISHED
+}
+enum invitationStatus{
   WAITING
   AGREED
+  REJECTED
 }
