@@ -7,7 +7,7 @@ type AggregateOrder {
   count: Int!
 }
 
-type AggregateParents {
+type AggregateParent {
   count: Int!
 }
 
@@ -38,7 +38,7 @@ scalar DateTime
 type Invitation {
   id: ID!
   stuednt: Student!
-  parents: Parents!
+  parents: Parent!
   status: invitationStatus!
 }
 
@@ -50,7 +50,7 @@ type InvitationConnection {
 
 input InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput!
-  parents: ParentsCreateOneWithoutInvitationsInput!
+  parents: ParentCreateOneWithoutInvitationsInput!
   status: invitationStatus!
 }
 
@@ -70,7 +70,7 @@ input InvitationCreateWithoutParentsInput {
 }
 
 input InvitationCreateWithoutStuedntInput {
-  parents: ParentsCreateOneWithoutInvitationsInput!
+  parents: ParentCreateOneWithoutInvitationsInput!
   status: invitationStatus!
 }
 
@@ -145,7 +145,7 @@ input InvitationSubscriptionWhereInput {
 
 input InvitationUpdateInput {
   stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
-  parents: ParentsUpdateOneRequiredWithoutInvitationsInput
+  parents: ParentUpdateOneRequiredWithoutInvitationsInput
   status: invitationStatus
 }
 
@@ -190,7 +190,7 @@ input InvitationUpdateWithoutParentsDataInput {
 }
 
 input InvitationUpdateWithoutStuedntDataInput {
-  parents: ParentsUpdateOneRequiredWithoutInvitationsInput
+  parents: ParentUpdateOneRequiredWithoutInvitationsInput
   status: invitationStatus
 }
 
@@ -232,7 +232,7 @@ input InvitationWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   stuednt: StudentWhereInput
-  parents: ParentsWhereInput
+  parents: ParentWhereInput
   status: invitationStatus
   status_not: invitationStatus
   status_in: [invitationStatus!]
@@ -268,12 +268,12 @@ type Mutation {
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
-  createParents(data: ParentsCreateInput!): Parents!
-  updateParents(data: ParentsUpdateInput!, where: ParentsWhereUniqueInput!): Parents
-  updateManyParentses(data: ParentsUpdateManyMutationInput!, where: ParentsWhereInput): BatchPayload!
-  upsertParents(where: ParentsWhereUniqueInput!, create: ParentsCreateInput!, update: ParentsUpdateInput!): Parents!
-  deleteParents(where: ParentsWhereUniqueInput!): Parents
-  deleteManyParentses(where: ParentsWhereInput): BatchPayload!
+  createParent(data: ParentCreateInput!): Parent!
+  updateParent(data: ParentUpdateInput!, where: ParentWhereUniqueInput!): Parent
+  updateManyParents(data: ParentUpdateManyMutationInput!, where: ParentWhereInput): BatchPayload!
+  upsertParent(where: ParentWhereUniqueInput!, create: ParentCreateInput!, update: ParentUpdateInput!): Parent!
+  deleteParent(where: ParentWhereUniqueInput!): Parent
+  deleteManyParents(where: ParentWhereInput): BatchPayload!
   createStudent(data: StudentCreateInput!): Student!
   updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
   updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
@@ -304,7 +304,7 @@ interface Node {
 type Order {
   order: String!
   stuednt: Student!
-  parents: Parents!
+  parents: Parent!
   status: OrderStatus!
 }
 
@@ -317,7 +317,7 @@ type OrderConnection {
 input OrderCreateInput {
   order: String!
   stuednt: StudentCreateOneWithoutOrderInput!
-  parents: ParentsCreateOneWithoutOrderInput!
+  parents: ParentCreateOneWithoutOrderInput!
   status: OrderStatus!
 }
 
@@ -339,7 +339,7 @@ input OrderCreateWithoutParentsInput {
 
 input OrderCreateWithoutStuedntInput {
   order: String!
-  parents: ParentsCreateOneWithoutOrderInput!
+  parents: ParentCreateOneWithoutOrderInput!
   status: OrderStatus!
 }
 
@@ -417,7 +417,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   order: String
   stuednt: StudentUpdateOneRequiredWithoutOrderInput
-  parents: ParentsUpdateOneRequiredWithoutOrderInput
+  parents: ParentUpdateOneRequiredWithoutOrderInput
   status: OrderStatus
 }
 
@@ -466,7 +466,7 @@ input OrderUpdateWithoutParentsDataInput {
 
 input OrderUpdateWithoutStuedntDataInput {
   order: String
-  parents: ParentsUpdateOneRequiredWithoutOrderInput
+  parents: ParentUpdateOneRequiredWithoutOrderInput
   status: OrderStatus
 }
 
@@ -508,7 +508,7 @@ input OrderWhereInput {
   order_ends_with: String
   order_not_ends_with: String
   stuednt: StudentWhereInput
-  parents: ParentsWhereInput
+  parents: ParentWhereInput
   status: OrderStatus
   status_not: OrderStatus
   status_in: [OrderStatus!]
@@ -529,7 +529,7 @@ type PageInfo {
   endCursor: String
 }
 
-type Parents {
+type Parent {
   id: ID!
   phone: String!
   name: String!
@@ -543,13 +543,13 @@ type Parents {
   order(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
-type ParentsConnection {
+type ParentConnection {
   pageInfo: PageInfo!
-  edges: [ParentsEdge]!
-  aggregate: AggregateParents!
+  edges: [ParentEdge]!
+  aggregate: AggregateParent!
 }
 
-input ParentsCreateInput {
+input ParentCreateInput {
   phone: String!
   name: String!
   address: String!
@@ -560,17 +560,17 @@ input ParentsCreateInput {
   order: OrderCreateManyWithoutParentsInput
 }
 
-input ParentsCreateOneWithoutInvitationsInput {
-  create: ParentsCreateWithoutInvitationsInput
-  connect: ParentsWhereUniqueInput
+input ParentCreateOneWithoutInvitationsInput {
+  create: ParentCreateWithoutInvitationsInput
+  connect: ParentWhereUniqueInput
 }
 
-input ParentsCreateOneWithoutOrderInput {
-  create: ParentsCreateWithoutOrderInput
-  connect: ParentsWhereUniqueInput
+input ParentCreateOneWithoutOrderInput {
+  create: ParentCreateWithoutOrderInput
+  connect: ParentWhereUniqueInput
 }
 
-input ParentsCreateWithoutInvitationsInput {
+input ParentCreateWithoutInvitationsInput {
   phone: String!
   name: String!
   address: String!
@@ -580,7 +580,7 @@ input ParentsCreateWithoutInvitationsInput {
   order: OrderCreateManyWithoutParentsInput
 }
 
-input ParentsCreateWithoutOrderInput {
+input ParentCreateWithoutOrderInput {
   phone: String!
   name: String!
   address: String!
@@ -590,12 +590,12 @@ input ParentsCreateWithoutOrderInput {
   invitations: InvitationCreateManyWithoutParentsInput
 }
 
-type ParentsEdge {
-  node: Parents!
+type ParentEdge {
+  node: Parent!
   cursor: String!
 }
 
-enum ParentsOrderByInput {
+enum ParentOrderByInput {
   id_ASC
   id_DESC
   phone_ASC
@@ -614,7 +614,7 @@ enum ParentsOrderByInput {
   updatedAt_DESC
 }
 
-type ParentsPreviousValues {
+type ParentPreviousValues {
   id: ID!
   phone: String!
   name: String!
@@ -625,25 +625,25 @@ type ParentsPreviousValues {
   updatedAt: DateTime!
 }
 
-type ParentsSubscriptionPayload {
+type ParentSubscriptionPayload {
   mutation: MutationType!
-  node: Parents
+  node: Parent
   updatedFields: [String!]
-  previousValues: ParentsPreviousValues
+  previousValues: ParentPreviousValues
 }
 
-input ParentsSubscriptionWhereInput {
+input ParentSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: ParentsWhereInput
-  AND: [ParentsSubscriptionWhereInput!]
-  OR: [ParentsSubscriptionWhereInput!]
-  NOT: [ParentsSubscriptionWhereInput!]
+  node: ParentWhereInput
+  AND: [ParentSubscriptionWhereInput!]
+  OR: [ParentSubscriptionWhereInput!]
+  NOT: [ParentSubscriptionWhereInput!]
 }
 
-input ParentsUpdateInput {
+input ParentUpdateInput {
   phone: String
   name: String
   address: String
@@ -654,7 +654,7 @@ input ParentsUpdateInput {
   order: OrderUpdateManyWithoutParentsInput
 }
 
-input ParentsUpdateManyMutationInput {
+input ParentUpdateManyMutationInput {
   phone: String
   name: String
   address: String
@@ -662,21 +662,21 @@ input ParentsUpdateManyMutationInput {
   authstatus: authStatus
 }
 
-input ParentsUpdateOneRequiredWithoutInvitationsInput {
-  create: ParentsCreateWithoutInvitationsInput
-  update: ParentsUpdateWithoutInvitationsDataInput
-  upsert: ParentsUpsertWithoutInvitationsInput
-  connect: ParentsWhereUniqueInput
+input ParentUpdateOneRequiredWithoutInvitationsInput {
+  create: ParentCreateWithoutInvitationsInput
+  update: ParentUpdateWithoutInvitationsDataInput
+  upsert: ParentUpsertWithoutInvitationsInput
+  connect: ParentWhereUniqueInput
 }
 
-input ParentsUpdateOneRequiredWithoutOrderInput {
-  create: ParentsCreateWithoutOrderInput
-  update: ParentsUpdateWithoutOrderDataInput
-  upsert: ParentsUpsertWithoutOrderInput
-  connect: ParentsWhereUniqueInput
+input ParentUpdateOneRequiredWithoutOrderInput {
+  create: ParentCreateWithoutOrderInput
+  update: ParentUpdateWithoutOrderDataInput
+  upsert: ParentUpsertWithoutOrderInput
+  connect: ParentWhereUniqueInput
 }
 
-input ParentsUpdateWithoutInvitationsDataInput {
+input ParentUpdateWithoutInvitationsDataInput {
   phone: String
   name: String
   address: String
@@ -686,7 +686,7 @@ input ParentsUpdateWithoutInvitationsDataInput {
   order: OrderUpdateManyWithoutParentsInput
 }
 
-input ParentsUpdateWithoutOrderDataInput {
+input ParentUpdateWithoutOrderDataInput {
   phone: String
   name: String
   address: String
@@ -696,17 +696,17 @@ input ParentsUpdateWithoutOrderDataInput {
   invitations: InvitationUpdateManyWithoutParentsInput
 }
 
-input ParentsUpsertWithoutInvitationsInput {
-  update: ParentsUpdateWithoutInvitationsDataInput!
-  create: ParentsCreateWithoutInvitationsInput!
+input ParentUpsertWithoutInvitationsInput {
+  update: ParentUpdateWithoutInvitationsDataInput!
+  create: ParentCreateWithoutInvitationsInput!
 }
 
-input ParentsUpsertWithoutOrderInput {
-  update: ParentsUpdateWithoutOrderDataInput!
-  create: ParentsCreateWithoutOrderInput!
+input ParentUpsertWithoutOrderInput {
+  update: ParentUpdateWithoutOrderDataInput!
+  create: ParentCreateWithoutOrderInput!
 }
 
-input ParentsWhereInput {
+input ParentWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -806,14 +806,16 @@ input ParentsWhereInput {
   order_every: OrderWhereInput
   order_some: OrderWhereInput
   order_none: OrderWhereInput
-  AND: [ParentsWhereInput!]
-  OR: [ParentsWhereInput!]
-  NOT: [ParentsWhereInput!]
+  AND: [ParentWhereInput!]
+  OR: [ParentWhereInput!]
+  NOT: [ParentWhereInput!]
 }
 
-input ParentsWhereUniqueInput {
+input ParentWhereUniqueInput {
   id: ID
   phone: String
+  name: String
+  email: String
 }
 
 type Query {
@@ -823,9 +825,9 @@ type Query {
   order(where: OrderWhereUniqueInput!): Order
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
-  parents(where: ParentsWhereUniqueInput!): Parents
-  parentses(where: ParentsWhereInput, orderBy: ParentsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Parents]!
-  parentsesConnection(where: ParentsWhereInput, orderBy: ParentsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ParentsConnection!
+  parent(where: ParentWhereUniqueInput!): Parent
+  parents(where: ParentWhereInput, orderBy: ParentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Parent]!
+  parentsConnection(where: ParentWhereInput, orderBy: ParentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ParentConnection!
   student(where: StudentWhereUniqueInput!): Student
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
   studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
@@ -1113,6 +1115,7 @@ input StudentWhereUniqueInput {
   id: ID
   phone: String
   name: String
+  email: String
 }
 
 type Subject {
@@ -1232,7 +1235,7 @@ input SubjectWhereInput {
 type Subscription {
   invitation(where: InvitationSubscriptionWhereInput): InvitationSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
-  parents(where: ParentsSubscriptionWhereInput): ParentsSubscriptionPayload
+  parent(where: ParentSubscriptionWhereInput): ParentSubscriptionPayload
   student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload

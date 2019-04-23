@@ -21,7 +21,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Parents",
+    name: "Parent",
     embedded: false
   },
   {

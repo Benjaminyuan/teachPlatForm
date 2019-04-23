@@ -1,15 +1,7 @@
+const jwt = require("../util/jwt")
 async function resource(req,res,next){
-    jwt = getJwt(req)
+    jwt = jwt.getJwt(req)
     if(jwt === false){
-        res.
+        res.status()
     }
-}
-function getJwt(req){
-    Authorization = req.get("Authorization")|| null
-    if( Authorization === null ){
-        return false
-    }
-    jwt = Authorization.repalce("Bearer ","")
-    return jwt
-
 }

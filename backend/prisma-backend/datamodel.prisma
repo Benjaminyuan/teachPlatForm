@@ -7,7 +7,7 @@ type Student{
   phone: String!@unique
   name: String!@unique
   university: University!
-  email: String!
+  email: String!@unique
   #可以发布的科目
   authstatus: authStatus!
   subjects:[Subject!]
@@ -17,12 +17,12 @@ type Student{
   invitations:[Invitation!]@relation(name:"InviteForStudent")
   order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
 }
-type Parents{
+type Parent{
   id: ID! @unique
   phone: String! @unique
-  name: String!
+  name: String!@unique
   address: String!
-  email: String!
+  email: String!@unique
   #想要找的学科
   subjects: [Subject!]
   #是否认证
@@ -31,7 +31,7 @@ type Parents{
   updatedAt: DateTime!
   # 邀请
   invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
-  order: [Order!]@relation(name:"OrderParents" onDelete:CASCADE)  
+  order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)  
 }
 # 科目
 type Subject{
@@ -64,13 +64,13 @@ enum SubjectName{
 type Invitation{
   id: ID!@unique
   stuednt: Student!@relation(name:"InviteForStudent")
-  parents: Parents!@relation(name:"InviteForParent")
+  parents: Parent!@relation(name:"InviteForParent")
   status: invitationStatus!
 }
 type Order{
   order: String!@unique
   stuednt: Student!@relation(name:"OrderStudent")
-  parents: Parents!@relation(name:"OrderParents")
+  parents: Parent!@relation(name:"OrderParent")
   status: OrderStatus!
 }
 enum OrderStatus{

@@ -16,7 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export interface Exists {
   invitation: (where?: InvitationWhereInput) => Promise<boolean>;
   order: (where?: OrderWhereInput) => Promise<boolean>;
-  parents: (where?: ParentsWhereInput) => Promise<boolean>;
+  parent: (where?: ParentWhereInput) => Promise<boolean>;
   student: (where?: StudentWhereInput) => Promise<boolean>;
   subject: (where?: SubjectWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -79,25 +79,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => OrderConnectionPromise;
-  parents: (where: ParentsWhereUniqueInput) => ParentsPromise;
-  parentses: (args?: {
-    where?: ParentsWhereInput;
-    orderBy?: ParentsOrderByInput;
+  parent: (where: ParentWhereUniqueInput) => ParentPromise;
+  parents: (args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Parents>;
-  parentsesConnection: (args?: {
-    where?: ParentsWhereInput;
-    orderBy?: ParentsOrderByInput;
+  }) => FragmentableArray<Parent>;
+  parentsConnection: (args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => ParentsConnectionPromise;
+  }) => ParentConnectionPromise;
   student: (where: StudentWhereUniqueInput) => StudentPromise;
   students: (args?: {
     where?: StudentWhereInput;
@@ -192,22 +192,22 @@ export interface Prisma {
   }) => OrderPromise;
   deleteOrder: (where: OrderWhereUniqueInput) => OrderPromise;
   deleteManyOrders: (where?: OrderWhereInput) => BatchPayloadPromise;
-  createParents: (data: ParentsCreateInput) => ParentsPromise;
-  updateParents: (args: {
-    data: ParentsUpdateInput;
-    where: ParentsWhereUniqueInput;
-  }) => ParentsPromise;
-  updateManyParentses: (args: {
-    data: ParentsUpdateManyMutationInput;
-    where?: ParentsWhereInput;
+  createParent: (data: ParentCreateInput) => ParentPromise;
+  updateParent: (args: {
+    data: ParentUpdateInput;
+    where: ParentWhereUniqueInput;
+  }) => ParentPromise;
+  updateManyParents: (args: {
+    data: ParentUpdateManyMutationInput;
+    where?: ParentWhereInput;
   }) => BatchPayloadPromise;
-  upsertParents: (args: {
-    where: ParentsWhereUniqueInput;
-    create: ParentsCreateInput;
-    update: ParentsUpdateInput;
-  }) => ParentsPromise;
-  deleteParents: (where: ParentsWhereUniqueInput) => ParentsPromise;
-  deleteManyParentses: (where?: ParentsWhereInput) => BatchPayloadPromise;
+  upsertParent: (args: {
+    where: ParentWhereUniqueInput;
+    create: ParentCreateInput;
+    update: ParentUpdateInput;
+  }) => ParentPromise;
+  deleteParent: (where: ParentWhereUniqueInput) => ParentPromise;
+  deleteManyParents: (where?: ParentWhereInput) => BatchPayloadPromise;
   createStudent: (data: StudentCreateInput) => StudentPromise;
   updateStudent: (args: {
     data: StudentUpdateInput;
@@ -261,9 +261,9 @@ export interface Subscription {
   order: (
     where?: OrderSubscriptionWhereInput
   ) => OrderSubscriptionPayloadSubscription;
-  parents: (
-    where?: ParentsSubscriptionWhereInput
-  ) => ParentsSubscriptionPayloadSubscription;
+  parent: (
+    where?: ParentSubscriptionWhereInput
+  ) => ParentSubscriptionPayloadSubscription;
   student: (
     where?: StudentSubscriptionWhereInput
   ) => StudentSubscriptionPayloadSubscription;
@@ -327,7 +327,7 @@ export type OrderOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type ParentsOrderByInput =
+export type ParentOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "phone_ASC"
@@ -405,7 +405,7 @@ export interface InvitationWhereInput {
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
   stuednt?: StudentWhereInput;
-  parents?: ParentsWhereInput;
+  parents?: ParentWhereInput;
   status?: invitationStatus;
   status_not?: invitationStatus;
   status_in?: invitationStatus[] | invitationStatus;
@@ -526,7 +526,7 @@ export interface OrderWhereInput {
   order_ends_with?: String;
   order_not_ends_with?: String;
   stuednt?: StudentWhereInput;
-  parents?: ParentsWhereInput;
+  parents?: ParentWhereInput;
   status?: OrderStatus;
   status_not?: OrderStatus;
   status_in?: OrderStatus[] | OrderStatus;
@@ -536,7 +536,7 @@ export interface OrderWhereInput {
   NOT?: OrderWhereInput[] | OrderWhereInput;
 }
 
-export interface ParentsWhereInput {
+export interface ParentWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -636,24 +636,27 @@ export interface ParentsWhereInput {
   order_every?: OrderWhereInput;
   order_some?: OrderWhereInput;
   order_none?: OrderWhereInput;
-  AND?: ParentsWhereInput[] | ParentsWhereInput;
-  OR?: ParentsWhereInput[] | ParentsWhereInput;
-  NOT?: ParentsWhereInput[] | ParentsWhereInput;
+  AND?: ParentWhereInput[] | ParentWhereInput;
+  OR?: ParentWhereInput[] | ParentWhereInput;
+  NOT?: ParentWhereInput[] | ParentWhereInput;
 }
 
 export type OrderWhereUniqueInput = AtLeastOne<{
   order: String;
 }>;
 
-export type ParentsWhereUniqueInput = AtLeastOne<{
+export type ParentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   phone?: String;
+  name?: String;
+  email?: String;
 }>;
 
 export type StudentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   phone?: String;
   name?: String;
+  email?: String;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -696,7 +699,7 @@ export interface UserWhereInput {
 
 export interface InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
-  parents: ParentsCreateOneWithoutInvitationsInput;
+  parents: ParentCreateOneWithoutInvitationsInput;
   status: invitationStatus;
 }
 
@@ -735,16 +738,16 @@ export interface OrderCreateManyWithoutStuedntInput {
 
 export interface OrderCreateWithoutStuedntInput {
   order: String;
-  parents: ParentsCreateOneWithoutOrderInput;
+  parents: ParentCreateOneWithoutOrderInput;
   status: OrderStatus;
 }
 
-export interface ParentsCreateOneWithoutOrderInput {
-  create?: ParentsCreateWithoutOrderInput;
-  connect?: ParentsWhereUniqueInput;
+export interface ParentCreateOneWithoutOrderInput {
+  create?: ParentCreateWithoutOrderInput;
+  connect?: ParentWhereUniqueInput;
 }
 
-export interface ParentsCreateWithoutOrderInput {
+export interface ParentCreateWithoutOrderInput {
   phone: String;
   name: String;
   address: String;
@@ -766,12 +769,12 @@ export interface InvitationCreateWithoutParentsInput {
   status: invitationStatus;
 }
 
-export interface ParentsCreateOneWithoutInvitationsInput {
-  create?: ParentsCreateWithoutInvitationsInput;
-  connect?: ParentsWhereUniqueInput;
+export interface ParentCreateOneWithoutInvitationsInput {
+  create?: ParentCreateWithoutInvitationsInput;
+  connect?: ParentWhereUniqueInput;
 }
 
-export interface ParentsCreateWithoutInvitationsInput {
+export interface ParentCreateWithoutInvitationsInput {
   phone: String;
   name: String;
   address: String;
@@ -815,13 +818,13 @@ export interface InvitationCreateManyWithoutStuedntInput {
 }
 
 export interface InvitationCreateWithoutStuedntInput {
-  parents: ParentsCreateOneWithoutInvitationsInput;
+  parents: ParentCreateOneWithoutInvitationsInput;
   status: invitationStatus;
 }
 
 export interface InvitationUpdateInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
-  parents?: ParentsUpdateOneRequiredWithoutInvitationsInput;
+  parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
   status?: invitationStatus;
 }
 
@@ -898,18 +901,18 @@ export interface OrderUpdateWithWhereUniqueWithoutStuedntInput {
 
 export interface OrderUpdateWithoutStuedntDataInput {
   order?: String;
-  parents?: ParentsUpdateOneRequiredWithoutOrderInput;
+  parents?: ParentUpdateOneRequiredWithoutOrderInput;
   status?: OrderStatus;
 }
 
-export interface ParentsUpdateOneRequiredWithoutOrderInput {
-  create?: ParentsCreateWithoutOrderInput;
-  update?: ParentsUpdateWithoutOrderDataInput;
-  upsert?: ParentsUpsertWithoutOrderInput;
-  connect?: ParentsWhereUniqueInput;
+export interface ParentUpdateOneRequiredWithoutOrderInput {
+  create?: ParentCreateWithoutOrderInput;
+  update?: ParentUpdateWithoutOrderDataInput;
+  upsert?: ParentUpsertWithoutOrderInput;
+  connect?: ParentWhereUniqueInput;
 }
 
-export interface ParentsUpdateWithoutOrderDataInput {
+export interface ParentUpdateWithoutOrderDataInput {
   phone?: String;
   name?: String;
   address?: String;
@@ -987,9 +990,9 @@ export interface InvitationUpdateManyDataInput {
   status?: invitationStatus;
 }
 
-export interface ParentsUpsertWithoutOrderInput {
-  update: ParentsUpdateWithoutOrderDataInput;
-  create: ParentsCreateWithoutOrderInput;
+export interface ParentUpsertWithoutOrderInput {
+  update: ParentUpdateWithoutOrderDataInput;
+  create: ParentCreateWithoutOrderInput;
 }
 
 export interface OrderUpsertWithWhereUniqueWithoutStuedntInput {
@@ -1037,14 +1040,14 @@ export interface StudentUpsertWithoutInvitationsInput {
   create: StudentCreateWithoutInvitationsInput;
 }
 
-export interface ParentsUpdateOneRequiredWithoutInvitationsInput {
-  create?: ParentsCreateWithoutInvitationsInput;
-  update?: ParentsUpdateWithoutInvitationsDataInput;
-  upsert?: ParentsUpsertWithoutInvitationsInput;
-  connect?: ParentsWhereUniqueInput;
+export interface ParentUpdateOneRequiredWithoutInvitationsInput {
+  create?: ParentCreateWithoutInvitationsInput;
+  update?: ParentUpdateWithoutInvitationsDataInput;
+  upsert?: ParentUpsertWithoutInvitationsInput;
+  connect?: ParentWhereUniqueInput;
 }
 
-export interface ParentsUpdateWithoutInvitationsDataInput {
+export interface ParentUpdateWithoutInvitationsDataInput {
   phone?: String;
   name?: String;
   address?: String;
@@ -1124,7 +1127,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutStuedntInput {
 }
 
 export interface InvitationUpdateWithoutStuedntDataInput {
-  parents?: ParentsUpdateOneRequiredWithoutInvitationsInput;
+  parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
   status?: invitationStatus;
 }
 
@@ -1145,9 +1148,9 @@ export interface OrderUpsertWithWhereUniqueWithoutParentsInput {
   create: OrderCreateWithoutParentsInput;
 }
 
-export interface ParentsUpsertWithoutInvitationsInput {
-  update: ParentsUpdateWithoutInvitationsDataInput;
-  create: ParentsCreateWithoutInvitationsInput;
+export interface ParentUpsertWithoutInvitationsInput {
+  update: ParentUpdateWithoutInvitationsDataInput;
+  create: ParentCreateWithoutInvitationsInput;
 }
 
 export interface InvitationUpdateManyMutationInput {
@@ -1157,14 +1160,14 @@ export interface InvitationUpdateManyMutationInput {
 export interface OrderCreateInput {
   order: String;
   stuednt: StudentCreateOneWithoutOrderInput;
-  parents: ParentsCreateOneWithoutOrderInput;
+  parents: ParentCreateOneWithoutOrderInput;
   status: OrderStatus;
 }
 
 export interface OrderUpdateInput {
   order?: String;
   stuednt?: StudentUpdateOneRequiredWithoutOrderInput;
-  parents?: ParentsUpdateOneRequiredWithoutOrderInput;
+  parents?: ParentUpdateOneRequiredWithoutOrderInput;
   status?: OrderStatus;
 }
 
@@ -1173,7 +1176,7 @@ export interface OrderUpdateManyMutationInput {
   status?: OrderStatus;
 }
 
-export interface ParentsCreateInput {
+export interface ParentCreateInput {
   phone: String;
   name: String;
   address: String;
@@ -1184,7 +1187,7 @@ export interface ParentsCreateInput {
   order?: OrderCreateManyWithoutParentsInput;
 }
 
-export interface ParentsUpdateInput {
+export interface ParentUpdateInput {
   phone?: String;
   name?: String;
   address?: String;
@@ -1195,7 +1198,7 @@ export interface ParentsUpdateInput {
   order?: OrderUpdateManyWithoutParentsInput;
 }
 
-export interface ParentsUpdateManyMutationInput {
+export interface ParentUpdateManyMutationInput {
   phone?: String;
   name?: String;
   address?: String;
@@ -1272,15 +1275,15 @@ export interface OrderSubscriptionWhereInput {
   NOT?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput;
 }
 
-export interface ParentsSubscriptionWhereInput {
+export interface ParentSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: ParentsWhereInput;
-  AND?: ParentsSubscriptionWhereInput[] | ParentsSubscriptionWhereInput;
-  OR?: ParentsSubscriptionWhereInput[] | ParentsSubscriptionWhereInput;
-  NOT?: ParentsSubscriptionWhereInput[] | ParentsSubscriptionWhereInput;
+  node?: ParentWhereInput;
+  AND?: ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput;
+  OR?: ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput;
+  NOT?: ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput;
 }
 
 export interface StudentSubscriptionWhereInput {
@@ -1328,7 +1331,7 @@ export interface Invitation {
 export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
   stuednt: <T = StudentPromise>() => T;
-  parents: <T = ParentsPromise>() => T;
+  parents: <T = ParentPromise>() => T;
   status: () => Promise<invitationStatus>;
 }
 
@@ -1337,7 +1340,7 @@ export interface InvitationSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   stuednt: <T = StudentSubscription>() => T;
-  parents: <T = ParentsSubscription>() => T;
+  parents: <T = ParentSubscription>() => T;
   status: () => Promise<AsyncIterator<invitationStatus>>;
 }
 
@@ -1455,7 +1458,7 @@ export interface Order {
 export interface OrderPromise extends Promise<Order>, Fragmentable {
   order: () => Promise<String>;
   stuednt: <T = StudentPromise>() => T;
-  parents: <T = ParentsPromise>() => T;
+  parents: <T = ParentPromise>() => T;
   status: () => Promise<OrderStatus>;
 }
 
@@ -1464,11 +1467,11 @@ export interface OrderSubscription
     Fragmentable {
   order: () => Promise<AsyncIterator<String>>;
   stuednt: <T = StudentSubscription>() => T;
-  parents: <T = ParentsSubscription>() => T;
+  parents: <T = ParentSubscription>() => T;
   status: () => Promise<AsyncIterator<OrderStatus>>;
 }
 
-export interface Parents {
+export interface Parent {
   id: ID_Output;
   phone: String;
   name: String;
@@ -1479,7 +1482,7 @@ export interface Parents {
   updatedAt: DateTimeOutput;
 }
 
-export interface ParentsPromise extends Promise<Parents>, Fragmentable {
+export interface ParentPromise extends Promise<Parent>, Fragmentable {
   id: () => Promise<ID_Output>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
@@ -1517,8 +1520,8 @@ export interface ParentsPromise extends Promise<Parents>, Fragmentable {
   }) => T;
 }
 
-export interface ParentsSubscription
-  extends Promise<AsyncIterator<Parents>>,
+export interface ParentSubscription
+  extends Promise<AsyncIterator<Parent>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   phone: () => Promise<AsyncIterator<String>>;
@@ -1690,56 +1693,56 @@ export interface AggregateOrderSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ParentsConnection {
+export interface ParentConnection {
   pageInfo: PageInfo;
-  edges: ParentsEdge[];
+  edges: ParentEdge[];
 }
 
-export interface ParentsConnectionPromise
-  extends Promise<ParentsConnection>,
+export interface ParentConnectionPromise
+  extends Promise<ParentConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ParentsEdge>>() => T;
-  aggregate: <T = AggregateParentsPromise>() => T;
+  edges: <T = FragmentableArray<ParentEdge>>() => T;
+  aggregate: <T = AggregateParentPromise>() => T;
 }
 
-export interface ParentsConnectionSubscription
-  extends Promise<AsyncIterator<ParentsConnection>>,
+export interface ParentConnectionSubscription
+  extends Promise<AsyncIterator<ParentConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ParentsEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateParentsSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ParentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateParentSubscription>() => T;
 }
 
-export interface ParentsEdge {
-  node: Parents;
+export interface ParentEdge {
+  node: Parent;
   cursor: String;
 }
 
-export interface ParentsEdgePromise extends Promise<ParentsEdge>, Fragmentable {
-  node: <T = ParentsPromise>() => T;
+export interface ParentEdgePromise extends Promise<ParentEdge>, Fragmentable {
+  node: <T = ParentPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface ParentsEdgeSubscription
-  extends Promise<AsyncIterator<ParentsEdge>>,
+export interface ParentEdgeSubscription
+  extends Promise<AsyncIterator<ParentEdge>>,
     Fragmentable {
-  node: <T = ParentsSubscription>() => T;
+  node: <T = ParentSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateParents {
+export interface AggregateParent {
   count: Int;
 }
 
-export interface AggregateParentsPromise
-  extends Promise<AggregateParents>,
+export interface AggregateParentPromise
+  extends Promise<AggregateParent>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateParentsSubscription
-  extends Promise<AsyncIterator<AggregateParents>>,
+export interface AggregateParentSubscription
+  extends Promise<AsyncIterator<AggregateParent>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -2027,32 +2030,32 @@ export interface OrderPreviousValuesSubscription
   status: () => Promise<AsyncIterator<OrderStatus>>;
 }
 
-export interface ParentsSubscriptionPayload {
+export interface ParentSubscriptionPayload {
   mutation: MutationType;
-  node: Parents;
+  node: Parent;
   updatedFields: String[];
-  previousValues: ParentsPreviousValues;
+  previousValues: ParentPreviousValues;
 }
 
-export interface ParentsSubscriptionPayloadPromise
-  extends Promise<ParentsSubscriptionPayload>,
+export interface ParentSubscriptionPayloadPromise
+  extends Promise<ParentSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = ParentsPromise>() => T;
+  node: <T = ParentPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = ParentsPreviousValuesPromise>() => T;
+  previousValues: <T = ParentPreviousValuesPromise>() => T;
 }
 
-export interface ParentsSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ParentsSubscriptionPayload>>,
+export interface ParentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ParentSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ParentsSubscription>() => T;
+  node: <T = ParentSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ParentsPreviousValuesSubscription>() => T;
+  previousValues: <T = ParentPreviousValuesSubscription>() => T;
 }
 
-export interface ParentsPreviousValues {
+export interface ParentPreviousValues {
   id: ID_Output;
   phone: String;
   name: String;
@@ -2063,8 +2066,8 @@ export interface ParentsPreviousValues {
   updatedAt: DateTimeOutput;
 }
 
-export interface ParentsPreviousValuesPromise
-  extends Promise<ParentsPreviousValues>,
+export interface ParentPreviousValuesPromise
+  extends Promise<ParentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   phone: () => Promise<String>;
@@ -2076,8 +2079,8 @@ export interface ParentsPreviousValuesPromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface ParentsPreviousValuesSubscription
-  extends Promise<AsyncIterator<ParentsPreviousValues>>,
+export interface ParentPreviousValuesSubscription
+  extends Promise<AsyncIterator<ParentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   phone: () => Promise<AsyncIterator<String>>;
@@ -2294,7 +2297,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Parents",
+    name: "Parent",
     embedded: false
   },
   {

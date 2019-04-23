@@ -1,4 +1,3 @@
-
 async function login(req,res){
    auth =  req.get("Authorization")
    jwt = auth.replace("Bearer ","")
