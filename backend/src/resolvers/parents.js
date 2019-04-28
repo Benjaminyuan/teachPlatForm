@@ -2,9 +2,6 @@ const  parentRepo  = require("../Dao/parentsRepository")
 async function signup(req,res){
 
 }
-async function isExist(req,res){
-    
-}
 async function updateInfo(req,res){
 
 }

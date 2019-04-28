@@ -1,5 +1,9 @@
 module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateInvitation {
+        typeDefs: /* GraphQL */ `type AggregateAvalibelTime {
+  count: Int!
+}
+
+type AggregateInvitation {
   count: Int!
 }
 
@@ -23,10 +27,120 @@ type AggregateUser {
   count: Int!
 }
 
-enum authStatus {
+enum AuthStatus {
   UNCOMMITED
   AUTHCOMMITED
   AUTHED
+}
+
+type AvalibelTime {
+  day: Day!
+  detail: DetailTime!
+}
+
+type AvalibelTimeConnection {
+  pageInfo: PageInfo!
+  edges: [AvalibelTimeEdge]!
+  aggregate: AggregateAvalibelTime!
+}
+
+input AvalibelTimeCreateInput {
+  day: Day!
+  detail: DetailTime!
+}
+
+input AvalibelTimeCreateManyInput {
+  create: [AvalibelTimeCreateInput!]
+}
+
+type AvalibelTimeEdge {
+  node: AvalibelTime!
+  cursor: String!
+}
+
+enum AvalibelTimeOrderByInput {
+  day_ASC
+  day_DESC
+  detail_ASC
+  detail_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AvalibelTimePreviousValues {
+  day: Day!
+  detail: DetailTime!
+}
+
+input AvalibelTimeScalarWhereInput {
+  day: Day
+  day_not: Day
+  day_in: [Day!]
+  day_not_in: [Day!]
+  detail: DetailTime
+  detail_not: DetailTime
+  detail_in: [DetailTime!]
+  detail_not_in: [DetailTime!]
+  AND: [AvalibelTimeScalarWhereInput!]
+  OR: [AvalibelTimeScalarWhereInput!]
+  NOT: [AvalibelTimeScalarWhereInput!]
+}
+
+type AvalibelTimeSubscriptionPayload {
+  mutation: MutationType!
+  node: AvalibelTime
+  updatedFields: [String!]
+  previousValues: AvalibelTimePreviousValues
+}
+
+input AvalibelTimeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AvalibelTimeWhereInput
+  AND: [AvalibelTimeSubscriptionWhereInput!]
+  OR: [AvalibelTimeSubscriptionWhereInput!]
+  NOT: [AvalibelTimeSubscriptionWhereInput!]
+}
+
+input AvalibelTimeUpdateManyDataInput {
+  day: Day
+  detail: DetailTime
+}
+
+input AvalibelTimeUpdateManyInput {
+  create: [AvalibelTimeCreateInput!]
+  deleteMany: [AvalibelTimeScalarWhereInput!]
+  updateMany: [AvalibelTimeUpdateManyWithWhereNestedInput!]
+}
+
+input AvalibelTimeUpdateManyMutationInput {
+  day: Day
+  detail: DetailTime
+}
+
+input AvalibelTimeUpdateManyWithWhereNestedInput {
+  where: AvalibelTimeScalarWhereInput!
+  data: AvalibelTimeUpdateManyDataInput!
+}
+
+input AvalibelTimeWhereInput {
+  day: Day
+  day_not: Day
+  day_in: [Day!]
+  day_not_in: [Day!]
+  detail: DetailTime
+  detail_not: DetailTime
+  detail_in: [DetailTime!]
+  detail_not_in: [DetailTime!]
+  AND: [AvalibelTimeWhereInput!]
+  OR: [AvalibelTimeWhereInput!]
+  NOT: [AvalibelTimeWhereInput!]
 }
 
 type BatchPayload {
@@ -35,11 +149,32 @@ type BatchPayload {
 
 scalar DateTime
 
+enum Day {
+  SUN
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+}
+
+enum DetailTime {
+  MORN
+  NOON
+  AFTER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
 type Invitation {
   id: ID!
   stuednt: Student!
   parents: Parent!
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 
 type InvitationConnection {
@@ -51,7 +186,7 @@ type InvitationConnection {
 input InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput!
   parents: ParentCreateOneWithoutInvitationsInput!
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 
 input InvitationCreateManyWithoutParentsInput {
@@ -66,12 +201,12 @@ input InvitationCreateManyWithoutStuedntInput {
 
 input InvitationCreateWithoutParentsInput {
   stuednt: StudentCreateOneWithoutInvitationsInput!
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 
 input InvitationCreateWithoutStuedntInput {
   parents: ParentCreateOneWithoutInvitationsInput!
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 
 type InvitationEdge {
@@ -92,7 +227,7 @@ enum InvitationOrderByInput {
 
 type InvitationPreviousValues {
   id: ID!
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 
 input InvitationScalarWhereInput {
@@ -110,16 +245,16 @@ input InvitationScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  status: invitationStatus
-  status_not: invitationStatus
-  status_in: [invitationStatus!]
-  status_not_in: [invitationStatus!]
+  status: InvitationStatus
+  status_not: InvitationStatus
+  status_in: [InvitationStatus!]
+  status_not_in: [InvitationStatus!]
   AND: [InvitationScalarWhereInput!]
   OR: [InvitationScalarWhereInput!]
   NOT: [InvitationScalarWhereInput!]
 }
 
-enum invitationStatus {
+enum InvitationStatus {
   WAITING
   AGREED
   REJECTED
@@ -146,15 +281,15 @@ input InvitationSubscriptionWhereInput {
 input InvitationUpdateInput {
   stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
   parents: ParentUpdateOneRequiredWithoutInvitationsInput
-  status: invitationStatus
+  status: InvitationStatus
 }
 
 input InvitationUpdateManyDataInput {
-  status: invitationStatus
+  status: InvitationStatus
 }
 
 input InvitationUpdateManyMutationInput {
-  status: invitationStatus
+  status: InvitationStatus
 }
 
 input InvitationUpdateManyWithoutParentsInput {
@@ -186,12 +321,12 @@ input InvitationUpdateManyWithWhereNestedInput {
 
 input InvitationUpdateWithoutParentsDataInput {
   stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
-  status: invitationStatus
+  status: InvitationStatus
 }
 
 input InvitationUpdateWithoutStuedntDataInput {
   parents: ParentUpdateOneRequiredWithoutInvitationsInput
-  status: invitationStatus
+  status: InvitationStatus
 }
 
 input InvitationUpdateWithWhereUniqueWithoutParentsInput {
@@ -233,10 +368,10 @@ input InvitationWhereInput {
   id_not_ends_with: ID
   stuednt: StudentWhereInput
   parents: ParentWhereInput
-  status: invitationStatus
-  status_not: invitationStatus
-  status_in: [invitationStatus!]
-  status_not_in: [invitationStatus!]
+  status: InvitationStatus
+  status_not: InvitationStatus
+  status_in: [InvitationStatus!]
+  status_not_in: [InvitationStatus!]
   AND: [InvitationWhereInput!]
   OR: [InvitationWhereInput!]
   NOT: [InvitationWhereInput!]
@@ -256,6 +391,9 @@ enum Level {
 scalar Long
 
 type Mutation {
+  createAvalibelTime(data: AvalibelTimeCreateInput!): AvalibelTime!
+  updateManyAvalibelTimes(data: AvalibelTimeUpdateManyMutationInput!, where: AvalibelTimeWhereInput): BatchPayload!
+  deleteManyAvalibelTimes(where: AvalibelTimeWhereInput): BatchPayload!
   createInvitation(data: InvitationCreateInput!): Invitation!
   updateInvitation(data: InvitationUpdateInput!, where: InvitationWhereUniqueInput!): Invitation
   updateManyInvitations(data: InvitationUpdateManyMutationInput!, where: InvitationWhereInput): BatchPayload!
@@ -536,11 +674,17 @@ type Parent {
   address: String!
   email: String!
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
-  authstatus: authStatus!
+  authstatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender!
   invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
   order(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
+  teacherReuqire: String
+  childStatus: String
 }
 
 type ParentConnection {
@@ -555,9 +699,15 @@ input ParentCreateInput {
   address: String!
   email: String!
   subjects: SubjectCreateManyInput
-  authstatus: authStatus!
+  authstatus: AuthStatus!
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   invitations: InvitationCreateManyWithoutParentsInput
   order: OrderCreateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentCreateOneWithoutInvitationsInput {
@@ -576,8 +726,14 @@ input ParentCreateWithoutInvitationsInput {
   address: String!
   email: String!
   subjects: SubjectCreateManyInput
-  authstatus: authStatus!
+  authstatus: AuthStatus!
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   order: OrderCreateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentCreateWithoutOrderInput {
@@ -586,8 +742,14 @@ input ParentCreateWithoutOrderInput {
   address: String!
   email: String!
   subjects: SubjectCreateManyInput
-  authstatus: authStatus!
+  authstatus: AuthStatus!
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   invitations: InvitationCreateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 type ParentEdge {
@@ -612,6 +774,18 @@ enum ParentOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  lessonTime_ASC
+  lessonTime_DESC
+  days_ASC
+  days_DESC
+  pay_ASC
+  pay_DESC
+  childGender_ASC
+  childGender_DESC
+  teacherReuqire_ASC
+  teacherReuqire_DESC
+  childStatus_ASC
+  childStatus_DESC
 }
 
 type ParentPreviousValues {
@@ -620,9 +794,15 @@ type ParentPreviousValues {
   name: String!
   address: String!
   email: String!
-  authstatus: authStatus!
+  authstatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender!
+  teacherReuqire: String
+  childStatus: String
 }
 
 type ParentSubscriptionPayload {
@@ -649,9 +829,15 @@ input ParentUpdateInput {
   address: String
   email: String
   subjects: SubjectUpdateManyInput
-  authstatus: authStatus
+  authstatus: AuthStatus
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   invitations: InvitationUpdateManyWithoutParentsInput
   order: OrderUpdateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentUpdateManyMutationInput {
@@ -659,7 +845,13 @@ input ParentUpdateManyMutationInput {
   name: String
   address: String
   email: String
-  authstatus: authStatus
+  authstatus: AuthStatus
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentUpdateOneRequiredWithoutInvitationsInput {
@@ -682,8 +874,14 @@ input ParentUpdateWithoutInvitationsDataInput {
   address: String
   email: String
   subjects: SubjectUpdateManyInput
-  authstatus: authStatus
+  authstatus: AuthStatus
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   order: OrderUpdateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentUpdateWithoutOrderDataInput {
@@ -692,8 +890,14 @@ input ParentUpdateWithoutOrderDataInput {
   address: String
   email: String
   subjects: SubjectUpdateManyInput
-  authstatus: authStatus
+  authstatus: AuthStatus
+  lessonTime: Int
+  days: Int
+  pay: Int
+  childGender: Gender
   invitations: InvitationUpdateManyWithoutParentsInput
+  teacherReuqire: String
+  childStatus: String
 }
 
 input ParentUpsertWithoutInvitationsInput {
@@ -780,10 +984,10 @@ input ParentWhereInput {
   subjects_every: SubjectWhereInput
   subjects_some: SubjectWhereInput
   subjects_none: SubjectWhereInput
-  authstatus: authStatus
-  authstatus_not: authStatus
-  authstatus_in: [authStatus!]
-  authstatus_not_in: [authStatus!]
+  authstatus: AuthStatus
+  authstatus_not: AuthStatus
+  authstatus_in: [AuthStatus!]
+  authstatus_not_in: [AuthStatus!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -800,12 +1004,68 @@ input ParentWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  lessonTime: Int
+  lessonTime_not: Int
+  lessonTime_in: [Int!]
+  lessonTime_not_in: [Int!]
+  lessonTime_lt: Int
+  lessonTime_lte: Int
+  lessonTime_gt: Int
+  lessonTime_gte: Int
+  days: Int
+  days_not: Int
+  days_in: [Int!]
+  days_not_in: [Int!]
+  days_lt: Int
+  days_lte: Int
+  days_gt: Int
+  days_gte: Int
+  pay: Int
+  pay_not: Int
+  pay_in: [Int!]
+  pay_not_in: [Int!]
+  pay_lt: Int
+  pay_lte: Int
+  pay_gt: Int
+  pay_gte: Int
+  childGender: Gender
+  childGender_not: Gender
+  childGender_in: [Gender!]
+  childGender_not_in: [Gender!]
   invitations_every: InvitationWhereInput
   invitations_some: InvitationWhereInput
   invitations_none: InvitationWhereInput
   order_every: OrderWhereInput
   order_some: OrderWhereInput
   order_none: OrderWhereInput
+  teacherReuqire: String
+  teacherReuqire_not: String
+  teacherReuqire_in: [String!]
+  teacherReuqire_not_in: [String!]
+  teacherReuqire_lt: String
+  teacherReuqire_lte: String
+  teacherReuqire_gt: String
+  teacherReuqire_gte: String
+  teacherReuqire_contains: String
+  teacherReuqire_not_contains: String
+  teacherReuqire_starts_with: String
+  teacherReuqire_not_starts_with: String
+  teacherReuqire_ends_with: String
+  teacherReuqire_not_ends_with: String
+  childStatus: String
+  childStatus_not: String
+  childStatus_in: [String!]
+  childStatus_not_in: [String!]
+  childStatus_lt: String
+  childStatus_lte: String
+  childStatus_gt: String
+  childStatus_gte: String
+  childStatus_contains: String
+  childStatus_not_contains: String
+  childStatus_starts_with: String
+  childStatus_not_starts_with: String
+  childStatus_ends_with: String
+  childStatus_not_ends_with: String
   AND: [ParentWhereInput!]
   OR: [ParentWhereInput!]
   NOT: [ParentWhereInput!]
@@ -819,6 +1079,8 @@ input ParentWhereUniqueInput {
 }
 
 type Query {
+  avalibelTimes(where: AvalibelTimeWhereInput, orderBy: AvalibelTimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AvalibelTime]!
+  avalibelTimesConnection(where: AvalibelTimeWhereInput, orderBy: AvalibelTimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AvalibelTimeConnection!
   invitation(where: InvitationWhereUniqueInput!): Invitation
   invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation]!
   invitationsConnection(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InvitationConnection!
@@ -845,10 +1107,12 @@ type Student {
   name: String!
   university: University!
   email: String!
-  authstatus: authStatus!
-  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+  Gender: Gender
   createdAt: DateTime!
   updatedAt: DateTime!
+  authstatus: AuthStatus!
+  subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject!]
+  avalible(where: AvalibelTimeWhereInput, orderBy: AvalibelTimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AvalibelTime!]
   invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
   order(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
@@ -864,8 +1128,10 @@ input StudentCreateInput {
   name: String!
   university: University!
   email: String!
-  authstatus: authStatus!
+  Gender: Gender
+  authstatus: AuthStatus!
   subjects: SubjectCreateManyInput
+  avalible: AvalibelTimeCreateManyInput
   invitations: InvitationCreateManyWithoutStuedntInput
   order: OrderCreateManyWithoutStuedntInput
 }
@@ -885,8 +1151,10 @@ input StudentCreateWithoutInvitationsInput {
   name: String!
   university: University!
   email: String!
-  authstatus: authStatus!
+  Gender: Gender
+  authstatus: AuthStatus!
   subjects: SubjectCreateManyInput
+  avalible: AvalibelTimeCreateManyInput
   order: OrderCreateManyWithoutStuedntInput
 }
 
@@ -895,8 +1163,10 @@ input StudentCreateWithoutOrderInput {
   name: String!
   university: University!
   email: String!
-  authstatus: authStatus!
+  Gender: Gender
+  authstatus: AuthStatus!
   subjects: SubjectCreateManyInput
+  avalible: AvalibelTimeCreateManyInput
   invitations: InvitationCreateManyWithoutStuedntInput
 }
 
@@ -916,12 +1186,14 @@ enum StudentOrderByInput {
   university_DESC
   email_ASC
   email_DESC
-  authstatus_ASC
-  authstatus_DESC
+  Gender_ASC
+  Gender_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  authstatus_ASC
+  authstatus_DESC
 }
 
 type StudentPreviousValues {
@@ -930,9 +1202,10 @@ type StudentPreviousValues {
   name: String!
   university: University!
   email: String!
-  authstatus: authStatus!
+  Gender: Gender
   createdAt: DateTime!
   updatedAt: DateTime!
+  authstatus: AuthStatus!
 }
 
 type StudentSubscriptionPayload {
@@ -958,8 +1231,10 @@ input StudentUpdateInput {
   name: String
   university: University
   email: String
-  authstatus: authStatus
+  Gender: Gender
+  authstatus: AuthStatus
   subjects: SubjectUpdateManyInput
+  avalible: AvalibelTimeUpdateManyInput
   invitations: InvitationUpdateManyWithoutStuedntInput
   order: OrderUpdateManyWithoutStuedntInput
 }
@@ -969,7 +1244,8 @@ input StudentUpdateManyMutationInput {
   name: String
   university: University
   email: String
-  authstatus: authStatus
+  Gender: Gender
+  authstatus: AuthStatus
 }
 
 input StudentUpdateOneRequiredWithoutInvitationsInput {
@@ -991,8 +1267,10 @@ input StudentUpdateWithoutInvitationsDataInput {
   name: String
   university: University
   email: String
-  authstatus: authStatus
+  Gender: Gender
+  authstatus: AuthStatus
   subjects: SubjectUpdateManyInput
+  avalible: AvalibelTimeUpdateManyInput
   order: OrderUpdateManyWithoutStuedntInput
 }
 
@@ -1001,8 +1279,10 @@ input StudentUpdateWithoutOrderDataInput {
   name: String
   university: University
   email: String
-  authstatus: authStatus
+  Gender: Gender
+  authstatus: AuthStatus
   subjects: SubjectUpdateManyInput
+  avalible: AvalibelTimeUpdateManyInput
   invitations: InvitationUpdateManyWithoutStuedntInput
 }
 
@@ -1077,13 +1357,10 @@ input StudentWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  authstatus: authStatus
-  authstatus_not: authStatus
-  authstatus_in: [authStatus!]
-  authstatus_not_in: [authStatus!]
-  subjects_every: SubjectWhereInput
-  subjects_some: SubjectWhereInput
-  subjects_none: SubjectWhereInput
+  Gender: Gender
+  Gender_not: Gender
+  Gender_in: [Gender!]
+  Gender_not_in: [Gender!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1100,6 +1377,16 @@ input StudentWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  authstatus: AuthStatus
+  authstatus_not: AuthStatus
+  authstatus_in: [AuthStatus!]
+  authstatus_not_in: [AuthStatus!]
+  subjects_every: SubjectWhereInput
+  subjects_some: SubjectWhereInput
+  subjects_none: SubjectWhereInput
+  avalible_every: AvalibelTimeWhereInput
+  avalible_some: AvalibelTimeWhereInput
+  avalible_none: AvalibelTimeWhereInput
   invitations_every: InvitationWhereInput
   invitations_some: InvitationWhereInput
   invitations_none: InvitationWhereInput
@@ -1233,6 +1520,7 @@ input SubjectWhereInput {
 }
 
 type Subscription {
+  avalibelTime(where: AvalibelTimeSubscriptionWhereInput): AvalibelTimeSubscriptionPayload
   invitation(where: InvitationSubscriptionWhereInput): InvitationSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   parent(where: ParentSubscriptionWhereInput): ParentSubscriptionPayload

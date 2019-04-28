@@ -14,6 +14,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
+  avalibelTime: (where?: AvalibelTimeWhereInput) => Promise<boolean>;
   invitation: (where?: InvitationWhereInput) => Promise<boolean>;
   order: (where?: OrderWhereInput) => Promise<boolean>;
   parent: (where?: ParentWhereInput) => Promise<boolean>;
@@ -41,6 +42,24 @@ export interface Prisma {
    * Queries
    */
 
+  avalibelTimes: (args?: {
+    where?: AvalibelTimeWhereInput;
+    orderBy?: AvalibelTimeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<AvalibelTime>;
+  avalibelTimesConnection: (args?: {
+    where?: AvalibelTimeWhereInput;
+    orderBy?: AvalibelTimeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AvalibelTimeConnectionPromise;
   invitation: (where: InvitationWhereUniqueInput) => InvitationPromise;
   invitations: (args?: {
     where?: InvitationWhereInput;
@@ -160,6 +179,14 @@ export interface Prisma {
    * Mutations
    */
 
+  createAvalibelTime: (data: AvalibelTimeCreateInput) => AvalibelTimePromise;
+  updateManyAvalibelTimes: (args: {
+    data: AvalibelTimeUpdateManyMutationInput;
+    where?: AvalibelTimeWhereInput;
+  }) => BatchPayloadPromise;
+  deleteManyAvalibelTimes: (
+    where?: AvalibelTimeWhereInput
+  ) => BatchPayloadPromise;
   createInvitation: (data: InvitationCreateInput) => InvitationPromise;
   updateInvitation: (args: {
     data: InvitationUpdateInput;
@@ -255,6 +282,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  avalibelTime: (
+    where?: AvalibelTimeSubscriptionWhereInput
+  ) => AvalibelTimeSubscriptionPayloadSubscription;
   invitation: (
     where?: InvitationSubscriptionWhereInput
   ) => InvitationSubscriptionPayloadSubscription;
@@ -283,9 +313,27 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type Day = "SUN" | "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT";
+
+export type DetailTime = "MORN" | "NOON" | "AFTER";
+
+export type AvalibelTimeOrderByInput =
+  | "day_ASC"
+  | "day_DESC"
+  | "detail_ASC"
+  | "detail_DESC"
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type University = "HUST" | "WHU";
 
-export type authStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED";
+export type Gender = "MALE" | "FEMALE";
+
+export type AuthStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED";
 
 export type SubjectName = "CHINESE" | "MATH" | "ENGLISH";
 
@@ -303,7 +351,7 @@ export type Level = "MIDDLE" | "MIDDLEHIGH" | "PRIMARY" | "UNI";
 
 export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
 
-export type invitationStatus = "WAITING" | "AGREED" | "REJECTED";
+export type InvitationStatus = "WAITING" | "AGREED" | "REJECTED";
 
 export type InvitationOrderByInput =
   | "id_ASC"
@@ -343,7 +391,19 @@ export type ParentOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "lessonTime_ASC"
+  | "lessonTime_DESC"
+  | "days_ASC"
+  | "days_DESC"
+  | "pay_ASC"
+  | "pay_DESC"
+  | "childGender_ASC"
+  | "childGender_DESC"
+  | "teacherReuqire_ASC"
+  | "teacherReuqire_DESC"
+  | "childStatus_ASC"
+  | "childStatus_DESC";
 
 export type StudentOrderByInput =
   | "id_ASC"
@@ -356,12 +416,14 @@ export type StudentOrderByInput =
   | "university_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "authstatus_ASC"
-  | "authstatus_DESC"
+  | "Gender_ASC"
+  | "Gender_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "authstatus_ASC"
+  | "authstatus_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -374,6 +436,20 @@ export type UserOrderByInput =
   | "updatedAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface AvalibelTimeWhereInput {
+  day?: Day;
+  day_not?: Day;
+  day_in?: Day[] | Day;
+  day_not_in?: Day[] | Day;
+  detail?: DetailTime;
+  detail_not?: DetailTime;
+  detail_in?: DetailTime[] | DetailTime;
+  detail_not_in?: DetailTime[] | DetailTime;
+  AND?: AvalibelTimeWhereInput[] | AvalibelTimeWhereInput;
+  OR?: AvalibelTimeWhereInput[] | AvalibelTimeWhereInput;
+  NOT?: AvalibelTimeWhereInput[] | AvalibelTimeWhereInput;
+}
 
 export type InvitationWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -406,10 +482,10 @@ export interface InvitationWhereInput {
   id_not_ends_with?: ID_Input;
   stuednt?: StudentWhereInput;
   parents?: ParentWhereInput;
-  status?: invitationStatus;
-  status_not?: invitationStatus;
-  status_in?: invitationStatus[] | invitationStatus;
-  status_not_in?: invitationStatus[] | invitationStatus;
+  status?: InvitationStatus;
+  status_not?: InvitationStatus;
+  status_in?: InvitationStatus[] | InvitationStatus;
+  status_not_in?: InvitationStatus[] | InvitationStatus;
   AND?: InvitationWhereInput[] | InvitationWhereInput;
   OR?: InvitationWhereInput[] | InvitationWhereInput;
   NOT?: InvitationWhereInput[] | InvitationWhereInput;
@@ -476,13 +552,10 @@ export interface StudentWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
-  authstatus?: authStatus;
-  authstatus_not?: authStatus;
-  authstatus_in?: authStatus[] | authStatus;
-  authstatus_not_in?: authStatus[] | authStatus;
-  subjects_every?: SubjectWhereInput;
-  subjects_some?: SubjectWhereInput;
-  subjects_none?: SubjectWhereInput;
+  Gender?: Gender;
+  Gender_not?: Gender;
+  Gender_in?: Gender[] | Gender;
+  Gender_not_in?: Gender[] | Gender;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -499,6 +572,16 @@ export interface StudentWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  authstatus?: AuthStatus;
+  authstatus_not?: AuthStatus;
+  authstatus_in?: AuthStatus[] | AuthStatus;
+  authstatus_not_in?: AuthStatus[] | AuthStatus;
+  subjects_every?: SubjectWhereInput;
+  subjects_some?: SubjectWhereInput;
+  subjects_none?: SubjectWhereInput;
+  avalible_every?: AvalibelTimeWhereInput;
+  avalible_some?: AvalibelTimeWhereInput;
+  avalible_none?: AvalibelTimeWhereInput;
   invitations_every?: InvitationWhereInput;
   invitations_some?: InvitationWhereInput;
   invitations_none?: InvitationWhereInput;
@@ -610,10 +693,10 @@ export interface ParentWhereInput {
   subjects_every?: SubjectWhereInput;
   subjects_some?: SubjectWhereInput;
   subjects_none?: SubjectWhereInput;
-  authstatus?: authStatus;
-  authstatus_not?: authStatus;
-  authstatus_in?: authStatus[] | authStatus;
-  authstatus_not_in?: authStatus[] | authStatus;
+  authstatus?: AuthStatus;
+  authstatus_not?: AuthStatus;
+  authstatus_in?: AuthStatus[] | AuthStatus;
+  authstatus_not_in?: AuthStatus[] | AuthStatus;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -630,12 +713,68 @@ export interface ParentWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  lessonTime?: Int;
+  lessonTime_not?: Int;
+  lessonTime_in?: Int[] | Int;
+  lessonTime_not_in?: Int[] | Int;
+  lessonTime_lt?: Int;
+  lessonTime_lte?: Int;
+  lessonTime_gt?: Int;
+  lessonTime_gte?: Int;
+  days?: Int;
+  days_not?: Int;
+  days_in?: Int[] | Int;
+  days_not_in?: Int[] | Int;
+  days_lt?: Int;
+  days_lte?: Int;
+  days_gt?: Int;
+  days_gte?: Int;
+  pay?: Int;
+  pay_not?: Int;
+  pay_in?: Int[] | Int;
+  pay_not_in?: Int[] | Int;
+  pay_lt?: Int;
+  pay_lte?: Int;
+  pay_gt?: Int;
+  pay_gte?: Int;
+  childGender?: Gender;
+  childGender_not?: Gender;
+  childGender_in?: Gender[] | Gender;
+  childGender_not_in?: Gender[] | Gender;
   invitations_every?: InvitationWhereInput;
   invitations_some?: InvitationWhereInput;
   invitations_none?: InvitationWhereInput;
   order_every?: OrderWhereInput;
   order_some?: OrderWhereInput;
   order_none?: OrderWhereInput;
+  teacherReuqire?: String;
+  teacherReuqire_not?: String;
+  teacherReuqire_in?: String[] | String;
+  teacherReuqire_not_in?: String[] | String;
+  teacherReuqire_lt?: String;
+  teacherReuqire_lte?: String;
+  teacherReuqire_gt?: String;
+  teacherReuqire_gte?: String;
+  teacherReuqire_contains?: String;
+  teacherReuqire_not_contains?: String;
+  teacherReuqire_starts_with?: String;
+  teacherReuqire_not_starts_with?: String;
+  teacherReuqire_ends_with?: String;
+  teacherReuqire_not_ends_with?: String;
+  childStatus?: String;
+  childStatus_not?: String;
+  childStatus_in?: String[] | String;
+  childStatus_not_in?: String[] | String;
+  childStatus_lt?: String;
+  childStatus_lte?: String;
+  childStatus_gt?: String;
+  childStatus_gte?: String;
+  childStatus_contains?: String;
+  childStatus_not_contains?: String;
+  childStatus_starts_with?: String;
+  childStatus_not_starts_with?: String;
+  childStatus_ends_with?: String;
+  childStatus_not_ends_with?: String;
   AND?: ParentWhereInput[] | ParentWhereInput;
   OR?: ParentWhereInput[] | ParentWhereInput;
   NOT?: ParentWhereInput[] | ParentWhereInput;
@@ -697,10 +836,20 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
+export interface AvalibelTimeCreateInput {
+  day: Day;
+  detail: DetailTime;
+}
+
+export interface AvalibelTimeUpdateManyMutationInput {
+  day?: Day;
+  detail?: DetailTime;
+}
+
 export interface InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
   parents: ParentCreateOneWithoutInvitationsInput;
-  status: invitationStatus;
+  status: InvitationStatus;
 }
 
 export interface StudentCreateOneWithoutInvitationsInput {
@@ -713,8 +862,10 @@ export interface StudentCreateWithoutInvitationsInput {
   name: String;
   university: University;
   email: String;
-  authstatus: authStatus;
+  Gender?: Gender;
+  authstatus: AuthStatus;
   subjects?: SubjectCreateManyInput;
+  avalible?: AvalibelTimeCreateManyInput;
   order?: OrderCreateManyWithoutStuedntInput;
 }
 
@@ -729,6 +880,10 @@ export interface SubjectCreateInput {
 
 export interface SubjectCreatelevelInput {
   set?: Level[] | Level;
+}
+
+export interface AvalibelTimeCreateManyInput {
+  create?: AvalibelTimeCreateInput[] | AvalibelTimeCreateInput;
 }
 
 export interface OrderCreateManyWithoutStuedntInput {
@@ -753,8 +908,14 @@ export interface ParentCreateWithoutOrderInput {
   address: String;
   email: String;
   subjects?: SubjectCreateManyInput;
-  authstatus: authStatus;
+  authstatus: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   invitations?: InvitationCreateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface InvitationCreateManyWithoutParentsInput {
@@ -766,7 +927,7 @@ export interface InvitationCreateManyWithoutParentsInput {
 
 export interface InvitationCreateWithoutParentsInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
-  status: invitationStatus;
+  status: InvitationStatus;
 }
 
 export interface ParentCreateOneWithoutInvitationsInput {
@@ -780,8 +941,14 @@ export interface ParentCreateWithoutInvitationsInput {
   address: String;
   email: String;
   subjects?: SubjectCreateManyInput;
-  authstatus: authStatus;
+  authstatus: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   order?: OrderCreateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface OrderCreateManyWithoutParentsInput {
@@ -805,8 +972,10 @@ export interface StudentCreateWithoutOrderInput {
   name: String;
   university: University;
   email: String;
-  authstatus: authStatus;
+  Gender?: Gender;
+  authstatus: AuthStatus;
   subjects?: SubjectCreateManyInput;
+  avalible?: AvalibelTimeCreateManyInput;
   invitations?: InvitationCreateManyWithoutStuedntInput;
 }
 
@@ -819,13 +988,13 @@ export interface InvitationCreateManyWithoutStuedntInput {
 
 export interface InvitationCreateWithoutStuedntInput {
   parents: ParentCreateOneWithoutInvitationsInput;
-  status: invitationStatus;
+  status: InvitationStatus;
 }
 
 export interface InvitationUpdateInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
   parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
-  status?: invitationStatus;
+  status?: InvitationStatus;
 }
 
 export interface StudentUpdateOneRequiredWithoutInvitationsInput {
@@ -840,8 +1009,10 @@ export interface StudentUpdateWithoutInvitationsDataInput {
   name?: String;
   university?: University;
   email?: String;
-  authstatus?: authStatus;
+  Gender?: Gender;
+  authstatus?: AuthStatus;
   subjects?: SubjectUpdateManyInput;
+  avalible?: AvalibelTimeUpdateManyInput;
   order?: OrderUpdateManyWithoutStuedntInput;
 }
 
@@ -875,6 +1046,38 @@ export interface SubjectUpdateManyDataInput {
 
 export interface SubjectUpdatelevelInput {
   set?: Level[] | Level;
+}
+
+export interface AvalibelTimeUpdateManyInput {
+  create?: AvalibelTimeCreateInput[] | AvalibelTimeCreateInput;
+  deleteMany?: AvalibelTimeScalarWhereInput[] | AvalibelTimeScalarWhereInput;
+  updateMany?:
+    | AvalibelTimeUpdateManyWithWhereNestedInput[]
+    | AvalibelTimeUpdateManyWithWhereNestedInput;
+}
+
+export interface AvalibelTimeScalarWhereInput {
+  day?: Day;
+  day_not?: Day;
+  day_in?: Day[] | Day;
+  day_not_in?: Day[] | Day;
+  detail?: DetailTime;
+  detail_not?: DetailTime;
+  detail_in?: DetailTime[] | DetailTime;
+  detail_not_in?: DetailTime[] | DetailTime;
+  AND?: AvalibelTimeScalarWhereInput[] | AvalibelTimeScalarWhereInput;
+  OR?: AvalibelTimeScalarWhereInput[] | AvalibelTimeScalarWhereInput;
+  NOT?: AvalibelTimeScalarWhereInput[] | AvalibelTimeScalarWhereInput;
+}
+
+export interface AvalibelTimeUpdateManyWithWhereNestedInput {
+  where: AvalibelTimeScalarWhereInput;
+  data: AvalibelTimeUpdateManyDataInput;
+}
+
+export interface AvalibelTimeUpdateManyDataInput {
+  day?: Day;
+  detail?: DetailTime;
 }
 
 export interface OrderUpdateManyWithoutStuedntInput {
@@ -918,8 +1121,14 @@ export interface ParentUpdateWithoutOrderDataInput {
   address?: String;
   email?: String;
   subjects?: SubjectUpdateManyInput;
-  authstatus?: authStatus;
+  authstatus?: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   invitations?: InvitationUpdateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface InvitationUpdateManyWithoutParentsInput {
@@ -948,7 +1157,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutParentsInput {
 
 export interface InvitationUpdateWithoutParentsDataInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
-  status?: invitationStatus;
+  status?: InvitationStatus;
 }
 
 export interface InvitationUpsertWithWhereUniqueWithoutParentsInput {
@@ -972,10 +1181,10 @@ export interface InvitationScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  status?: invitationStatus;
-  status_not?: invitationStatus;
-  status_in?: invitationStatus[] | invitationStatus;
-  status_not_in?: invitationStatus[] | invitationStatus;
+  status?: InvitationStatus;
+  status_not?: InvitationStatus;
+  status_in?: InvitationStatus[] | InvitationStatus;
+  status_not_in?: InvitationStatus[] | InvitationStatus;
   AND?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   OR?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   NOT?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
@@ -987,7 +1196,7 @@ export interface InvitationUpdateManyWithWhereNestedInput {
 }
 
 export interface InvitationUpdateManyDataInput {
-  status?: invitationStatus;
+  status?: InvitationStatus;
 }
 
 export interface ParentUpsertWithoutOrderInput {
@@ -1053,8 +1262,14 @@ export interface ParentUpdateWithoutInvitationsDataInput {
   address?: String;
   email?: String;
   subjects?: SubjectUpdateManyInput;
-  authstatus?: authStatus;
+  authstatus?: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   order?: OrderUpdateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface OrderUpdateManyWithoutParentsInput {
@@ -1097,8 +1312,10 @@ export interface StudentUpdateWithoutOrderDataInput {
   name?: String;
   university?: University;
   email?: String;
-  authstatus?: authStatus;
+  Gender?: Gender;
+  authstatus?: AuthStatus;
   subjects?: SubjectUpdateManyInput;
+  avalible?: AvalibelTimeUpdateManyInput;
   invitations?: InvitationUpdateManyWithoutStuedntInput;
 }
 
@@ -1128,7 +1345,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutStuedntInput {
 
 export interface InvitationUpdateWithoutStuedntDataInput {
   parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
-  status?: invitationStatus;
+  status?: InvitationStatus;
 }
 
 export interface InvitationUpsertWithWhereUniqueWithoutStuedntInput {
@@ -1154,7 +1371,7 @@ export interface ParentUpsertWithoutInvitationsInput {
 }
 
 export interface InvitationUpdateManyMutationInput {
-  status?: invitationStatus;
+  status?: InvitationStatus;
 }
 
 export interface OrderCreateInput {
@@ -1182,9 +1399,15 @@ export interface ParentCreateInput {
   address: String;
   email: String;
   subjects?: SubjectCreateManyInput;
-  authstatus: authStatus;
+  authstatus: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   invitations?: InvitationCreateManyWithoutParentsInput;
   order?: OrderCreateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface ParentUpdateInput {
@@ -1193,9 +1416,15 @@ export interface ParentUpdateInput {
   address?: String;
   email?: String;
   subjects?: SubjectUpdateManyInput;
-  authstatus?: authStatus;
+  authstatus?: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
   invitations?: InvitationUpdateManyWithoutParentsInput;
   order?: OrderUpdateManyWithoutParentsInput;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface ParentUpdateManyMutationInput {
@@ -1203,7 +1432,13 @@ export interface ParentUpdateManyMutationInput {
   name?: String;
   address?: String;
   email?: String;
-  authstatus?: authStatus;
+  authstatus?: AuthStatus;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender?: Gender;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface StudentCreateInput {
@@ -1211,8 +1446,10 @@ export interface StudentCreateInput {
   name: String;
   university: University;
   email: String;
-  authstatus: authStatus;
+  Gender?: Gender;
+  authstatus: AuthStatus;
   subjects?: SubjectCreateManyInput;
+  avalible?: AvalibelTimeCreateManyInput;
   invitations?: InvitationCreateManyWithoutStuedntInput;
   order?: OrderCreateManyWithoutStuedntInput;
 }
@@ -1222,8 +1459,10 @@ export interface StudentUpdateInput {
   name?: String;
   university?: University;
   email?: String;
-  authstatus?: authStatus;
+  Gender?: Gender;
+  authstatus?: AuthStatus;
   subjects?: SubjectUpdateManyInput;
+  avalible?: AvalibelTimeUpdateManyInput;
   invitations?: InvitationUpdateManyWithoutStuedntInput;
   order?: OrderUpdateManyWithoutStuedntInput;
 }
@@ -1233,7 +1472,8 @@ export interface StudentUpdateManyMutationInput {
   name?: String;
   university?: University;
   email?: String;
-  authstatus?: authStatus;
+  Gender?: Gender;
+  authstatus?: AuthStatus;
 }
 
 export interface SubjectUpdateManyMutationInput {
@@ -1251,6 +1491,23 @@ export interface UserUpdateInput {
 
 export interface UserUpdateManyMutationInput {
   name?: String;
+}
+
+export interface AvalibelTimeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: AvalibelTimeWhereInput;
+  AND?:
+    | AvalibelTimeSubscriptionWhereInput[]
+    | AvalibelTimeSubscriptionWhereInput;
+  OR?:
+    | AvalibelTimeSubscriptionWhereInput[]
+    | AvalibelTimeSubscriptionWhereInput;
+  NOT?:
+    | AvalibelTimeSubscriptionWhereInput[]
+    | AvalibelTimeSubscriptionWhereInput;
 }
 
 export interface InvitationSubscriptionWhereInput {
@@ -1323,16 +1580,114 @@ export interface NodeNode {
   id: ID_Output;
 }
 
+export interface AvalibelTime {
+  day: Day;
+  detail: DetailTime;
+}
+
+export interface AvalibelTimePromise
+  extends Promise<AvalibelTime>,
+    Fragmentable {
+  day: () => Promise<Day>;
+  detail: () => Promise<DetailTime>;
+}
+
+export interface AvalibelTimeSubscription
+  extends Promise<AsyncIterator<AvalibelTime>>,
+    Fragmentable {
+  day: () => Promise<AsyncIterator<Day>>;
+  detail: () => Promise<AsyncIterator<DetailTime>>;
+}
+
+export interface AvalibelTimeConnection {
+  pageInfo: PageInfo;
+  edges: AvalibelTimeEdge[];
+}
+
+export interface AvalibelTimeConnectionPromise
+  extends Promise<AvalibelTimeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AvalibelTimeEdge>>() => T;
+  aggregate: <T = AggregateAvalibelTimePromise>() => T;
+}
+
+export interface AvalibelTimeConnectionSubscription
+  extends Promise<AsyncIterator<AvalibelTimeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AvalibelTimeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAvalibelTimeSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AvalibelTimeEdge {
+  node: AvalibelTime;
+  cursor: String;
+}
+
+export interface AvalibelTimeEdgePromise
+  extends Promise<AvalibelTimeEdge>,
+    Fragmentable {
+  node: <T = AvalibelTimePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AvalibelTimeEdgeSubscription
+  extends Promise<AsyncIterator<AvalibelTimeEdge>>,
+    Fragmentable {
+  node: <T = AvalibelTimeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAvalibelTime {
+  count: Int;
+}
+
+export interface AggregateAvalibelTimePromise
+  extends Promise<AggregateAvalibelTime>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAvalibelTimeSubscription
+  extends Promise<AsyncIterator<AggregateAvalibelTime>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface Invitation {
   id: ID_Output;
-  status: invitationStatus;
+  status: InvitationStatus;
 }
 
 export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
   stuednt: <T = StudentPromise>() => T;
   parents: <T = ParentPromise>() => T;
-  status: () => Promise<invitationStatus>;
+  status: () => Promise<InvitationStatus>;
 }
 
 export interface InvitationSubscription
@@ -1341,7 +1696,7 @@ export interface InvitationSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   stuednt: <T = StudentSubscription>() => T;
   parents: <T = ParentSubscription>() => T;
-  status: () => Promise<AsyncIterator<invitationStatus>>;
+  status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
 
 export interface Student {
@@ -1350,9 +1705,10 @@ export interface Student {
   name: String;
   university: University;
   email: String;
-  authstatus: authStatus;
+  Gender?: Gender;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  authstatus: AuthStatus;
 }
 
 export interface StudentPromise extends Promise<Student>, Fragmentable {
@@ -1361,7 +1717,10 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
   name: () => Promise<String>;
   university: () => Promise<University>;
   email: () => Promise<String>;
-  authstatus: () => Promise<authStatus>;
+  Gender: () => Promise<Gender>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  authstatus: () => Promise<AuthStatus>;
   subjects: <T = FragmentableArray<Subject>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
@@ -1371,8 +1730,15 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  avalible: <T = FragmentableArray<AvalibelTime>>(args?: {
+    where?: AvalibelTimeWhereInput;
+    orderBy?: AvalibelTimeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   invitations: <T = FragmentableArray<Invitation>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
@@ -1401,7 +1767,10 @@ export interface StudentSubscription
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
   email: () => Promise<AsyncIterator<String>>;
-  authstatus: () => Promise<AsyncIterator<authStatus>>;
+  Gender: () => Promise<AsyncIterator<Gender>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  authstatus: () => Promise<AsyncIterator<AuthStatus>>;
   subjects: <T = Promise<AsyncIterator<SubjectSubscription>>>(args?: {
     where?: SubjectWhereInput;
     orderBy?: SubjectOrderByInput;
@@ -1411,8 +1780,15 @@ export interface StudentSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  avalible: <T = Promise<AsyncIterator<AvalibelTimeSubscription>>>(args?: {
+    where?: AvalibelTimeWhereInput;
+    orderBy?: AvalibelTimeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
@@ -1477,9 +1853,15 @@ export interface Parent {
   name: String;
   address: String;
   email: String;
-  authstatus: authStatus;
+  authstatus: AuthStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender: Gender;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface ParentPromise extends Promise<Parent>, Fragmentable {
@@ -1497,9 +1879,13 @@ export interface ParentPromise extends Promise<Parent>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  authstatus: () => Promise<authStatus>;
+  authstatus: () => Promise<AuthStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  lessonTime: () => Promise<Int>;
+  days: () => Promise<Int>;
+  pay: () => Promise<Int>;
+  childGender: () => Promise<Gender>;
   invitations: <T = FragmentableArray<Invitation>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
@@ -1518,6 +1904,8 @@ export interface ParentPromise extends Promise<Parent>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  teacherReuqire: () => Promise<String>;
+  childStatus: () => Promise<String>;
 }
 
 export interface ParentSubscription
@@ -1537,9 +1925,13 @@ export interface ParentSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  authstatus: () => Promise<AsyncIterator<authStatus>>;
+  authstatus: () => Promise<AsyncIterator<AuthStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lessonTime: () => Promise<AsyncIterator<Int>>;
+  days: () => Promise<AsyncIterator<Int>>;
+  pay: () => Promise<AsyncIterator<Int>>;
+  childGender: () => Promise<AsyncIterator<Gender>>;
   invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(args?: {
     where?: InvitationWhereInput;
     orderBy?: InvitationOrderByInput;
@@ -1558,6 +1950,8 @@ export interface ParentSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  teacherReuqire: () => Promise<AsyncIterator<String>>;
+  childStatus: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InvitationConnection {
@@ -1579,29 +1973,6 @@ export interface InvitationConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<InvitationEdgeSubscription>>>() => T;
   aggregate: <T = AggregateInvitationSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InvitationEdge {
@@ -1942,6 +2313,50 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface AvalibelTimeSubscriptionPayload {
+  mutation: MutationType;
+  node: AvalibelTime;
+  updatedFields: String[];
+  previousValues: AvalibelTimePreviousValues;
+}
+
+export interface AvalibelTimeSubscriptionPayloadPromise
+  extends Promise<AvalibelTimeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AvalibelTimePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AvalibelTimePreviousValuesPromise>() => T;
+}
+
+export interface AvalibelTimeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AvalibelTimeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AvalibelTimeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AvalibelTimePreviousValuesSubscription>() => T;
+}
+
+export interface AvalibelTimePreviousValues {
+  day: Day;
+  detail: DetailTime;
+}
+
+export interface AvalibelTimePreviousValuesPromise
+  extends Promise<AvalibelTimePreviousValues>,
+    Fragmentable {
+  day: () => Promise<Day>;
+  detail: () => Promise<DetailTime>;
+}
+
+export interface AvalibelTimePreviousValuesSubscription
+  extends Promise<AsyncIterator<AvalibelTimePreviousValues>>,
+    Fragmentable {
+  day: () => Promise<AsyncIterator<Day>>;
+  detail: () => Promise<AsyncIterator<DetailTime>>;
+}
+
 export interface InvitationSubscriptionPayload {
   mutation: MutationType;
   node: Invitation;
@@ -1969,21 +2384,21 @@ export interface InvitationSubscriptionPayloadSubscription
 
 export interface InvitationPreviousValues {
   id: ID_Output;
-  status: invitationStatus;
+  status: InvitationStatus;
 }
 
 export interface InvitationPreviousValuesPromise
   extends Promise<InvitationPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  status: () => Promise<invitationStatus>;
+  status: () => Promise<InvitationStatus>;
 }
 
 export interface InvitationPreviousValuesSubscription
   extends Promise<AsyncIterator<InvitationPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  status: () => Promise<AsyncIterator<invitationStatus>>;
+  status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
 
 export interface OrderSubscriptionPayload {
@@ -2061,9 +2476,15 @@ export interface ParentPreviousValues {
   name: String;
   address: String;
   email: String;
-  authstatus: authStatus;
+  authstatus: AuthStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  lessonTime?: Int;
+  days?: Int;
+  pay?: Int;
+  childGender: Gender;
+  teacherReuqire?: String;
+  childStatus?: String;
 }
 
 export interface ParentPreviousValuesPromise
@@ -2074,9 +2495,15 @@ export interface ParentPreviousValuesPromise
   name: () => Promise<String>;
   address: () => Promise<String>;
   email: () => Promise<String>;
-  authstatus: () => Promise<authStatus>;
+  authstatus: () => Promise<AuthStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  lessonTime: () => Promise<Int>;
+  days: () => Promise<Int>;
+  pay: () => Promise<Int>;
+  childGender: () => Promise<Gender>;
+  teacherReuqire: () => Promise<String>;
+  childStatus: () => Promise<String>;
 }
 
 export interface ParentPreviousValuesSubscription
@@ -2087,9 +2514,15 @@ export interface ParentPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  authstatus: () => Promise<AsyncIterator<authStatus>>;
+  authstatus: () => Promise<AsyncIterator<AuthStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lessonTime: () => Promise<AsyncIterator<Int>>;
+  days: () => Promise<AsyncIterator<Int>>;
+  pay: () => Promise<AsyncIterator<Int>>;
+  childGender: () => Promise<AsyncIterator<Gender>>;
+  teacherReuqire: () => Promise<AsyncIterator<String>>;
+  childStatus: () => Promise<AsyncIterator<String>>;
 }
 
 export interface StudentSubscriptionPayload {
@@ -2123,9 +2556,10 @@ export interface StudentPreviousValues {
   name: String;
   university: University;
   email: String;
-  authstatus: authStatus;
+  Gender?: Gender;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  authstatus: AuthStatus;
 }
 
 export interface StudentPreviousValuesPromise
@@ -2136,9 +2570,10 @@ export interface StudentPreviousValuesPromise
   name: () => Promise<String>;
   university: () => Promise<University>;
   email: () => Promise<String>;
-  authstatus: () => Promise<authStatus>;
+  Gender: () => Promise<Gender>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  authstatus: () => Promise<AuthStatus>;
 }
 
 export interface StudentPreviousValuesSubscription
@@ -2149,9 +2584,10 @@ export interface StudentPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
   email: () => Promise<AsyncIterator<String>>;
-  authstatus: () => Promise<AsyncIterator<authStatus>>;
+  Gender: () => Promise<AsyncIterator<Gender>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  authstatus: () => Promise<AsyncIterator<AuthStatus>>;
 }
 
 export interface SubjectSubscriptionPayload {
@@ -2243,10 +2679,9 @@ export interface UserPreviousValuesSubscription
 }
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Int = number;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -2254,9 +2689,15 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Int = number;
+export type Boolean = boolean;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -2268,11 +2709,6 @@ DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
 
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
 export type Long = string;
 
 /**
@@ -2281,7 +2717,31 @@ export type Long = string;
 
 export const models: Model[] = [
   {
+    name: "AuthStatus",
+    embedded: false
+  },
+  {
+    name: "AvalibelTime",
+    embedded: false
+  },
+  {
+    name: "Day",
+    embedded: false
+  },
+  {
+    name: "DetailTime",
+    embedded: false
+  },
+  {
+    name: "Gender",
+    embedded: false
+  },
+  {
     name: "Invitation",
+    embedded: false
+  },
+  {
+    name: "InvitationStatus",
     embedded: false
   },
   {
@@ -2318,14 +2778,6 @@ export const models: Model[] = [
   },
   {
     name: "User",
-    embedded: false
-  },
-  {
-    name: "authStatus",
-    embedded: false
-  },
-  {
-    name: "invitationStatus",
     embedded: false
   }
 ];

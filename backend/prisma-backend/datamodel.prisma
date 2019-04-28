@@ -8,12 +8,14 @@ type Student{
   name: String!@unique
   university: University!
   email: String!@unique
-  #可以发布的科目
-  authstatus: authStatus!
-  subjects:[Subject!]
-  #平台认证
+  Gender: Gender @default(value:MALE)
   createdAt: DateTime!
   updatedAt: DateTime!
+  #可以发布的科目
+  authstatus: AuthStatus!
+  subjects:[Subject!]
+  #平台认证
+  avalible:[AvalibelTime!]!
   invitations:[Invitation!]@relation(name:"InviteForStudent")
   order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
 }
@@ -24,21 +26,71 @@ type Parent{
   address: String!
   email: String!@unique
   #想要找的学科
-  subjects: [Subject!]
   #是否认证
-  authstatus: authStatus!
+  authstatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
   # 邀请
   invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
-  order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)  
+  order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)   
+  publishTerm: [BasicTermInfo!] 
 }
+type BasicTermInfo{
+  termId: ID! @unique
+  subjects: [Subject!]
+  pay: Int @default(value:50)
+  childGender: Gender! @default(value:FEMALE)
+  TeacherGender: SelectGender! @default(value:BOTH)
+  teacherReuqire: String
+  childStatus: String
+  longTerm: LongTerm
+  shortTerm: ShortTerm
+}
+type ShortTerm{
+  shortTermId: ID!@unique
+  timeList:[DateTime!]!
+}
+
+type LongTerm{
+  longTermId: ID! @unique
+  lessonTime: Int @default(value:1)
+  days: Int @default(value:1)
+  timeList: [AvalibelTime!]!
+}
+type AvalibelTime{
+  day: Day!
+  detail: DetailTime!
+}
+enum Gender{
+  MALE
+  FEMALE
+}
+enum SelectGender{
+  MALE
+  FEMALE
+  BOTH
+}
+enum DetailTime{
+  MORN
+  NOON
+  AFTER
+}
+enum Day{
+  SUN
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+}
+
 # 科目
 type Subject{
   name: SubjectName!
   level:[Level!]! 
 }
-enum authStatus{
+enum AuthStatus{
   UNCOMMITED
   AUTHCOMMITED
   AUTHED
@@ -65,7 +117,7 @@ type Invitation{
   id: ID!@unique
   stuednt: Student!@relation(name:"InviteForStudent")
   parents: Parent!@relation(name:"InviteForParent")
-  status: invitationStatus!
+  status: InvitationStatus!
 }
 type Order{
   order: String!@unique
@@ -78,7 +130,7 @@ enum OrderStatus{
   UNPAIED
   FINISHED
 }
-enum invitationStatus{
+enum InvitationStatus{
   WAITING
   AGREED
   REJECTED
