@@ -14,9 +14,10 @@ function getJwt(req){
     }
 
 }
-function newJwt(role,exp,jti){
+function newJwt(role,jti,auth,unionid){
     try{
-        token =  jwt.sign({iss:"Benji",exp:Math.floor(Date.now()/1000)+exp,sub:"auth for login",jti:jti,role: role},process.env.JWTSECRET)
+        let playload = {iss:"Benji",sub:"auth for login",jti:jti,role: role,authStatus:auth,unionid:unionid}
+        token =  jwt.sign(playload,process.env.JWTSECRET)
     }catch(e){
         return {
             res: false,
@@ -34,13 +35,13 @@ function verifyJwt(token){
     }catch(e){
         console.log(e)
         return {
-            res: false,
-            jwt: ""
+            valid: false,
+            parseRes: ""
         }
     }
     return {
-        res: true,
-        jwt: res
+        valid: true,
+        parseRes: res
     }
 }
 module.exports={

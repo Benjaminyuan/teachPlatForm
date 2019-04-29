@@ -1,4 +1,4 @@
-endpoint: http://47.107.67.70:4466/prisma-backend/dev-2
+endpoint: http://47.107.67.70:4466/prisma-backend/dev-3
 datamodel: datamodel.prisma
 
 generate:

@@ -1,4 +1,9 @@
 const{ prisma } = require("../generated/prisma-client")
+async function findParentById(UnionId){
+    return await prisma.$exists.parent({
+        UnionID: UnionId
+    })
+}
 async function parentExist(name,email,phone){
     return prisma.$exists.parents({
          AND:[
@@ -15,25 +20,24 @@ async function parentExist(name,email,phone){
      })
  }
 async function getParent(data){
-        return await prisma.student({
-            data
-        })
+        return await prisma.student(data)
 }
  async function createParent(data){
     //未加锁，
    try{ 
        await prisma.createParent({
-       name: data.name,
-       university: data.university,
-       email: data.email,
-       phone: data.phone,
-       address: data.address,
-       authstatus: 'UNCOMMITED',
-       subjects: JSON.parse(data.subjects),
-       order: {
-       },
-       invitations: {},
-   })}catch(e){
+            name: data.name,
+            university: data.university,
+            email: data.email,
+            phone: data.phone,
+            address: data.address,
+            authstatus: 'UNCOMMITED',
+            subjects: JSON.parse(data.subjects),
+            order: {
+            },
+            invitations: {},
+        })
+    }catch(e){
        return false
    }
    return true
@@ -61,8 +65,17 @@ async function updateInfo(data){
         return false
     }
 }
+async function getParentById(UnionID){
+   Info =  prisma.parent({
+        UnionID:UnionID
+    })
+    return Info
+}
 module.exports={
     updateInfo,
     parentExist,
-    createParent
+    createParent,
+    getParent,
+    findParentById,
+    getParentById,
 }

@@ -1,9 +1,11 @@
 type User {
-  id: ID! @unique
-  name: String!
+  # id: ID! @unique
+  UnionID: String!@unique
 }
 type Student{
   id: ID! @unique
+  UnionID: String!@unique
+  openid: String! @unique
   phone: String!@unique
   name: String!@unique
   university: University!
@@ -11,14 +13,25 @@ type Student{
   Gender: Gender @default(value:MALE)
   createdAt: DateTime!
   updatedAt: DateTime!
+  expectPay: Int
   #可以发布的科目
   authstatus: AuthStatus!
   subjects:[Subject!]
+  starList: [Parent!]
   #平台认证
   avalible:[AvalibelTime!]!
+  studentDetail: StudentDetail  
   invitations:[Invitation!]@relation(name:"InviteForStudent")
   order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
 }
+type StudentDetail{
+  selfIntro:String!
+  grades:String!
+  exprience: String!
+  pictrue:[String!]
+}
+ 
+
 type Parent{
   id: ID! @unique
   phone: String! @unique
@@ -27,9 +40,11 @@ type Parent{
   email: String!@unique
   #想要找的学科
   #是否认证
+  UnionID: String!
   authstatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+  starList: [Student!] 
   # 邀请
   invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
   order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)   
@@ -97,10 +112,10 @@ enum AuthStatus{
 }
 # 学生等级
 enum Level{
+  PRIMARY
   MIDDLE
   MIDDLEHIGH
-  PRIMARY
-  UNI
+  OTHER
 }
 #学校
 enum University{
@@ -111,6 +126,12 @@ enum SubjectName{
   CHINESE
   MATH
   ENGLISH
+  PHYSICS
+  CHEMSTRY
+  BIOLOGY
+  HISTORY
+  GEOGRAPHY
+  OTHER
 }
 
 type Invitation{

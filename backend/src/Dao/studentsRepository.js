@@ -1,6 +1,11 @@
 const{ prisma } = require("../generated/prisma-client")
-async function getStudents(data){
+async function getStudent(data){
     return await prisma.student(data)
+}
+async function findStudentById(UnionId){
+    return await prisma.$exists.student({
+        UnionID:UnionId
+    })
 }
 async function studentExist(name,email,phone){
    return await prisma.$exists.student({
@@ -58,8 +63,17 @@ async function updateInfo(data){
         return false
     }
 }
+async function  getStudentById(UnionID){
+    Info = await prisma.student({
+        UnionID:UnionID
+    })
+    return Info
+}
 module.exports ={
     studentExist,
     createStudent,
     updateInfo,
+    getStudent,
+    findStudentById,
+    getStudentById,
 }

@@ -13,6 +13,10 @@ var models = [
     embedded: false
   },
   {
+    name: "BasicTermInfo",
+    embedded: false
+  },
+  {
     name: "Day",
     embedded: false
   },
@@ -37,6 +41,10 @@ var models = [
     embedded: false
   },
   {
+    name: "LongTerm",
+    embedded: false
+  },
+  {
     name: "Order",
     embedded: false
   },
@@ -49,7 +57,19 @@ var models = [
     embedded: false
   },
   {
+    name: "SelectGender",
+    embedded: false
+  },
+  {
+    name: "ShortTerm",
+    embedded: false
+  },
+  {
     name: "Student",
+    embedded: false
+  },
+  {
+    name: "StudentDetail",
     embedded: false
   },
   {
@@ -72,6 +92,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://47.107.67.70:4466/prisma-backend/dev-2`
+  endpoint: `http://47.107.67.70:4466/prisma-backend/dev-3`
 });
 exports.prisma = new exports.Prisma();
