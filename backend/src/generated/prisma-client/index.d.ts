@@ -531,7 +531,9 @@ export type University = "HUST" | "WHU";
 
 export type AuthStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED";
 
-export type InvitationStatus = "WAITING" | "AGREED" | "REJECTED";
+export type Invitor = "STUDENT" | "PARENT";
+
+export type InvitationStatus = "REBACK" | "WAITING" | "AGREED" | "REJECTED";
 
 export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
 
@@ -584,6 +586,8 @@ export type StudentOrderByInput =
 export type InvitationOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "invitor_ASC"
+  | "invitor_DESC"
   | "status_ASC"
   | "status_DESC"
   | "createdAt_ASC"
@@ -1142,6 +1146,10 @@ export interface InvitationWhereInput {
   id_not_ends_with?: ID_Input;
   stuednt?: StudentWhereInput;
   parents?: ParentWhereInput;
+  invitor?: Invitor;
+  invitor_not?: Invitor;
+  invitor_in?: Invitor[] | Invitor;
+  invitor_not_in?: Invitor[] | Invitor;
   status?: InvitationStatus;
   status_not?: InvitationStatus;
   status_in?: InvitationStatus[] | InvitationStatus;
@@ -1426,6 +1434,7 @@ export interface BasicTermInfoUpdateManyMutationInput {
 export interface InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
   parents: ParentCreateOneWithoutInvitationsInput;
+  invitor: Invitor;
   status: InvitationStatus;
 }
 
@@ -1479,6 +1488,7 @@ export interface InvitationCreateManyWithoutParentsInput {
 
 export interface InvitationCreateWithoutParentsInput {
   stuednt: StudentCreateOneWithoutInvitationsInput;
+  invitor: Invitor;
   status: InvitationStatus;
 }
 
@@ -1539,6 +1549,7 @@ export interface InvitationCreateManyWithoutStuedntInput {
 
 export interface InvitationCreateWithoutStuedntInput {
   parents: ParentCreateOneWithoutInvitationsInput;
+  invitor: Invitor;
   status: InvitationStatus;
 }
 
@@ -1619,6 +1630,7 @@ export interface BasicTermInfoCreateManyInput {
 export interface InvitationUpdateInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
   parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
+  invitor?: Invitor;
   status?: InvitationStatus;
 }
 
@@ -1708,6 +1720,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutParentsInput {
 
 export interface InvitationUpdateWithoutParentsDataInput {
   stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
+  invitor?: Invitor;
   status?: InvitationStatus;
 }
 
@@ -1732,6 +1745,10 @@ export interface InvitationScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  invitor?: Invitor;
+  invitor_not?: Invitor;
+  invitor_in?: Invitor[] | Invitor;
+  invitor_not_in?: Invitor[] | Invitor;
   status?: InvitationStatus;
   status_not?: InvitationStatus;
   status_in?: InvitationStatus[] | InvitationStatus;
@@ -1747,6 +1764,7 @@ export interface InvitationUpdateManyWithWhereNestedInput {
 }
 
 export interface InvitationUpdateManyDataInput {
+  invitor?: Invitor;
   status?: InvitationStatus;
 }
 
@@ -1852,6 +1870,7 @@ export interface InvitationUpdateWithWhereUniqueWithoutStuedntInput {
 
 export interface InvitationUpdateWithoutStuedntDataInput {
   parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
+  invitor?: Invitor;
   status?: InvitationStatus;
 }
 
@@ -2432,6 +2451,7 @@ export interface StudentUpsertWithoutInvitationsInput {
 }
 
 export interface InvitationUpdateManyMutationInput {
+  invitor?: Invitor;
   status?: InvitationStatus;
 }
 
@@ -3008,6 +3028,7 @@ export interface AggregateBasicTermInfoSubscription
 
 export interface Invitation {
   id: ID_Output;
+  invitor: Invitor;
   status: InvitationStatus;
 }
 
@@ -3015,6 +3036,7 @@ export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
   stuednt: <T = StudentPromise>() => T;
   parents: <T = ParentPromise>() => T;
+  invitor: () => Promise<Invitor>;
   status: () => Promise<InvitationStatus>;
 }
 
@@ -3024,6 +3046,7 @@ export interface InvitationSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   stuednt: <T = StudentSubscription>() => T;
   parents: <T = ParentSubscription>() => T;
+  invitor: () => Promise<AsyncIterator<Invitor>>;
   status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
 
@@ -3973,6 +3996,7 @@ export interface InvitationSubscriptionPayloadSubscription
 
 export interface InvitationPreviousValues {
   id: ID_Output;
+  invitor: Invitor;
   status: InvitationStatus;
 }
 
@@ -3980,6 +4004,7 @@ export interface InvitationPreviousValuesPromise
   extends Promise<InvitationPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  invitor: () => Promise<Invitor>;
   status: () => Promise<InvitationStatus>;
 }
 
@@ -3987,6 +4012,7 @@ export interface InvitationPreviousValuesSubscription
   extends Promise<AsyncIterator<InvitationPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  invitor: () => Promise<AsyncIterator<Invitor>>;
   status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
 
@@ -4467,6 +4493,10 @@ export const models: Model[] = [
   },
   {
     name: "InvitationStatus",
+    embedded: false
+  },
+  {
+    name: "Invitor",
     embedded: false
   },
   {

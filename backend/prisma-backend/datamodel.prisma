@@ -16,7 +16,7 @@ type Student{
   expectPay: Int
   #可以发布的科目
   authstatus: AuthStatus!
-  subjects:[Subject!]
+  subjects:[Subject!]!
   starList: [Parent!]
   #平台认证
   avalible:[AvalibelTime!]!
@@ -31,7 +31,6 @@ type StudentDetail{
   pictrue:[String!]
 }
  
-
 type Parent{
   id: ID! @unique
   phone: String! @unique
@@ -138,6 +137,7 @@ type Invitation{
   id: ID!@unique
   stuednt: Student!@relation(name:"InviteForStudent")
   parents: Parent!@relation(name:"InviteForParent")
+  invitor: Invitor!
   status: InvitationStatus!
 }
 type Order{
@@ -146,12 +146,17 @@ type Order{
   parents: Parent!@relation(name:"OrderParent")
   status: OrderStatus!
 }
+enum Invitor{
+  STUDENT
+  PARENT
+}
 enum OrderStatus{
   PAIED
   UNPAIED
   FINISHED
 }
 enum InvitationStatus{
+  REBACK
   WAITING
   AGREED
   REJECTED

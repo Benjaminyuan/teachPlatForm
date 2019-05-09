@@ -5,7 +5,7 @@ const SECRET = "4c3801dcc2a0f601b69aecdac20b12ff"
 const APPID = "wxd48257c42c622c9d"
 async function getInfoFromWeChat(code){
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}E&grant_type=authorization_code`
-    request.get(url,(err,response,body)=>{
+    await request.get(url,(err,response,body)=>{
         console.log("err",err)
         // console.log("response",response)
         console.log("body:",body)
@@ -14,13 +14,45 @@ async function getInfoFromWeChat(code){
 }
 
 function getAuthStatus(token){
-   const{res,info} = jwt.verifyJwt(token)
-   if(res && info[authStatus]==="AUTHED"){
+   const{valid,parseRes} = jwt.verifyJwt(token)
+   if(valid && parseRes["authStatus"]==="AUTHED"){
         return true
    }
    return false
 }
+function hasRole(parseRes,role){
+   if( parseRes["role"] === role ){
+       return true
+   }
+   return false
+}
+function tokenAuth(req, response) {
+    let { res, token } = jwt.getJwt(req)
+    if (res === true) {
+        valid, parseRes  = jwt.verifyJwt(token)
+        //有人篡改jwt
+        if (valid === false) {
+            return {
+                res: false,
+                data: "" 
+            }
+        }
+        return {
+            res: true,
+            data: parseRes
+        }
+    }
+      
+    //鉴于jwt不设置过期日期，只有在认为故意更改的情况下，重新授权登录    
+    //没有jwt，新设备登录，或者换了设备登录，重新请求授权
+    return {
+        res:false,
+        data:""
+    }
+    
+}
 module.exports = {
     getInfoFromWeChat,
-    getAuthStatus
+    getAuthStatus,
+    tokenAuth
 }

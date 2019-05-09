@@ -4,25 +4,9 @@ const studentRepo = require("../Dao/studentsRepository")
 const parentRepo = require("../Dao/parentsRepository")
 const userRepo = require("../Dao/userRepository")
 const EXPIRE_TIME = 604800
-async function tokenAuth(req, response) {
-    let { res, token } = jwt.getJwt(req)
-    if (res === true) {
-        let { valid, parseRes } = jwt.verifyJwt(token)
-        //有人篡改jwt
-        if (valid === false) {
-            res = false
-        } else {
-            //jwt有效
-            response.status(200).jsonp({ auth: true })
-        }
-    }
-    //鉴于jwt不设置过期日期，只有在认为故意更改的情况下，重新授权登录
-    if (res === false) {
-        //没有jwt，新设备登录，或者换了设备登录，重新请求授权
-        response.status(301).jsonp({ info: "重新请求授权" })
-    }
-}
-async function getUserInfo(role) {
+
+
+async function getUserInfo(role,req) {
     if (role === "student") {
         info = await studentRepo.getStudent(req.body.data)
     } else if (role === "parent") {
@@ -34,8 +18,14 @@ async function login(req, res) {
 
 }
 async function weChatAuth(req, response) {
+    /**
+     * {
+     *      code: string,
+     * }
+     */
     let user
     data = await jwt.getInfoFromWeChat(req.body.code)
+    console.log(data)
     if (data.errcode) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
     }
@@ -71,6 +61,5 @@ async function weChatAuth(req, response) {
     }
 }
 module.exports = {
-    tokenAuth,
     weChatAuth,
 }

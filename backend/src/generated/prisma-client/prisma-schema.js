@@ -484,6 +484,7 @@ type Invitation {
   id: ID!
   stuednt: Student!
   parents: Parent!
+  invitor: Invitor!
   status: InvitationStatus!
 }
 
@@ -496,6 +497,7 @@ type InvitationConnection {
 input InvitationCreateInput {
   stuednt: StudentCreateOneWithoutInvitationsInput!
   parents: ParentCreateOneWithoutInvitationsInput!
+  invitor: Invitor!
   status: InvitationStatus!
 }
 
@@ -511,11 +513,13 @@ input InvitationCreateManyWithoutStuedntInput {
 
 input InvitationCreateWithoutParentsInput {
   stuednt: StudentCreateOneWithoutInvitationsInput!
+  invitor: Invitor!
   status: InvitationStatus!
 }
 
 input InvitationCreateWithoutStuedntInput {
   parents: ParentCreateOneWithoutInvitationsInput!
+  invitor: Invitor!
   status: InvitationStatus!
 }
 
@@ -527,6 +531,8 @@ type InvitationEdge {
 enum InvitationOrderByInput {
   id_ASC
   id_DESC
+  invitor_ASC
+  invitor_DESC
   status_ASC
   status_DESC
   createdAt_ASC
@@ -537,6 +543,7 @@ enum InvitationOrderByInput {
 
 type InvitationPreviousValues {
   id: ID!
+  invitor: Invitor!
   status: InvitationStatus!
 }
 
@@ -555,6 +562,10 @@ input InvitationScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  invitor: Invitor
+  invitor_not: Invitor
+  invitor_in: [Invitor!]
+  invitor_not_in: [Invitor!]
   status: InvitationStatus
   status_not: InvitationStatus
   status_in: [InvitationStatus!]
@@ -565,6 +576,7 @@ input InvitationScalarWhereInput {
 }
 
 enum InvitationStatus {
+  REBACK
   WAITING
   AGREED
   REJECTED
@@ -591,14 +603,17 @@ input InvitationSubscriptionWhereInput {
 input InvitationUpdateInput {
   stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
   parents: ParentUpdateOneRequiredWithoutInvitationsInput
+  invitor: Invitor
   status: InvitationStatus
 }
 
 input InvitationUpdateManyDataInput {
+  invitor: Invitor
   status: InvitationStatus
 }
 
 input InvitationUpdateManyMutationInput {
+  invitor: Invitor
   status: InvitationStatus
 }
 
@@ -631,11 +646,13 @@ input InvitationUpdateManyWithWhereNestedInput {
 
 input InvitationUpdateWithoutParentsDataInput {
   stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
+  invitor: Invitor
   status: InvitationStatus
 }
 
 input InvitationUpdateWithoutStuedntDataInput {
   parents: ParentUpdateOneRequiredWithoutInvitationsInput
+  invitor: Invitor
   status: InvitationStatus
 }
 
@@ -678,6 +695,10 @@ input InvitationWhereInput {
   id_not_ends_with: ID
   stuednt: StudentWhereInput
   parents: ParentWhereInput
+  invitor: Invitor
+  invitor_not: Invitor
+  invitor_in: [Invitor!]
+  invitor_not_in: [Invitor!]
   status: InvitationStatus
   status_not: InvitationStatus
   status_in: [InvitationStatus!]
@@ -689,6 +710,11 @@ input InvitationWhereInput {
 
 input InvitationWhereUniqueInput {
   id: ID
+}
+
+enum Invitor {
+  STUDENT
+  PARENT
 }
 
 enum Level {

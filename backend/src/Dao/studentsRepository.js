@@ -1,6 +1,18 @@
 const{ prisma } = require("../generated/prisma-client")
 async function getStudent(data){
-    return await prisma.student(data)
+    let info  
+    try{
+        info = await prisma.student(data)
+    }catch(e){
+        return {
+            parent: "",
+            found: false
+        }
+    }
+    return {
+        parent:info,
+        found: true
+    }
 }
 async function findStudentById(UnionId){
     return await prisma.$exists.student({
@@ -8,7 +20,7 @@ async function findStudentById(UnionId){
     })
 }
 async function studentExist(name,email,phone){
-   return await prisma.$exists.student({
+   let res =  await prisma.$exists.student({
         AND:[
             {
                 name: name
@@ -21,39 +33,33 @@ async function studentExist(name,email,phone){
             },
         ]
     })
+    return res
 }
 async function createStudent(data){
     //未加锁，
+    let student 
    try{ 
-       await prisma.createStudent({
-       name: data.name,
-       university: data.university,
-       email: data.email,
-       phone: data.phone,
-       authstatus: 'UNCOMMITED',
-       subjects: JSON.parse(data.subjects),
-       order: {
-       },
-       invitations: {},
-   })}catch(e){
-       return false
+        student = await prisma.createStudent(data)
+    }catch(e){
+        
+       return {
+           create:false,
+           student:student
+        }
    }
-   return true
+   return {
+       create:true,
+       student:student
+   }
 }
-async function updateInfo(data){
+async function updateInfo(data,id){
 
     //未加锁
     try{
        res =  await prisma.updateStudent({
-        data:{
-            name: data.name,
-            phone: data.phone,
-            email: data.email,
-            university: data.university,
-            subjects: data.subjects
-        },
+        data:data,
         where:{
-            id: data.id
+            id: id
         }
     })
         console.log(res)

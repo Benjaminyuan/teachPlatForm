@@ -37,6 +37,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Invitor",
+    embedded: false
+  },
+  {
     name: "Level",
     embedded: false
   },
