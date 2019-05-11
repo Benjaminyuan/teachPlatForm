@@ -26,13 +26,19 @@ app.post('/*',(req,res,next)=>{
     if(filter.isEmpty(req.body)){
         res.status(400).json({info:"请求为空，请输入有效请求！！"})
     }
-
     next()
 })
 
-
-
-
+app.post("/*",filter.extractJwtInfo)
+app.post("/*",(res,req,next)=>{
+   let status =  res.body.tokenData.authStatus;
+   console.log("auth check")
+   if(status !== "AUTHED"){
+       req.status(403).json({info:"未授权访问"})
+   }
+   console.log("auth check finished !!")
+   next()
+})
 app.get('/student/:id',student.getStudent)
 app.get('/parent/:id',parent.getParent)
 /**
@@ -42,10 +48,14 @@ app.get('/parent/:id',parent.getParent)
 app.get('/star/:role/:id',)
 //检查用户是否存在，用于填写表单校验
 app.post('/user/exist',common.isExist)
+/**-------邀请------------- */
+// app.post('/invitation',filter.extractJwtInfo)
 //发送邀请
-app.post('/invitation/',common.createInvitation)
+app.post('/invitation/init',common.createInvitation)
 //改变邀请状态：参数  invitationId，状态
-app.post('/status/invitation',common.updateInvitaion)
+// app.get('/invitation/status/:id',common.getInvitationStatus)
+app.post('/invitation/status',common.updateInvitaion)
+/**-------邀请------------- */
 
 app.post('/signup',selfAuth.weChatAuth)
 // app.post('/auth/login',)

@@ -533,7 +533,7 @@ export type AuthStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED";
 
 export type Invitor = "STUDENT" | "PARENT";
 
-export type InvitationStatus = "REBACK" | "WAITING" | "AGREED" | "REJECTED";
+export type InvitationStatus = "REBACK" | "WAITING" | "ACCEPT" | "REJECTED";
 
 export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
 
@@ -1144,8 +1144,8 @@ export interface InvitationWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  stuednt?: StudentWhereInput;
-  parents?: ParentWhereInput;
+  student?: StudentWhereInput;
+  parent?: ParentWhereInput;
   invitor?: Invitor;
   invitor_not?: Invitor;
   invitor_in?: Invitor[] | Invitor;
@@ -1175,7 +1175,7 @@ export interface OrderWhereInput {
   order_ends_with?: String;
   order_not_ends_with?: String;
   stuednt?: StudentWhereInput;
-  parents?: ParentWhereInput;
+  parent?: ParentWhereInput;
   status?: OrderStatus;
   status_not?: OrderStatus;
   status_in?: OrderStatus[] | OrderStatus;
@@ -1432,8 +1432,8 @@ export interface BasicTermInfoUpdateManyMutationInput {
 }
 
 export interface InvitationCreateInput {
-  stuednt: StudentCreateOneWithoutInvitationsInput;
-  parents: ParentCreateOneWithoutInvitationsInput;
+  student: StudentCreateOneWithoutInvitationsInput;
+  parent: ParentCreateOneWithoutInvitationsInput;
   invitor: Invitor;
   status: InvitationStatus;
 }
@@ -1474,30 +1474,30 @@ export interface ParentCreateWithoutStarListInput {
   email: String;
   UnionID: String;
   authstatus: AuthStatus;
-  invitations?: InvitationCreateManyWithoutParentsInput;
-  order?: OrderCreateManyWithoutParentsInput;
+  invitations?: InvitationCreateManyWithoutParentInput;
+  order?: OrderCreateManyWithoutParentInput;
   publishTerm?: BasicTermInfoCreateManyInput;
 }
 
-export interface InvitationCreateManyWithoutParentsInput {
+export interface InvitationCreateManyWithoutParentInput {
   create?:
-    | InvitationCreateWithoutParentsInput[]
-    | InvitationCreateWithoutParentsInput;
+    | InvitationCreateWithoutParentInput[]
+    | InvitationCreateWithoutParentInput;
   connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
 }
 
-export interface InvitationCreateWithoutParentsInput {
-  stuednt: StudentCreateOneWithoutInvitationsInput;
+export interface InvitationCreateWithoutParentInput {
+  student: StudentCreateOneWithoutInvitationsInput;
   invitor: Invitor;
   status: InvitationStatus;
 }
 
-export interface OrderCreateManyWithoutParentsInput {
-  create?: OrderCreateWithoutParentsInput[] | OrderCreateWithoutParentsInput;
+export interface OrderCreateManyWithoutParentInput {
+  create?: OrderCreateWithoutParentInput[] | OrderCreateWithoutParentInput;
   connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
 }
 
-export interface OrderCreateWithoutParentsInput {
+export interface OrderCreateWithoutParentInput {
   order: String;
   stuednt: StudentCreateOneWithoutOrderInput;
   status: OrderStatus;
@@ -1522,7 +1522,7 @@ export interface StudentCreateWithoutOrderInput {
   starList?: ParentCreateManyWithoutStarListInput;
   avalible?: AvalibelTimeCreateManyInput;
   studentDetail?: StudentDetailCreateOneInput;
-  invitations?: InvitationCreateManyWithoutStuedntInput;
+  invitations?: InvitationCreateManyWithoutStudentInput;
 }
 
 export interface StudentDetailCreateOneInput {
@@ -1540,15 +1540,15 @@ export interface StudentDetailCreatepictrueInput {
   set?: String[] | String;
 }
 
-export interface InvitationCreateManyWithoutStuedntInput {
+export interface InvitationCreateManyWithoutStudentInput {
   create?:
-    | InvitationCreateWithoutStuedntInput[]
-    | InvitationCreateWithoutStuedntInput;
+    | InvitationCreateWithoutStudentInput[]
+    | InvitationCreateWithoutStudentInput;
   connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
 }
 
-export interface InvitationCreateWithoutStuedntInput {
-  parents: ParentCreateOneWithoutInvitationsInput;
+export interface InvitationCreateWithoutStudentInput {
+  parent: ParentCreateOneWithoutInvitationsInput;
   invitor: Invitor;
   status: InvitationStatus;
 }
@@ -1566,7 +1566,7 @@ export interface ParentCreateWithoutInvitationsInput {
   UnionID: String;
   authstatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
-  order?: OrderCreateManyWithoutParentsInput;
+  order?: OrderCreateManyWithoutParentInput;
   publishTerm?: BasicTermInfoCreateManyInput;
 }
 
@@ -1590,7 +1590,7 @@ export interface StudentCreateWithoutStarListInput {
   subjects?: SubjectCreateManyInput;
   avalible?: AvalibelTimeCreateManyInput;
   studentDetail?: StudentDetailCreateOneInput;
-  invitations?: InvitationCreateManyWithoutStuedntInput;
+  invitations?: InvitationCreateManyWithoutStudentInput;
   order?: OrderCreateManyWithoutStuedntInput;
 }
 
@@ -1601,7 +1601,7 @@ export interface OrderCreateManyWithoutStuedntInput {
 
 export interface OrderCreateWithoutStuedntInput {
   order: String;
-  parents: ParentCreateOneWithoutOrderInput;
+  parent: ParentCreateOneWithoutOrderInput;
   status: OrderStatus;
 }
 
@@ -1618,7 +1618,7 @@ export interface ParentCreateWithoutOrderInput {
   UnionID: String;
   authstatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
-  invitations?: InvitationCreateManyWithoutParentsInput;
+  invitations?: InvitationCreateManyWithoutParentInput;
   publishTerm?: BasicTermInfoCreateManyInput;
 }
 
@@ -1628,8 +1628,8 @@ export interface BasicTermInfoCreateManyInput {
 }
 
 export interface InvitationUpdateInput {
-  stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
-  parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
+  student?: StudentUpdateOneRequiredWithoutInvitationsInput;
+  parent?: ParentUpdateOneRequiredWithoutInvitationsInput;
   invitor?: Invitor;
   status?: InvitationStatus;
 }
@@ -1689,45 +1689,45 @@ export interface ParentUpdateWithoutStarListDataInput {
   email?: String;
   UnionID?: String;
   authstatus?: AuthStatus;
-  invitations?: InvitationUpdateManyWithoutParentsInput;
-  order?: OrderUpdateManyWithoutParentsInput;
+  invitations?: InvitationUpdateManyWithoutParentInput;
+  order?: OrderUpdateManyWithoutParentInput;
   publishTerm?: BasicTermInfoUpdateManyInput;
 }
 
-export interface InvitationUpdateManyWithoutParentsInput {
+export interface InvitationUpdateManyWithoutParentInput {
   create?:
-    | InvitationCreateWithoutParentsInput[]
-    | InvitationCreateWithoutParentsInput;
+    | InvitationCreateWithoutParentInput[]
+    | InvitationCreateWithoutParentInput;
   delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   update?:
-    | InvitationUpdateWithWhereUniqueWithoutParentsInput[]
-    | InvitationUpdateWithWhereUniqueWithoutParentsInput;
+    | InvitationUpdateWithWhereUniqueWithoutParentInput[]
+    | InvitationUpdateWithWhereUniqueWithoutParentInput;
   upsert?:
-    | InvitationUpsertWithWhereUniqueWithoutParentsInput[]
-    | InvitationUpsertWithWhereUniqueWithoutParentsInput;
+    | InvitationUpsertWithWhereUniqueWithoutParentInput[]
+    | InvitationUpsertWithWhereUniqueWithoutParentInput;
   deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   updateMany?:
     | InvitationUpdateManyWithWhereNestedInput[]
     | InvitationUpdateManyWithWhereNestedInput;
 }
 
-export interface InvitationUpdateWithWhereUniqueWithoutParentsInput {
+export interface InvitationUpdateWithWhereUniqueWithoutParentInput {
   where: InvitationWhereUniqueInput;
-  data: InvitationUpdateWithoutParentsDataInput;
+  data: InvitationUpdateWithoutParentDataInput;
 }
 
-export interface InvitationUpdateWithoutParentsDataInput {
-  stuednt?: StudentUpdateOneRequiredWithoutInvitationsInput;
+export interface InvitationUpdateWithoutParentDataInput {
+  student?: StudentUpdateOneRequiredWithoutInvitationsInput;
   invitor?: Invitor;
   status?: InvitationStatus;
 }
 
-export interface InvitationUpsertWithWhereUniqueWithoutParentsInput {
+export interface InvitationUpsertWithWhereUniqueWithoutParentInput {
   where: InvitationWhereUniqueInput;
-  update: InvitationUpdateWithoutParentsDataInput;
-  create: InvitationCreateWithoutParentsInput;
+  update: InvitationUpdateWithoutParentDataInput;
+  create: InvitationCreateWithoutParentInput;
 }
 
 export interface InvitationScalarWhereInput {
@@ -1768,29 +1768,29 @@ export interface InvitationUpdateManyDataInput {
   status?: InvitationStatus;
 }
 
-export interface OrderUpdateManyWithoutParentsInput {
-  create?: OrderCreateWithoutParentsInput[] | OrderCreateWithoutParentsInput;
+export interface OrderUpdateManyWithoutParentInput {
+  create?: OrderCreateWithoutParentInput[] | OrderCreateWithoutParentInput;
   delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
   connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
   disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput;
   update?:
-    | OrderUpdateWithWhereUniqueWithoutParentsInput[]
-    | OrderUpdateWithWhereUniqueWithoutParentsInput;
+    | OrderUpdateWithWhereUniqueWithoutParentInput[]
+    | OrderUpdateWithWhereUniqueWithoutParentInput;
   upsert?:
-    | OrderUpsertWithWhereUniqueWithoutParentsInput[]
-    | OrderUpsertWithWhereUniqueWithoutParentsInput;
+    | OrderUpsertWithWhereUniqueWithoutParentInput[]
+    | OrderUpsertWithWhereUniqueWithoutParentInput;
   deleteMany?: OrderScalarWhereInput[] | OrderScalarWhereInput;
   updateMany?:
     | OrderUpdateManyWithWhereNestedInput[]
     | OrderUpdateManyWithWhereNestedInput;
 }
 
-export interface OrderUpdateWithWhereUniqueWithoutParentsInput {
+export interface OrderUpdateWithWhereUniqueWithoutParentInput {
   where: OrderWhereUniqueInput;
-  data: OrderUpdateWithoutParentsDataInput;
+  data: OrderUpdateWithoutParentDataInput;
 }
 
-export interface OrderUpdateWithoutParentsDataInput {
+export interface OrderUpdateWithoutParentDataInput {
   order?: String;
   stuednt?: StudentUpdateOneRequiredWithoutOrderInput;
   status?: OrderStatus;
@@ -1817,7 +1817,7 @@ export interface StudentUpdateWithoutOrderDataInput {
   starList?: ParentUpdateManyWithoutStarListInput;
   avalible?: AvalibelTimeUpdateManyInput;
   studentDetail?: StudentDetailUpdateOneInput;
-  invitations?: InvitationUpdateManyWithoutStuedntInput;
+  invitations?: InvitationUpdateManyWithoutStudentInput;
 }
 
 export interface StudentDetailUpdateOneInput {
@@ -1844,32 +1844,32 @@ export interface StudentDetailUpsertNestedInput {
   create: StudentDetailCreateInput;
 }
 
-export interface InvitationUpdateManyWithoutStuedntInput {
+export interface InvitationUpdateManyWithoutStudentInput {
   create?:
-    | InvitationCreateWithoutStuedntInput[]
-    | InvitationCreateWithoutStuedntInput;
+    | InvitationCreateWithoutStudentInput[]
+    | InvitationCreateWithoutStudentInput;
   delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   update?:
-    | InvitationUpdateWithWhereUniqueWithoutStuedntInput[]
-    | InvitationUpdateWithWhereUniqueWithoutStuedntInput;
+    | InvitationUpdateWithWhereUniqueWithoutStudentInput[]
+    | InvitationUpdateWithWhereUniqueWithoutStudentInput;
   upsert?:
-    | InvitationUpsertWithWhereUniqueWithoutStuedntInput[]
-    | InvitationUpsertWithWhereUniqueWithoutStuedntInput;
+    | InvitationUpsertWithWhereUniqueWithoutStudentInput[]
+    | InvitationUpsertWithWhereUniqueWithoutStudentInput;
   deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   updateMany?:
     | InvitationUpdateManyWithWhereNestedInput[]
     | InvitationUpdateManyWithWhereNestedInput;
 }
 
-export interface InvitationUpdateWithWhereUniqueWithoutStuedntInput {
+export interface InvitationUpdateWithWhereUniqueWithoutStudentInput {
   where: InvitationWhereUniqueInput;
-  data: InvitationUpdateWithoutStuedntDataInput;
+  data: InvitationUpdateWithoutStudentDataInput;
 }
 
-export interface InvitationUpdateWithoutStuedntDataInput {
-  parents?: ParentUpdateOneRequiredWithoutInvitationsInput;
+export interface InvitationUpdateWithoutStudentDataInput {
+  parent?: ParentUpdateOneRequiredWithoutInvitationsInput;
   invitor?: Invitor;
   status?: InvitationStatus;
 }
@@ -1889,7 +1889,7 @@ export interface ParentUpdateWithoutInvitationsDataInput {
   UnionID?: String;
   authstatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
-  order?: OrderUpdateManyWithoutParentsInput;
+  order?: OrderUpdateManyWithoutParentInput;
   publishTerm?: BasicTermInfoUpdateManyInput;
 }
 
@@ -1930,7 +1930,7 @@ export interface StudentUpdateWithoutStarListDataInput {
   subjects?: SubjectUpdateManyInput;
   avalible?: AvalibelTimeUpdateManyInput;
   studentDetail?: StudentDetailUpdateOneInput;
-  invitations?: InvitationUpdateManyWithoutStuedntInput;
+  invitations?: InvitationUpdateManyWithoutStudentInput;
   order?: OrderUpdateManyWithoutStuedntInput;
 }
 
@@ -1958,7 +1958,7 @@ export interface OrderUpdateWithWhereUniqueWithoutStuedntInput {
 
 export interface OrderUpdateWithoutStuedntDataInput {
   order?: String;
-  parents?: ParentUpdateOneRequiredWithoutOrderInput;
+  parent?: ParentUpdateOneRequiredWithoutOrderInput;
   status?: OrderStatus;
 }
 
@@ -1977,7 +1977,7 @@ export interface ParentUpdateWithoutOrderDataInput {
   UnionID?: String;
   authstatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
-  invitations?: InvitationUpdateManyWithoutParentsInput;
+  invitations?: InvitationUpdateManyWithoutParentInput;
   publishTerm?: BasicTermInfoUpdateManyInput;
 }
 
@@ -2298,10 +2298,10 @@ export interface ParentUpsertWithoutInvitationsInput {
   create: ParentCreateWithoutInvitationsInput;
 }
 
-export interface InvitationUpsertWithWhereUniqueWithoutStuedntInput {
+export interface InvitationUpsertWithWhereUniqueWithoutStudentInput {
   where: InvitationWhereUniqueInput;
-  update: InvitationUpdateWithoutStuedntDataInput;
-  create: InvitationCreateWithoutStuedntInput;
+  update: InvitationUpdateWithoutStudentDataInput;
+  create: InvitationCreateWithoutStudentInput;
 }
 
 export interface StudentUpsertWithoutOrderInput {
@@ -2309,10 +2309,10 @@ export interface StudentUpsertWithoutOrderInput {
   create: StudentCreateWithoutOrderInput;
 }
 
-export interface OrderUpsertWithWhereUniqueWithoutParentsInput {
+export interface OrderUpsertWithWhereUniqueWithoutParentInput {
   where: OrderWhereUniqueInput;
-  update: OrderUpdateWithoutParentsDataInput;
-  create: OrderCreateWithoutParentsInput;
+  update: OrderUpdateWithoutParentDataInput;
+  create: OrderCreateWithoutParentInput;
 }
 
 export interface ParentUpsertWithWhereUniqueWithoutStarListInput {
@@ -2471,14 +2471,14 @@ export interface LongTermUpdateManyMutationInput {
 export interface OrderCreateInput {
   order: String;
   stuednt: StudentCreateOneWithoutOrderInput;
-  parents: ParentCreateOneWithoutOrderInput;
+  parent: ParentCreateOneWithoutOrderInput;
   status: OrderStatus;
 }
 
 export interface OrderUpdateInput {
   order?: String;
   stuednt?: StudentUpdateOneRequiredWithoutOrderInput;
-  parents?: ParentUpdateOneRequiredWithoutOrderInput;
+  parent?: ParentUpdateOneRequiredWithoutOrderInput;
   status?: OrderStatus;
 }
 
@@ -2495,8 +2495,8 @@ export interface ParentCreateInput {
   UnionID: String;
   authstatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
-  invitations?: InvitationCreateManyWithoutParentsInput;
-  order?: OrderCreateManyWithoutParentsInput;
+  invitations?: InvitationCreateManyWithoutParentInput;
+  order?: OrderCreateManyWithoutParentInput;
   publishTerm?: BasicTermInfoCreateManyInput;
 }
 
@@ -2508,8 +2508,8 @@ export interface ParentUpdateInput {
   UnionID?: String;
   authstatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
-  invitations?: InvitationUpdateManyWithoutParentsInput;
-  order?: OrderUpdateManyWithoutParentsInput;
+  invitations?: InvitationUpdateManyWithoutParentInput;
+  order?: OrderUpdateManyWithoutParentInput;
   publishTerm?: BasicTermInfoUpdateManyInput;
 }
 
@@ -2546,7 +2546,7 @@ export interface StudentCreateInput {
   starList?: ParentCreateManyWithoutStarListInput;
   avalible?: AvalibelTimeCreateManyInput;
   studentDetail?: StudentDetailCreateOneInput;
-  invitations?: InvitationCreateManyWithoutStuedntInput;
+  invitations?: InvitationCreateManyWithoutStudentInput;
   order?: OrderCreateManyWithoutStuedntInput;
 }
 
@@ -2564,7 +2564,7 @@ export interface StudentUpdateInput {
   starList?: ParentUpdateManyWithoutStarListInput;
   avalible?: AvalibelTimeUpdateManyInput;
   studentDetail?: StudentDetailUpdateOneInput;
-  invitations?: InvitationUpdateManyWithoutStuedntInput;
+  invitations?: InvitationUpdateManyWithoutStudentInput;
   order?: OrderUpdateManyWithoutStuedntInput;
 }
 
@@ -3034,8 +3034,8 @@ export interface Invitation {
 
 export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
-  stuednt: <T = StudentPromise>() => T;
-  parents: <T = ParentPromise>() => T;
+  student: <T = StudentPromise>() => T;
+  parent: <T = ParentPromise>() => T;
   invitor: () => Promise<Invitor>;
   status: () => Promise<InvitationStatus>;
 }
@@ -3044,8 +3044,8 @@ export interface InvitationSubscription
   extends Promise<AsyncIterator<Invitation>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  stuednt: <T = StudentSubscription>() => T;
-  parents: <T = ParentSubscription>() => T;
+  student: <T = StudentSubscription>() => T;
+  parent: <T = ParentSubscription>() => T;
   invitor: () => Promise<AsyncIterator<Invitor>>;
   status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
@@ -3307,7 +3307,7 @@ export interface Order {
 export interface OrderPromise extends Promise<Order>, Fragmentable {
   order: () => Promise<String>;
   stuednt: <T = StudentPromise>() => T;
-  parents: <T = ParentPromise>() => T;
+  parent: <T = ParentPromise>() => T;
   status: () => Promise<OrderStatus>;
 }
 
@@ -3316,7 +3316,7 @@ export interface OrderSubscription
     Fragmentable {
   order: () => Promise<AsyncIterator<String>>;
   stuednt: <T = StudentSubscription>() => T;
-  parents: <T = ParentSubscription>() => T;
+  parent: <T = ParentSubscription>() => T;
   status: () => Promise<AsyncIterator<OrderStatus>>;
 }
 

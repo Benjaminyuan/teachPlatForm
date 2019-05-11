@@ -33,7 +33,7 @@ async function weChatAuth(req, response) {
     if (exist === false) {
         //用户不存在，则创建
         user = userRepo.createUser(data.unionid)
-        token = jwt.newJwt("USER", "xxx", "UNCOMMITED")
+        token = jwt.newJwt("USER", user.Unionid, "UNCOMMITED")
         //此时的访问权限最低
         response.append("Authorization", `Bearer ${token}`)
         response.status(200).jsonp({ auth: true })
@@ -44,14 +44,14 @@ async function weChatAuth(req, response) {
         if (studentExist === true) {
             //已经注册为学生
             student = studentRepo.getStudentById(data.unionid)
-            let { res, token } = jwt.newJwt("STUDENT", "xxx", student.authstatus, data.unionid)
+            let { res, token } = jwt.newJwt("STUDENT", student.id, student.authstatus, data.unionid)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "STUDENT" })
         } else if (parentExist === true) {
             //已经注册为parent
             parent = studentRepo.getParentById(data.unionid)
-            let { res, token } = jwt.newJwt("PARENT", "xxx", parent.authstatus)
+            let { res, token } = jwt.newJwt("PARENT", parent.id, parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "PARENT" })

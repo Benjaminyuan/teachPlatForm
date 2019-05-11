@@ -1,14 +1,8 @@
-// const jwt = require("../util/jwt")
-// function jwtTest(){
-//     start = Date.now()
-//     res =  jwt.newJwt("user",604800,"cjutjh8hw00c90742se98slsl")
-//     end = Date.now()
-//     console.log(res)
-//     console.log("time cost:"+(end-start)+"ms")
-//     return res
-// }
-// res = jwtTest()
-
+const jwt = require("../util/jwt")
+const {res,token} = jwt.newJwt("STUDENT","cjv9b6kwh00go07421skgs41h","AUTHED","12333333333")
+if(res){
+    console.log(token)
+}
 // function jestJson(key,value){
 //     const res = {
 //         key:value
@@ -49,20 +43,20 @@
 //     order:{}
 // }
 // console.log(JSON.stringify(data))
-function testLet(data){
-    let test 
-    if(data){
-        test={
-            data:true
-        }
-    }else{
-        test = {
-            data:false
-        }
-    }
-    test.otherdata ={
-        connect: "data"
-    }
-    console.log(test)
-}
-testLet(true)
+// function testLet(data){
+//     let test 
+//     if(data){
+//         test={
+//             data:true
+//         }
+//     }else{
+//         test = {
+//             data:false
+//         }
+//     }
+//     test.otherdata ={
+//         connect: "data"
+//     }
+//     console.log(test)
+// }
+// testLet(true)

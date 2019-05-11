@@ -3,14 +3,14 @@ function getJwt(req){
     Authorization = req.get("Authorization")|| null
     if( Authorization === null ){
         return {
-            res:false,
+            exist:false,
             token: '',
         }
     }
-    jwt = Authorization.repalce("Bearer ","")
+    token = Authorization.replace("Bearer ","")
     return {
-        res: true,
-        token: jwt,
+        exist: true,
+        token: token,
     }
 
 }

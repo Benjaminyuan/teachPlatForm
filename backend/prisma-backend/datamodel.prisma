@@ -135,15 +135,15 @@ enum SubjectName{
 
 type Invitation{
   id: ID!@unique
-  stuednt: Student!@relation(name:"InviteForStudent")
-  parents: Parent!@relation(name:"InviteForParent")
+  student: Student!@relation(name:"InviteForStudent")
+  parent: Parent!@relation(name:"InviteForParent")
   invitor: Invitor!
   status: InvitationStatus!
 }
 type Order{
   order: String!@unique
   stuednt: Student!@relation(name:"OrderStudent")
-  parents: Parent!@relation(name:"OrderParent")
+  parent: Parent!@relation(name:"OrderParent")
   status: OrderStatus!
 }
 enum Invitor{
@@ -158,6 +158,6 @@ enum OrderStatus{
 enum InvitationStatus{
   REBACK
   WAITING
-  AGREED
+  ACCEPT
   REJECTED
 }

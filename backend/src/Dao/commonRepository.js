@@ -1,9 +1,10 @@
 const { prisma } = require("../generated/prisma-client")
 async function createInvitation(data) {
-
     try {
         res = await prisma.createInvitation(data)
+        console.log(res)
     } catch (e) {
+        console.log(e)
         return {
             create:false,
             invitation:""
@@ -57,7 +58,9 @@ async function getInvitation(data) {
 async function invitationExist(data) {
     let exist
     try {
-        exist = await prisma.$exists.invitation(data)
+        console.log("check")
+        exist = await prisma.$exists.invitation()
+        console.log(exist)
     } catch (e) {
         console.log(e)
         exist = false

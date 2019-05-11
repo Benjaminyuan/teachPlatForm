@@ -61,9 +61,12 @@ function handleStarOrUnstarData(req, star) {
 
 }
 /*-----------star 和unStar 逻辑差不多，所以写了一个功能函数，减少代码重复------*/
-function createInvitation(req, res) {
-    let role = req.body.role
-    let roleId = req.body.roleId
+async function createInvitation(req, res) {
+    let role = req.body.tokenData.role
+    //role: parent or student
+    let roleId = req.body.tokenData.jti
+    let query = {}
+    //id
     let id = req.body.id
     let data =  {
         //邀请初始化，waiting 写死！！
@@ -71,40 +74,57 @@ function createInvitation(req, res) {
     }
     if(role === 'parent'){
         data.invitor="PARENT"
+        query.invitor="PARENT"
         data.student={
             connect:{
                 id:id
             }
         }
+        query.student={
+            id:id
+        }
         data.parent={
             connect:{
                 id: roleId
             }
+        }
+        query.parent={
+            id:id
         }
     }else{
         data.invitor="STUDENT"
+        query.invitor="STUDENT"
         data.student={
             connect:{
                 id: roleId
             }
+        }
+        query.student={
+            id:roleId
         }
         data.parent={
             connect:{
                 id:id
             }
         }
+        query.parent={
+            id:id
+        }
     }
     console.log(data)
-    let exist = commonRepo.invitationExist(data)
+    console.log(query)
+    let exist = await commonRepo.invitationExist(query)
+    console.log(exist)
     if(exist){
-        req.status(403).json({info:"请勿重复邀请！！"})
+        res.status(403).json({info:"请勿重复邀请！！"})
+    }else{
+        let{create,invitation} = await commonRepo.createInvitation(data)
+        res.status(200).json({ create: create,invitation:invitation})
     }
-    let{create,invitation} =  commonRepo.createInvitation(data)
-    res.status(200).json({ create: create,invitation:invitation})
 }
-function updateInvitaion(req,res){
-    let role = req.body.role
-    let roleId = req.boyd.roleId
+async function updateInvitaion(req,res){
+    let role = req.body.tokenData.role
+    let roleId = req.boyd.roleId.jti
     let invitationId = req.body.invitationId
     let status = req.body.status
     let {get,data}=commonRepo.getInvitation({id:invitationId})
@@ -122,9 +142,9 @@ function updateInvitaion(req,res){
      
         //邀请者有两个权限，删除和取消
     }else{
-       //被邀请者
-       if(status === "REJECTED" && data.status === "WAITING" ){
-           result = commonRepo.updateInvitation({status:"REJECTED",id:invitationId})
+       //被邀请者接受和拒绝
+       if( data.status === "WAITING"&&(status === "REJECTED"|| status ==="ACCEPT") ){
+           result = commonRepo.updateInvitation({status:status,id:invitationId})
        }
     }
     if(result){
@@ -158,6 +178,5 @@ module.exports = {
     isExist,
     star,
     unStar,
-    sendInvitation,
     updateInvitaion
 }

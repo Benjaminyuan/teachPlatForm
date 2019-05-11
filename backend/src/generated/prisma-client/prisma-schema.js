@@ -482,8 +482,8 @@ enum Gender {
 
 type Invitation {
   id: ID!
-  stuednt: Student!
-  parents: Parent!
+  student: Student!
+  parent: Parent!
   invitor: Invitor!
   status: InvitationStatus!
 }
@@ -495,30 +495,30 @@ type InvitationConnection {
 }
 
 input InvitationCreateInput {
-  stuednt: StudentCreateOneWithoutInvitationsInput!
-  parents: ParentCreateOneWithoutInvitationsInput!
+  student: StudentCreateOneWithoutInvitationsInput!
+  parent: ParentCreateOneWithoutInvitationsInput!
   invitor: Invitor!
   status: InvitationStatus!
 }
 
-input InvitationCreateManyWithoutParentsInput {
-  create: [InvitationCreateWithoutParentsInput!]
+input InvitationCreateManyWithoutParentInput {
+  create: [InvitationCreateWithoutParentInput!]
   connect: [InvitationWhereUniqueInput!]
 }
 
-input InvitationCreateManyWithoutStuedntInput {
-  create: [InvitationCreateWithoutStuedntInput!]
+input InvitationCreateManyWithoutStudentInput {
+  create: [InvitationCreateWithoutStudentInput!]
   connect: [InvitationWhereUniqueInput!]
 }
 
-input InvitationCreateWithoutParentsInput {
-  stuednt: StudentCreateOneWithoutInvitationsInput!
+input InvitationCreateWithoutParentInput {
+  student: StudentCreateOneWithoutInvitationsInput!
   invitor: Invitor!
   status: InvitationStatus!
 }
 
-input InvitationCreateWithoutStuedntInput {
-  parents: ParentCreateOneWithoutInvitationsInput!
+input InvitationCreateWithoutStudentInput {
+  parent: ParentCreateOneWithoutInvitationsInput!
   invitor: Invitor!
   status: InvitationStatus!
 }
@@ -578,7 +578,7 @@ input InvitationScalarWhereInput {
 enum InvitationStatus {
   REBACK
   WAITING
-  AGREED
+  ACCEPT
   REJECTED
 }
 
@@ -601,8 +601,8 @@ input InvitationSubscriptionWhereInput {
 }
 
 input InvitationUpdateInput {
-  stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
-  parents: ParentUpdateOneRequiredWithoutInvitationsInput
+  student: StudentUpdateOneRequiredWithoutInvitationsInput
+  parent: ParentUpdateOneRequiredWithoutInvitationsInput
   invitor: Invitor
   status: InvitationStatus
 }
@@ -617,24 +617,24 @@ input InvitationUpdateManyMutationInput {
   status: InvitationStatus
 }
 
-input InvitationUpdateManyWithoutParentsInput {
-  create: [InvitationCreateWithoutParentsInput!]
+input InvitationUpdateManyWithoutParentInput {
+  create: [InvitationCreateWithoutParentInput!]
   delete: [InvitationWhereUniqueInput!]
   connect: [InvitationWhereUniqueInput!]
   disconnect: [InvitationWhereUniqueInput!]
-  update: [InvitationUpdateWithWhereUniqueWithoutParentsInput!]
-  upsert: [InvitationUpsertWithWhereUniqueWithoutParentsInput!]
+  update: [InvitationUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [InvitationUpsertWithWhereUniqueWithoutParentInput!]
   deleteMany: [InvitationScalarWhereInput!]
   updateMany: [InvitationUpdateManyWithWhereNestedInput!]
 }
 
-input InvitationUpdateManyWithoutStuedntInput {
-  create: [InvitationCreateWithoutStuedntInput!]
+input InvitationUpdateManyWithoutStudentInput {
+  create: [InvitationCreateWithoutStudentInput!]
   delete: [InvitationWhereUniqueInput!]
   connect: [InvitationWhereUniqueInput!]
   disconnect: [InvitationWhereUniqueInput!]
-  update: [InvitationUpdateWithWhereUniqueWithoutStuedntInput!]
-  upsert: [InvitationUpsertWithWhereUniqueWithoutStuedntInput!]
+  update: [InvitationUpdateWithWhereUniqueWithoutStudentInput!]
+  upsert: [InvitationUpsertWithWhereUniqueWithoutStudentInput!]
   deleteMany: [InvitationScalarWhereInput!]
   updateMany: [InvitationUpdateManyWithWhereNestedInput!]
 }
@@ -644,38 +644,38 @@ input InvitationUpdateManyWithWhereNestedInput {
   data: InvitationUpdateManyDataInput!
 }
 
-input InvitationUpdateWithoutParentsDataInput {
-  stuednt: StudentUpdateOneRequiredWithoutInvitationsInput
+input InvitationUpdateWithoutParentDataInput {
+  student: StudentUpdateOneRequiredWithoutInvitationsInput
   invitor: Invitor
   status: InvitationStatus
 }
 
-input InvitationUpdateWithoutStuedntDataInput {
-  parents: ParentUpdateOneRequiredWithoutInvitationsInput
+input InvitationUpdateWithoutStudentDataInput {
+  parent: ParentUpdateOneRequiredWithoutInvitationsInput
   invitor: Invitor
   status: InvitationStatus
 }
 
-input InvitationUpdateWithWhereUniqueWithoutParentsInput {
+input InvitationUpdateWithWhereUniqueWithoutParentInput {
   where: InvitationWhereUniqueInput!
-  data: InvitationUpdateWithoutParentsDataInput!
+  data: InvitationUpdateWithoutParentDataInput!
 }
 
-input InvitationUpdateWithWhereUniqueWithoutStuedntInput {
+input InvitationUpdateWithWhereUniqueWithoutStudentInput {
   where: InvitationWhereUniqueInput!
-  data: InvitationUpdateWithoutStuedntDataInput!
+  data: InvitationUpdateWithoutStudentDataInput!
 }
 
-input InvitationUpsertWithWhereUniqueWithoutParentsInput {
+input InvitationUpsertWithWhereUniqueWithoutParentInput {
   where: InvitationWhereUniqueInput!
-  update: InvitationUpdateWithoutParentsDataInput!
-  create: InvitationCreateWithoutParentsInput!
+  update: InvitationUpdateWithoutParentDataInput!
+  create: InvitationCreateWithoutParentInput!
 }
 
-input InvitationUpsertWithWhereUniqueWithoutStuedntInput {
+input InvitationUpsertWithWhereUniqueWithoutStudentInput {
   where: InvitationWhereUniqueInput!
-  update: InvitationUpdateWithoutStuedntDataInput!
-  create: InvitationCreateWithoutStuedntInput!
+  update: InvitationUpdateWithoutStudentDataInput!
+  create: InvitationCreateWithoutStudentInput!
 }
 
 input InvitationWhereInput {
@@ -693,8 +693,8 @@ input InvitationWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  stuednt: StudentWhereInput
-  parents: ParentWhereInput
+  student: StudentWhereInput
+  parent: ParentWhereInput
   invitor: Invitor
   invitor_not: Invitor
   invitor_in: [Invitor!]
@@ -945,7 +945,7 @@ interface Node {
 type Order {
   order: String!
   stuednt: Student!
-  parents: Parent!
+  parent: Parent!
   status: OrderStatus!
 }
 
@@ -958,12 +958,12 @@ type OrderConnection {
 input OrderCreateInput {
   order: String!
   stuednt: StudentCreateOneWithoutOrderInput!
-  parents: ParentCreateOneWithoutOrderInput!
+  parent: ParentCreateOneWithoutOrderInput!
   status: OrderStatus!
 }
 
-input OrderCreateManyWithoutParentsInput {
-  create: [OrderCreateWithoutParentsInput!]
+input OrderCreateManyWithoutParentInput {
+  create: [OrderCreateWithoutParentInput!]
   connect: [OrderWhereUniqueInput!]
 }
 
@@ -972,7 +972,7 @@ input OrderCreateManyWithoutStuedntInput {
   connect: [OrderWhereUniqueInput!]
 }
 
-input OrderCreateWithoutParentsInput {
+input OrderCreateWithoutParentInput {
   order: String!
   stuednt: StudentCreateOneWithoutOrderInput!
   status: OrderStatus!
@@ -980,7 +980,7 @@ input OrderCreateWithoutParentsInput {
 
 input OrderCreateWithoutStuedntInput {
   order: String!
-  parents: ParentCreateOneWithoutOrderInput!
+  parent: ParentCreateOneWithoutOrderInput!
   status: OrderStatus!
 }
 
@@ -1058,7 +1058,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   order: String
   stuednt: StudentUpdateOneRequiredWithoutOrderInput
-  parents: ParentUpdateOneRequiredWithoutOrderInput
+  parent: ParentUpdateOneRequiredWithoutOrderInput
   status: OrderStatus
 }
 
@@ -1072,13 +1072,13 @@ input OrderUpdateManyMutationInput {
   status: OrderStatus
 }
 
-input OrderUpdateManyWithoutParentsInput {
-  create: [OrderCreateWithoutParentsInput!]
+input OrderUpdateManyWithoutParentInput {
+  create: [OrderCreateWithoutParentInput!]
   delete: [OrderWhereUniqueInput!]
   connect: [OrderWhereUniqueInput!]
   disconnect: [OrderWhereUniqueInput!]
-  update: [OrderUpdateWithWhereUniqueWithoutParentsInput!]
-  upsert: [OrderUpsertWithWhereUniqueWithoutParentsInput!]
+  update: [OrderUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [OrderUpsertWithWhereUniqueWithoutParentInput!]
   deleteMany: [OrderScalarWhereInput!]
   updateMany: [OrderUpdateManyWithWhereNestedInput!]
 }
@@ -1099,7 +1099,7 @@ input OrderUpdateManyWithWhereNestedInput {
   data: OrderUpdateManyDataInput!
 }
 
-input OrderUpdateWithoutParentsDataInput {
+input OrderUpdateWithoutParentDataInput {
   order: String
   stuednt: StudentUpdateOneRequiredWithoutOrderInput
   status: OrderStatus
@@ -1107,13 +1107,13 @@ input OrderUpdateWithoutParentsDataInput {
 
 input OrderUpdateWithoutStuedntDataInput {
   order: String
-  parents: ParentUpdateOneRequiredWithoutOrderInput
+  parent: ParentUpdateOneRequiredWithoutOrderInput
   status: OrderStatus
 }
 
-input OrderUpdateWithWhereUniqueWithoutParentsInput {
+input OrderUpdateWithWhereUniqueWithoutParentInput {
   where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutParentsDataInput!
+  data: OrderUpdateWithoutParentDataInput!
 }
 
 input OrderUpdateWithWhereUniqueWithoutStuedntInput {
@@ -1121,10 +1121,10 @@ input OrderUpdateWithWhereUniqueWithoutStuedntInput {
   data: OrderUpdateWithoutStuedntDataInput!
 }
 
-input OrderUpsertWithWhereUniqueWithoutParentsInput {
+input OrderUpsertWithWhereUniqueWithoutParentInput {
   where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutParentsDataInput!
-  create: OrderCreateWithoutParentsInput!
+  update: OrderUpdateWithoutParentDataInput!
+  create: OrderCreateWithoutParentInput!
 }
 
 input OrderUpsertWithWhereUniqueWithoutStuedntInput {
@@ -1149,7 +1149,7 @@ input OrderWhereInput {
   order_ends_with: String
   order_not_ends_with: String
   stuednt: StudentWhereInput
-  parents: ParentWhereInput
+  parent: ParentWhereInput
   status: OrderStatus
   status_not: OrderStatus
   status_in: [OrderStatus!]
@@ -1200,8 +1200,8 @@ input ParentCreateInput {
   UnionID: String!
   authstatus: AuthStatus!
   starList: StudentCreateManyWithoutStarListInput
-  invitations: InvitationCreateManyWithoutParentsInput
-  order: OrderCreateManyWithoutParentsInput
+  invitations: InvitationCreateManyWithoutParentInput
+  order: OrderCreateManyWithoutParentInput
   publishTerm: BasicTermInfoCreateManyInput
 }
 
@@ -1228,7 +1228,7 @@ input ParentCreateWithoutInvitationsInput {
   UnionID: String!
   authstatus: AuthStatus!
   starList: StudentCreateManyWithoutStarListInput
-  order: OrderCreateManyWithoutParentsInput
+  order: OrderCreateManyWithoutParentInput
   publishTerm: BasicTermInfoCreateManyInput
 }
 
@@ -1240,7 +1240,7 @@ input ParentCreateWithoutOrderInput {
   UnionID: String!
   authstatus: AuthStatus!
   starList: StudentCreateManyWithoutStarListInput
-  invitations: InvitationCreateManyWithoutParentsInput
+  invitations: InvitationCreateManyWithoutParentInput
   publishTerm: BasicTermInfoCreateManyInput
 }
 
@@ -1251,8 +1251,8 @@ input ParentCreateWithoutStarListInput {
   email: String!
   UnionID: String!
   authstatus: AuthStatus!
-  invitations: InvitationCreateManyWithoutParentsInput
-  order: OrderCreateManyWithoutParentsInput
+  invitations: InvitationCreateManyWithoutParentInput
+  order: OrderCreateManyWithoutParentInput
   publishTerm: BasicTermInfoCreateManyInput
 }
 
@@ -1430,8 +1430,8 @@ input ParentUpdateInput {
   UnionID: String
   authstatus: AuthStatus
   starList: StudentUpdateManyWithoutStarListInput
-  invitations: InvitationUpdateManyWithoutParentsInput
-  order: OrderUpdateManyWithoutParentsInput
+  invitations: InvitationUpdateManyWithoutParentInput
+  order: OrderUpdateManyWithoutParentInput
   publishTerm: BasicTermInfoUpdateManyInput
 }
 
@@ -1491,7 +1491,7 @@ input ParentUpdateWithoutInvitationsDataInput {
   UnionID: String
   authstatus: AuthStatus
   starList: StudentUpdateManyWithoutStarListInput
-  order: OrderUpdateManyWithoutParentsInput
+  order: OrderUpdateManyWithoutParentInput
   publishTerm: BasicTermInfoUpdateManyInput
 }
 
@@ -1503,7 +1503,7 @@ input ParentUpdateWithoutOrderDataInput {
   UnionID: String
   authstatus: AuthStatus
   starList: StudentUpdateManyWithoutStarListInput
-  invitations: InvitationUpdateManyWithoutParentsInput
+  invitations: InvitationUpdateManyWithoutParentInput
   publishTerm: BasicTermInfoUpdateManyInput
 }
 
@@ -1514,8 +1514,8 @@ input ParentUpdateWithoutStarListDataInput {
   email: String
   UnionID: String
   authstatus: AuthStatus
-  invitations: InvitationUpdateManyWithoutParentsInput
-  order: OrderUpdateManyWithoutParentsInput
+  invitations: InvitationUpdateManyWithoutParentInput
+  order: OrderUpdateManyWithoutParentInput
   publishTerm: BasicTermInfoUpdateManyInput
 }
 
@@ -1871,7 +1871,7 @@ input StudentCreateInput {
   starList: ParentCreateManyWithoutStarListInput
   avalible: AvalibelTimeCreateManyInput
   studentDetail: StudentDetailCreateOneInput
-  invitations: InvitationCreateManyWithoutStuedntInput
+  invitations: InvitationCreateManyWithoutStudentInput
   order: OrderCreateManyWithoutStuedntInput
 }
 
@@ -1921,7 +1921,7 @@ input StudentCreateWithoutOrderInput {
   starList: ParentCreateManyWithoutStarListInput
   avalible: AvalibelTimeCreateManyInput
   studentDetail: StudentDetailCreateOneInput
-  invitations: InvitationCreateManyWithoutStuedntInput
+  invitations: InvitationCreateManyWithoutStudentInput
 }
 
 input StudentCreateWithoutStarListInput {
@@ -1937,7 +1937,7 @@ input StudentCreateWithoutStarListInput {
   subjects: SubjectCreateManyInput
   avalible: AvalibelTimeCreateManyInput
   studentDetail: StudentDetailCreateOneInput
-  invitations: InvitationCreateManyWithoutStuedntInput
+  invitations: InvitationCreateManyWithoutStudentInput
   order: OrderCreateManyWithoutStuedntInput
 }
 
@@ -2298,7 +2298,7 @@ input StudentUpdateInput {
   starList: ParentUpdateManyWithoutStarListInput
   avalible: AvalibelTimeUpdateManyInput
   studentDetail: StudentDetailUpdateOneInput
-  invitations: InvitationUpdateManyWithoutStuedntInput
+  invitations: InvitationUpdateManyWithoutStudentInput
   order: OrderUpdateManyWithoutStuedntInput
 }
 
@@ -2387,7 +2387,7 @@ input StudentUpdateWithoutOrderDataInput {
   starList: ParentUpdateManyWithoutStarListInput
   avalible: AvalibelTimeUpdateManyInput
   studentDetail: StudentDetailUpdateOneInput
-  invitations: InvitationUpdateManyWithoutStuedntInput
+  invitations: InvitationUpdateManyWithoutStudentInput
 }
 
 input StudentUpdateWithoutStarListDataInput {
@@ -2403,7 +2403,7 @@ input StudentUpdateWithoutStarListDataInput {
   subjects: SubjectUpdateManyInput
   avalible: AvalibelTimeUpdateManyInput
   studentDetail: StudentDetailUpdateOneInput
-  invitations: InvitationUpdateManyWithoutStuedntInput
+  invitations: InvitationUpdateManyWithoutStudentInput
   order: OrderUpdateManyWithoutStuedntInput
 }
 
