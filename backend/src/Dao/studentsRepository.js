@@ -2,17 +2,28 @@ const{ prisma } = require("../generated/prisma-client")
 async function getStudent(data){
     let info  
     try{
-        info = await prisma.student(data)
+        info = await prisma.student({
+            UnionID:data.UnionID
+        })
     }catch(e){
         return {
-            parent: "",
+            resData: "",
             found: false
         }
     }
-    return {
-        parent:info,
-        found: true
+    if(info){
+        return {
+            resData:info,
+            found: true
+        }
+       
+    }else{
+        return  {
+            resData: "",
+            found: false
+        }
     }
+    
 }
 async function findStudentById(UnionId){
     return await prisma.$exists.student({
@@ -38,6 +49,7 @@ async function studentExist(name,email,phone){
 async function createStudent(data){
     //未加锁，
     let student 
+    data.authStatus="UNCOMMITED"
    try{ 
         student = await prisma.createStudent(data)
     }catch(e){
@@ -75,6 +87,16 @@ async function  getStudentById(UnionID){
     })
     return Info
 }
+async function getStudents(skip,first,status){
+   const resData = await prisma.students({
+        where:{
+            authStatus:status
+        },
+        skip:skip,
+        first:first
+    })
+    return resData
+}
 module.exports ={
     studentExist,
     createStudent,
@@ -82,4 +104,5 @@ module.exports ={
     getStudent,
     findStudentById,
     getStudentById,
+    getStudents
 }

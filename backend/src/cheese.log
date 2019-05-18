@@ -1,0 +1,2 @@
+[2019-05-12T18:16:36.701] [INFO] cheese - 127.0.0.1 - - "GET /invitation/status/cjvkprqgw00l40742nzffgrf HTTP/1.1" 404 32 "" "PostmanRuntime/7.11.0"
+[2019-05-12T18:16:41.745] [INFO] cheese - 127.0.0.1 - - "GET /invitation/status/cjvkprqgw00l40742nzffgrfr HTTP/1.1" 200 31 "" "PostmanRuntime/7.11.0"

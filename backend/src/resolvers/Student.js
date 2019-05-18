@@ -1,16 +1,9 @@
 const studentRepo = require("../Dao/studentsRepository")
+const authRepo = require("../Dao/authRepo")
 const filter = require("../util/filter")
-async function getStudent(req, res) {
-   studentRepo.getStudent(data)
-    res.send(student)
-}
 
 /*-------finish basic test--------  */
-async function getStudents(req, res) {
-    console.log(req.body)
-    let students = await req.prisma.students({})
-    res.send(students)
-}
+
 /*-------------------------- */
 
 
@@ -22,7 +15,9 @@ async function getStudents(req, res) {
 }
 /*-------finish basic test--------  */
 
-
+async function sendAuth(req,res){
+    const data = JSON.parse(req.body)
+}
 
 
 
@@ -50,6 +45,7 @@ async function signup(req, res) {
     // const{name,uni,email,phone,}
     res.json({ "create": create,student:student })
 }
+
 /*---------------  */
 
 
@@ -59,8 +55,6 @@ async function signup(req, res) {
 
 /*---------------------- */
 module.exports = {
-    getStudent,
-    getStudents,
     signup,
-    updateInfo
+    updateInfo,
 }

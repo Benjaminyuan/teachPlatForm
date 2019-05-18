@@ -5,6 +5,10 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
+    name: "Admin",
+    embedded: false
+  },
+  {
     name: "AuthStatus",
     embedded: false
   },
@@ -61,6 +65,10 @@ var models = [
     embedded: false
   },
   {
+    name: "ParentAuthInfo",
+    embedded: false
+  },
+  {
     name: "SelectGender",
     embedded: false
   },
@@ -70,6 +78,10 @@ var models = [
   },
   {
     name: "Student",
+    embedded: false
+  },
+  {
+    name: "StudentAuthInfo",
     embedded: false
   },
   {
@@ -96,6 +108,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://47.107.67.70:4466/prisma-backend/dev-3`
+  endpoint: `http://47.107.67.70:4466/prisma-backend/dev-5`
 });
 exports.prisma = new exports.Prisma();

@@ -24,19 +24,36 @@ async function getParent(data){
         let info  
         try{
             info = await prisma.parent({
-                id:data
+                UnionID:data.UnionID
             })
         }catch(e){
             return {
-                parent: "",
+                resData: "",
                 found: false
             }
         }
-        return {
-            parent:info,
-            found: true
+        if(info){
+            return {
+                resData:info,
+                found: true
+            }
+        }else{
+            return {
+                resData: "",
+                found: false
+            }
         }
     }
+async function getParents(skip,first,status){
+    const resData = await prisma.parents({
+        where:{
+            authStatus:status
+        },
+        skip:skip,
+        first:first
+    })
+    return resData
+}
  async function createParent(data){
     //未加锁，
    try{ 
@@ -76,4 +93,5 @@ module.exports={
     getParent,
     findParentById,
     getParentById,
+    getParents
 }

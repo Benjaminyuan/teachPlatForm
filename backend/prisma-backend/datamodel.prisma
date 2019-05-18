@@ -2,6 +2,13 @@ type User {
   # id: ID! @unique
   UnionID: String!@unique
 }
+type Admin{
+  id: ID!@unique
+  UnionID: String! @unique
+  name: String!@unique
+  phone: String!@unique
+  email: String!@unique
+}
 type Student{
   id: ID! @unique
   UnionID: String!@unique
@@ -15,20 +22,21 @@ type Student{
   updatedAt: DateTime!
   expectPay: Int
   #可以发布的科目
-  authstatus: AuthStatus!
-  subjects:[Subject!]!
+  authStatus: AuthStatus!
+  subjects:[Subject!]! 
   starList: [Parent!]
   #平台认证
   avalible:[AvalibelTime!]!
   studentDetail: StudentDetail  
   invitations:[Invitation!]@relation(name:"InviteForStudent")
   order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
+  publish: Boolean! @default(value:"false")
 }
 type StudentDetail{
   selfIntro:String!
   grades:String!
   exprience: String!
-  pictrue:[String!]
+  picture:[String!]
 }
  
 type Parent{
@@ -39,19 +47,21 @@ type Parent{
   email: String!@unique
   #想要找的学科
   #是否认证
-  UnionID: String!
-  authstatus: AuthStatus!
+  UnionID: String!@unique
+  authStatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
   starList: [Student!] 
   # 邀请
   invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
   order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)   
-  publishTerm: [BasicTermInfo!] 
+  publishTerm: BasicTermInfo!@unique
+  publish: Boolean! @default(value:"false")
 }
 type BasicTermInfo{
   termId: ID! @unique
-  subjects: [Subject!]
+  Level:Level!
+  subjects: [SubjectName]!
   pay: Int @default(value:50)
   childGender: Gender! @default(value:FEMALE)
   TeacherGender: SelectGender! @default(value:BOTH)
@@ -75,6 +85,44 @@ type AvalibelTime{
   day: Day!
   detail: DetailTime!
 }
+type Order{
+  id: ID!@unique
+  stuednt: Student!@relation(name:"OrderStudent")
+  parent: Parent!@relation(name:"OrderParent")
+  status: OrderStatus!
+}
+type StudentAuthInfo{
+  id: ID! @unique
+  UnionID:String!@unique
+  student: Student! @unique
+  sourceUrl: [String!]!
+  res: AuthStatus!
+  info:String
+  Auth: Admin
+}
+type ParentAuthInfo{
+  id: ID! @unique
+  parent: Parent!@unique
+  UnionID:String!@unique
+  sourceUrl: [String!]!
+  res: AuthStatus!
+  info:String
+  Auth: Admin
+}
+type Invitation{
+  id: ID!@unique
+  student: Student!@relation(name:"InviteForStudent")
+  parent: Parent!@relation(name:"InviteForParent")
+  invitor: Invitor!
+  status: InvitationStatus!
+  createdAt:DateTime!
+  updatedAt:DateTime!
+}
+type Subject{
+  name: SubjectName!
+  level:[Level!]! 
+}
+
 enum Gender{
   MALE
   FEMALE
@@ -99,15 +147,12 @@ enum Day{
   SAT
 }
 
-# 科目
-type Subject{
-  name: SubjectName!
-  level:[Level!]! 
-}
+
 enum AuthStatus{
   UNCOMMITED
   AUTHCOMMITED
   AUTHED
+  REJECTED
 }
 # 学生等级
 enum Level{
@@ -133,19 +178,8 @@ enum SubjectName{
   OTHER
 }
 
-type Invitation{
-  id: ID!@unique
-  student: Student!@relation(name:"InviteForStudent")
-  parent: Parent!@relation(name:"InviteForParent")
-  invitor: Invitor!
-  status: InvitationStatus!
-}
-type Order{
-  order: String!@unique
-  stuednt: Student!@relation(name:"OrderStudent")
-  parent: Parent!@relation(name:"OrderParent")
-  status: OrderStatus!
-}
+
+
 enum Invitor{
   STUDENT
   PARENT
@@ -160,4 +194,7 @@ enum InvitationStatus{
   WAITING
   ACCEPT
   REJECTED
+  UNPAIED
+  PAIED
+  FINISHED
 }
