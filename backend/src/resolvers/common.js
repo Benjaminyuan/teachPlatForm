@@ -288,5 +288,6 @@ module.exports = {
     getPic,
     getInvitations,
     getPublishList,
-    getPublishStatus
+    getPublishStatus,
+    updatePublishStatus
 }
