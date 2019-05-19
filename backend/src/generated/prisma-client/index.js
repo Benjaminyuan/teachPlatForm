@@ -97,6 +97,10 @@ var models = [
     embedded: false
   },
   {
+    name: "TryOrder",
+    embedded: false
+  },
+  {
     name: "University",
     embedded: false
   },

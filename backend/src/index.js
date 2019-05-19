@@ -86,7 +86,6 @@ app.use((req, res) => {
     res.status(404).send("板块尚未开发")
 })
 const chat = io.of('/chat')
-addr={}
 chat.on('connection',sokcet.dispatcher)
 
 Server.listen(8009, 'localhost', () => {

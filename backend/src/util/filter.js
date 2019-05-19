@@ -21,7 +21,14 @@ function extractJwtInfo(req,res,next){
     }
 
 }
+function isPhoneNum(strNum){
+   return  /^1[34578]\d{9}$/.match(strNum)
+}
+function isEmail(strEmail){
+    
+}
 module.exports={
     isEmpty,
-    extractJwtInfo
+    extractJwtInfo,
+    isPhoneNum
 }

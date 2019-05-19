@@ -162,6 +162,9 @@ async function updateInvitaion(req,res){
             result = await  commonRepo.deleteInvitation({id:invitationId})
         }else if(status === "REBACK" && data.status === "WAITING"){
             result = await commonRepo.updateInvitation({status: "REBACK",id:invitationId})
+        }else if(status === "PAY" && data.status === "ACCPTED"){
+            //to do  wechat pay 
+            result  = await commonRepo.createTryOrder(data,invitationId)
         }
      
         //邀请者有两个权限，删除和取消

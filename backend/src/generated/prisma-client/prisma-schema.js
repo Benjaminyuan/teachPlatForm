@@ -244,6 +244,10 @@ type AggregateSubject {
   count: Int!
 }
 
+type AggregateTryOrder {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -1118,6 +1122,12 @@ type Mutation {
   createSubject(data: SubjectCreateInput!): Subject!
   updateManySubjects(data: SubjectUpdateManyMutationInput!, where: SubjectWhereInput): BatchPayload!
   deleteManySubjects(where: SubjectWhereInput): BatchPayload!
+  createTryOrder(data: TryOrderCreateInput!): TryOrder!
+  updateTryOrder(data: TryOrderUpdateInput!, where: TryOrderWhereUniqueInput!): TryOrder
+  updateManyTryOrders(data: TryOrderUpdateManyMutationInput!, where: TryOrderWhereInput): BatchPayload!
+  upsertTryOrder(where: TryOrderWhereUniqueInput!, create: TryOrderCreateInput!, update: TryOrderUpdateInput!): TryOrder!
+  deleteTryOrder(where: TryOrderWhereUniqueInput!): TryOrder
+  deleteManyTryOrders(where: TryOrderWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -2092,6 +2102,9 @@ type Query {
   studentDetailsConnection(where: StudentDetailWhereInput, orderBy: StudentDetailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentDetailConnection!
   subjects(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subject]!
   subjectsConnection(where: SubjectWhereInput, orderBy: SubjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubjectConnection!
+  tryOrder(where: TryOrderWhereUniqueInput!): TryOrder
+  tryOrders(where: TryOrderWhereInput, orderBy: TryOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TryOrder]!
+  tryOrdersConnection(where: TryOrderWhereInput, orderBy: TryOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TryOrderConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -3316,7 +3329,131 @@ type Subscription {
   studentAuthInfo(where: StudentAuthInfoSubscriptionWhereInput): StudentAuthInfoSubscriptionPayload
   studentDetail(where: StudentDetailSubscriptionWhereInput): StudentDetailSubscriptionPayload
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
+  tryOrder(where: TryOrderSubscriptionWhereInput): TryOrderSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type TryOrder {
+  id: ID!
+  student: Student!
+  parent: Parent!
+  address: String!
+  time: DateTime!
+}
+
+type TryOrderConnection {
+  pageInfo: PageInfo!
+  edges: [TryOrderEdge]!
+  aggregate: AggregateTryOrder!
+}
+
+input TryOrderCreateInput {
+  student: StudentCreateOneInput!
+  parent: ParentCreateOneInput!
+  address: String!
+  time: DateTime!
+}
+
+type TryOrderEdge {
+  node: TryOrder!
+  cursor: String!
+}
+
+enum TryOrderOrderByInput {
+  id_ASC
+  id_DESC
+  address_ASC
+  address_DESC
+  time_ASC
+  time_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TryOrderPreviousValues {
+  id: ID!
+  address: String!
+  time: DateTime!
+}
+
+type TryOrderSubscriptionPayload {
+  mutation: MutationType!
+  node: TryOrder
+  updatedFields: [String!]
+  previousValues: TryOrderPreviousValues
+}
+
+input TryOrderSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TryOrderWhereInput
+  AND: [TryOrderSubscriptionWhereInput!]
+  OR: [TryOrderSubscriptionWhereInput!]
+  NOT: [TryOrderSubscriptionWhereInput!]
+}
+
+input TryOrderUpdateInput {
+  student: StudentUpdateOneRequiredInput
+  parent: ParentUpdateOneRequiredInput
+  address: String
+  time: DateTime
+}
+
+input TryOrderUpdateManyMutationInput {
+  address: String
+  time: DateTime
+}
+
+input TryOrderWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  student: StudentWhereInput
+  parent: ParentWhereInput
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  time: DateTime
+  time_not: DateTime
+  time_in: [DateTime!]
+  time_not_in: [DateTime!]
+  time_lt: DateTime
+  time_lte: DateTime
+  time_gt: DateTime
+  time_gte: DateTime
+  AND: [TryOrderWhereInput!]
+  OR: [TryOrderWhereInput!]
+  NOT: [TryOrderWhereInput!]
+}
+
+input TryOrderWhereUniqueInput {
+  id: ID
 }
 
 enum University {

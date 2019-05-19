@@ -60,3 +60,6 @@ if(res){
 //     console.log(test)
 // }
 // testLet(true)
+let a = "a好"
+let b = "b好"
+console.log(a>b)

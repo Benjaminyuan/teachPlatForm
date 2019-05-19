@@ -85,6 +85,25 @@ fragment studentInvitation on Parent{
         status
       }
 }`
+const Orderfragment = `
+        parent{
+            name
+        address
+        updatedAt
+        publishTerm{
+        subjects
+        Level
+        }
+        student{
+            name
+            university
+            expectPay
+            updatedAt
+            avalible{
+              day
+             detail
+            }
+`
 module.exports={
     invitationStatus,
     studentAuthStatus,
@@ -94,5 +113,6 @@ module.exports={
     studentRoleResult,
     parentRoleResult,
     studentInvitationResult,
-    parentInvitationResult
+    parentInvitationResult,
+    Orderfragment 
 }

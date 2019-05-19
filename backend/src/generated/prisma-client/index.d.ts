@@ -27,6 +27,7 @@ export interface Exists {
   studentAuthInfo: (where?: StudentAuthInfoWhereInput) => Promise<boolean>;
   studentDetail: (where?: StudentDetailWhereInput) => Promise<boolean>;
   subject: (where?: SubjectWhereInput) => Promise<boolean>;
+  tryOrder: (where?: TryOrderWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -297,6 +298,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => SubjectConnectionPromise;
+  tryOrder: (where: TryOrderWhereUniqueInput) => TryOrderPromise;
+  tryOrders: (args?: {
+    where?: TryOrderWhereInput;
+    orderBy?: TryOrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TryOrder>;
+  tryOrdersConnection: (args?: {
+    where?: TryOrderWhereInput;
+    orderBy?: TryOrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TryOrderConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -520,6 +540,22 @@ export interface Prisma {
     where?: SubjectWhereInput;
   }) => BatchPayloadPromise;
   deleteManySubjects: (where?: SubjectWhereInput) => BatchPayloadPromise;
+  createTryOrder: (data: TryOrderCreateInput) => TryOrderPromise;
+  updateTryOrder: (args: {
+    data: TryOrderUpdateInput;
+    where: TryOrderWhereUniqueInput;
+  }) => TryOrderPromise;
+  updateManyTryOrders: (args: {
+    data: TryOrderUpdateManyMutationInput;
+    where?: TryOrderWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTryOrder: (args: {
+    where: TryOrderWhereUniqueInput;
+    create: TryOrderCreateInput;
+    update: TryOrderUpdateInput;
+  }) => TryOrderPromise;
+  deleteTryOrder: (where: TryOrderWhereUniqueInput) => TryOrderPromise;
+  deleteManyTryOrders: (where?: TryOrderWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -584,6 +620,9 @@ export interface Subscription {
   subject: (
     where?: SubjectSubscriptionWhereInput
   ) => SubjectSubscriptionPayloadSubscription;
+  tryOrder: (
+    where?: TryOrderSubscriptionWhereInput
+  ) => TryOrderSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -828,6 +867,18 @@ export type StudentDetailOrderByInput =
   | "exprience_DESC"
   | "id_ASC"
   | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type TryOrderOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "address_ASC"
+  | "address_DESC"
+  | "time_ASC"
+  | "time_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1621,6 +1672,54 @@ export interface StudentAuthInfoWhereInput {
   AND?: StudentAuthInfoWhereInput[] | StudentAuthInfoWhereInput;
   OR?: StudentAuthInfoWhereInput[] | StudentAuthInfoWhereInput;
   NOT?: StudentAuthInfoWhereInput[] | StudentAuthInfoWhereInput;
+}
+
+export type TryOrderWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface TryOrderWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  student?: StudentWhereInput;
+  parent?: ParentWhereInput;
+  address?: String;
+  address_not?: String;
+  address_in?: String[] | String;
+  address_not_in?: String[] | String;
+  address_lt?: String;
+  address_lte?: String;
+  address_gt?: String;
+  address_gte?: String;
+  address_contains?: String;
+  address_not_contains?: String;
+  address_starts_with?: String;
+  address_not_starts_with?: String;
+  address_ends_with?: String;
+  address_not_ends_with?: String;
+  time?: DateTimeInput;
+  time_not?: DateTimeInput;
+  time_in?: DateTimeInput[] | DateTimeInput;
+  time_not_in?: DateTimeInput[] | DateTimeInput;
+  time_lt?: DateTimeInput;
+  time_lte?: DateTimeInput;
+  time_gt?: DateTimeInput;
+  time_gte?: DateTimeInput;
+  AND?: TryOrderWhereInput[] | TryOrderWhereInput;
+  OR?: TryOrderWhereInput[] | TryOrderWhereInput;
+  NOT?: TryOrderWhereInput[] | TryOrderWhereInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -3133,6 +3232,25 @@ export interface SubjectUpdateManyMutationInput {
   level?: SubjectUpdatelevelInput;
 }
 
+export interface TryOrderCreateInput {
+  student: StudentCreateOneInput;
+  parent: ParentCreateOneInput;
+  address: String;
+  time: DateTimeInput;
+}
+
+export interface TryOrderUpdateInput {
+  student?: StudentUpdateOneRequiredInput;
+  parent?: ParentUpdateOneRequiredInput;
+  address?: String;
+  time?: DateTimeInput;
+}
+
+export interface TryOrderUpdateManyMutationInput {
+  address?: String;
+  time?: DateTimeInput;
+}
+
 export interface UserCreateInput {
   UnionID: String;
 }
@@ -3316,6 +3434,17 @@ export interface SubjectSubscriptionWhereInput {
   AND?: SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput;
   OR?: SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput;
   NOT?: SubjectSubscriptionWhereInput[] | SubjectSubscriptionWhereInput;
+}
+
+export interface TryOrderSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TryOrderWhereInput;
+  AND?: TryOrderSubscriptionWhereInput[] | TryOrderSubscriptionWhereInput;
+  OR?: TryOrderSubscriptionWhereInput[] | TryOrderSubscriptionWhereInput;
+  NOT?: TryOrderSubscriptionWhereInput[] | TryOrderSubscriptionWhereInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -4611,6 +4740,86 @@ export interface AggregateSubjectSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface TryOrder {
+  id: ID_Output;
+  address: String;
+  time: DateTimeOutput;
+}
+
+export interface TryOrderPromise extends Promise<TryOrder>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  student: <T = StudentPromise>() => T;
+  parent: <T = ParentPromise>() => T;
+  address: () => Promise<String>;
+  time: () => Promise<DateTimeOutput>;
+}
+
+export interface TryOrderSubscription
+  extends Promise<AsyncIterator<TryOrder>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  student: <T = StudentSubscription>() => T;
+  parent: <T = ParentSubscription>() => T;
+  address: () => Promise<AsyncIterator<String>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TryOrderConnection {
+  pageInfo: PageInfo;
+  edges: TryOrderEdge[];
+}
+
+export interface TryOrderConnectionPromise
+  extends Promise<TryOrderConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TryOrderEdge>>() => T;
+  aggregate: <T = AggregateTryOrderPromise>() => T;
+}
+
+export interface TryOrderConnectionSubscription
+  extends Promise<AsyncIterator<TryOrderConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TryOrderEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTryOrderSubscription>() => T;
+}
+
+export interface TryOrderEdge {
+  node: TryOrder;
+  cursor: String;
+}
+
+export interface TryOrderEdgePromise
+  extends Promise<TryOrderEdge>,
+    Fragmentable {
+  node: <T = TryOrderPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TryOrderEdgeSubscription
+  extends Promise<AsyncIterator<TryOrderEdge>>,
+    Fragmentable {
+  node: <T = TryOrderSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTryOrder {
+  count: Int;
+}
+
+export interface AggregateTryOrderPromise
+  extends Promise<AggregateTryOrder>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTryOrderSubscription
+  extends Promise<AsyncIterator<AggregateTryOrder>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface User {
   UnionID: String;
 }
@@ -5387,6 +5596,53 @@ export interface SubjectPreviousValuesSubscription
   level: () => Promise<AsyncIterator<Level[]>>;
 }
 
+export interface TryOrderSubscriptionPayload {
+  mutation: MutationType;
+  node: TryOrder;
+  updatedFields: String[];
+  previousValues: TryOrderPreviousValues;
+}
+
+export interface TryOrderSubscriptionPayloadPromise
+  extends Promise<TryOrderSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TryOrderPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TryOrderPreviousValuesPromise>() => T;
+}
+
+export interface TryOrderSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TryOrderSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TryOrderSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TryOrderPreviousValuesSubscription>() => T;
+}
+
+export interface TryOrderPreviousValues {
+  id: ID_Output;
+  address: String;
+  time: DateTimeOutput;
+}
+
+export interface TryOrderPreviousValuesPromise
+  extends Promise<TryOrderPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  address: () => Promise<String>;
+  time: () => Promise<DateTimeOutput>;
+}
+
+export interface TryOrderPreviousValuesSubscription
+  extends Promise<AsyncIterator<TryOrderPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  address: () => Promise<AsyncIterator<String>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -5556,6 +5812,10 @@ export const models: Model[] = [
   },
   {
     name: "SubjectName",
+    embedded: false
+  },
+  {
+    name: "TryOrder",
     embedded: false
   },
   {

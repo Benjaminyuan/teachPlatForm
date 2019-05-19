@@ -201,6 +201,43 @@ async function updatePublishStatus(data,role){
     }
     return true 
 }
+async function createTryOrder(data,invitationId){
+    let TryOrder
+    try{
+        prisma.transaction(async ()=>{
+            await prisma.updateInvitation({
+                data: {
+                    status: "PAIED"
+                },
+                where: {
+                    id:invitationId
+                    //订单id
+                }
+            })
+          TryOrder =   await prisma.createTryOrder({
+                parent:{
+                    connect:{
+                        UnionID: data.parent.UnionID
+                    }
+                },
+                student:{
+                    connect:{
+                        UnionID: data.student.UnionID
+                    }
+                },
+                address: data.parent.address
+            })
+        })
+       
+    }catch(e){
+        return {
+            result:""
+        }
+    }
+    return {
+        result: TryOrder
+    }
+}
 module.exports = {
     createInvitation,
     getInvitation,
@@ -211,5 +248,6 @@ module.exports = {
     createOrder,
     getRoleInvitations,
     getPublishList,
-    updatePublishStatus
+    updatePublishStatus,
+    createTryOrder
 }
