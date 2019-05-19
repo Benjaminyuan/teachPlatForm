@@ -118,6 +118,20 @@ type Invitation{
   createdAt:DateTime!
   updatedAt:DateTime!
 }
+type TryOrder{
+  id: ID! @unique
+  student: Student!
+  parent: Parent! 
+  address: String!
+  startTime: DateTime
+  endTime: DateTime
+  phone:String
+  emerContact: 
+}
+type emerContact{
+  name:String!
+  phone:String!
+}
 type Subject{
   name: SubjectName!
   level:[Level!]! 
