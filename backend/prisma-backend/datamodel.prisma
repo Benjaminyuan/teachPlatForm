@@ -16,6 +16,7 @@ type Student{
   phone: String!@unique
   name: String!@unique
   university: University!
+  grades: String!
   email: String!@unique
   Gender: Gender @default(value:MALE)
   createdAt: DateTime!
@@ -126,15 +127,24 @@ type TryOrder{
   startTime: DateTime
   endTime: DateTime
   phone:String
-  emerContact: 
+  otherInfo:String
+  emerContact: [emerContact!]
+  status: tryOrderStatus!
 }
 type emerContact{
   name:String!
   phone:String!
+  relation: String!
 }
 type Subject{
   name: SubjectName!
   level:[Level!]! 
+}
+enum tryOrderStatus{
+  INIT
+  PACK
+  SACK
+  CANCLED
 }
 
 enum Gender{

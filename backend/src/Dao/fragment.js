@@ -85,24 +85,22 @@ fragment studentInvitation on Parent{
         status
       }
 }`
-const Orderfragment = `
-        parent{
-            name
-        address
-        updatedAt
-        publishTerm{
-        subjects
-        Level
-        }
-        student{
-            name
-            university
-            expectPay
-            updatedAt
-            avalible{
-              day
-             detail
-            }
+const orderChangeResult = `
+fragment OrderChange on  TryOder{
+    parent{
+    name
+    address
+    publishTerm{
+    subjects
+    Level
+    }
+    student{
+        name
+        university
+        expectPay
+    }
+    phone 
+}
 `
 module.exports={
     invitationStatus,
@@ -114,5 +112,5 @@ module.exports={
     parentRoleResult,
     studentInvitationResult,
     parentInvitationResult,
-    Orderfragment 
+    Orderfragment,
 }
