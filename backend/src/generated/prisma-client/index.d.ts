@@ -29,6 +29,7 @@ export interface Exists {
   subject: (where?: SubjectWhereInput) => Promise<boolean>;
   tryOrder: (where?: TryOrderWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
+  emerContact: (where?: emerContactWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -336,6 +337,24 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => UserConnectionPromise;
+  emerContacts: (args?: {
+    where?: emerContactWhereInput;
+    orderBy?: emerContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<emerContact>;
+  emerContactsConnection: (args?: {
+    where?: emerContactWhereInput;
+    orderBy?: emerContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => emerContactConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -572,6 +591,14 @@ export interface Prisma {
   }) => UserPromise;
   deleteUser: (where: UserWhereUniqueInput) => UserPromise;
   deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  createemerContact: (data: emerContactCreateInput) => emerContactPromise;
+  updateManyemerContacts: (args: {
+    data: emerContactUpdateManyMutationInput;
+    where?: emerContactWhereInput;
+  }) => BatchPayloadPromise;
+  deleteManyemerContacts: (
+    where?: emerContactWhereInput
+  ) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -626,6 +653,9 @@ export interface Subscription {
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
+  emerContact: (
+    where?: emerContactSubscriptionWhereInput
+  ) => emerContactSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -769,6 +799,8 @@ export type StudentOrderByInput =
   | "name_DESC"
   | "university_ASC"
   | "university_DESC"
+  | "grades_ASC"
+  | "grades_DESC"
   | "email_ASC"
   | "email_DESC"
   | "Gender_ASC"
@@ -872,13 +904,45 @@ export type StudentDetailOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
+export type emerContactOrderByInput =
+  | "name_ASC"
+  | "name_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "relation_ASC"
+  | "relation_DESC"
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type tryOrderStatus =
+  | "INIT"
+  | "INFOCOMPLETE"
+  | "PACK"
+  | "SACK"
+  | "CANCLED"
+  | "FINISHED";
+
 export type TryOrderOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "address_ASC"
   | "address_DESC"
-  | "time_ASC"
-  | "time_DESC"
+  | "startTime_ASC"
+  | "startTime_DESC"
+  | "endTime_ASC"
+  | "endTime_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "otherInfo_ASC"
+  | "otherInfo_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "rejectInfo_ASC"
+  | "rejectInfo_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1338,6 +1402,20 @@ export interface StudentWhereInput {
   university_not?: University;
   university_in?: University[] | University;
   university_not_in?: University[] | University;
+  grades?: String;
+  grades_not?: String;
+  grades_in?: String[] | String;
+  grades_not_in?: String[] | String;
+  grades_lt?: String;
+  grades_lte?: String;
+  grades_gt?: String;
+  grades_gte?: String;
+  grades_contains?: String;
+  grades_not_contains?: String;
+  grades_starts_with?: String;
+  grades_not_starts_with?: String;
+  grades_ends_with?: String;
+  grades_not_ends_with?: String;
   email?: String;
   email_not?: String;
   email_in?: String[] | String;
@@ -1678,6 +1756,54 @@ export type TryOrderWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
+export interface emerContactWhereInput {
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  phone?: String;
+  phone_not?: String;
+  phone_in?: String[] | String;
+  phone_not_in?: String[] | String;
+  phone_lt?: String;
+  phone_lte?: String;
+  phone_gt?: String;
+  phone_gte?: String;
+  phone_contains?: String;
+  phone_not_contains?: String;
+  phone_starts_with?: String;
+  phone_not_starts_with?: String;
+  phone_ends_with?: String;
+  phone_not_ends_with?: String;
+  relation?: String;
+  relation_not?: String;
+  relation_in?: String[] | String;
+  relation_not_in?: String[] | String;
+  relation_lt?: String;
+  relation_lte?: String;
+  relation_gt?: String;
+  relation_gte?: String;
+  relation_contains?: String;
+  relation_not_contains?: String;
+  relation_starts_with?: String;
+  relation_not_starts_with?: String;
+  relation_ends_with?: String;
+  relation_not_ends_with?: String;
+  AND?: emerContactWhereInput[] | emerContactWhereInput;
+  OR?: emerContactWhereInput[] | emerContactWhereInput;
+  NOT?: emerContactWhereInput[] | emerContactWhereInput;
+}
+
 export interface TryOrderWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
@@ -1709,14 +1835,71 @@ export interface TryOrderWhereInput {
   address_not_starts_with?: String;
   address_ends_with?: String;
   address_not_ends_with?: String;
-  time?: DateTimeInput;
-  time_not?: DateTimeInput;
-  time_in?: DateTimeInput[] | DateTimeInput;
-  time_not_in?: DateTimeInput[] | DateTimeInput;
-  time_lt?: DateTimeInput;
-  time_lte?: DateTimeInput;
-  time_gt?: DateTimeInput;
-  time_gte?: DateTimeInput;
+  startTime?: DateTimeInput;
+  startTime_not?: DateTimeInput;
+  startTime_in?: DateTimeInput[] | DateTimeInput;
+  startTime_not_in?: DateTimeInput[] | DateTimeInput;
+  startTime_lt?: DateTimeInput;
+  startTime_lte?: DateTimeInput;
+  startTime_gt?: DateTimeInput;
+  startTime_gte?: DateTimeInput;
+  endTime?: DateTimeInput;
+  endTime_not?: DateTimeInput;
+  endTime_in?: DateTimeInput[] | DateTimeInput;
+  endTime_not_in?: DateTimeInput[] | DateTimeInput;
+  endTime_lt?: DateTimeInput;
+  endTime_lte?: DateTimeInput;
+  endTime_gt?: DateTimeInput;
+  endTime_gte?: DateTimeInput;
+  phone?: String;
+  phone_not?: String;
+  phone_in?: String[] | String;
+  phone_not_in?: String[] | String;
+  phone_lt?: String;
+  phone_lte?: String;
+  phone_gt?: String;
+  phone_gte?: String;
+  phone_contains?: String;
+  phone_not_contains?: String;
+  phone_starts_with?: String;
+  phone_not_starts_with?: String;
+  phone_ends_with?: String;
+  phone_not_ends_with?: String;
+  otherInfo?: String;
+  otherInfo_not?: String;
+  otherInfo_in?: String[] | String;
+  otherInfo_not_in?: String[] | String;
+  otherInfo_lt?: String;
+  otherInfo_lte?: String;
+  otherInfo_gt?: String;
+  otherInfo_gte?: String;
+  otherInfo_contains?: String;
+  otherInfo_not_contains?: String;
+  otherInfo_starts_with?: String;
+  otherInfo_not_starts_with?: String;
+  otherInfo_ends_with?: String;
+  otherInfo_not_ends_with?: String;
+  emerContact_every?: emerContactWhereInput;
+  emerContact_some?: emerContactWhereInput;
+  emerContact_none?: emerContactWhereInput;
+  status?: tryOrderStatus;
+  status_not?: tryOrderStatus;
+  status_in?: tryOrderStatus[] | tryOrderStatus;
+  status_not_in?: tryOrderStatus[] | tryOrderStatus;
+  rejectInfo?: String;
+  rejectInfo_not?: String;
+  rejectInfo_in?: String[] | String;
+  rejectInfo_not_in?: String[] | String;
+  rejectInfo_lt?: String;
+  rejectInfo_lte?: String;
+  rejectInfo_gt?: String;
+  rejectInfo_gte?: String;
+  rejectInfo_contains?: String;
+  rejectInfo_not_contains?: String;
+  rejectInfo_starts_with?: String;
+  rejectInfo_not_starts_with?: String;
+  rejectInfo_ends_with?: String;
+  rejectInfo_not_ends_with?: String;
   AND?: TryOrderWhereInput[] | TryOrderWhereInput;
   OR?: TryOrderWhereInput[] | TryOrderWhereInput;
   NOT?: TryOrderWhereInput[] | TryOrderWhereInput;
@@ -1946,6 +2129,7 @@ export interface StudentCreateWithoutInvitationsInput {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2025,6 +2209,7 @@ export interface StudentCreateWithoutOrderInput {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2096,6 +2281,7 @@ export interface StudentCreateWithoutStarListInput {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2161,6 +2347,7 @@ export interface StudentUpdateWithoutInvitationsDataInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2372,6 +2559,7 @@ export interface StudentUpdateWithoutOrderDataInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2488,6 +2676,7 @@ export interface StudentUpdateWithoutStarListDataInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2697,6 +2886,20 @@ export interface StudentScalarWhereInput {
   university_not?: University;
   university_in?: University[] | University;
   university_not_in?: University[] | University;
+  grades?: String;
+  grades_not?: String;
+  grades_in?: String[] | String;
+  grades_not_in?: String[] | String;
+  grades_lt?: String;
+  grades_lte?: String;
+  grades_gt?: String;
+  grades_gte?: String;
+  grades_contains?: String;
+  grades_not_contains?: String;
+  grades_starts_with?: String;
+  grades_not_starts_with?: String;
+  grades_ends_with?: String;
+  grades_not_ends_with?: String;
   email?: String;
   email_not?: String;
   email_in?: String[] | String;
@@ -2761,6 +2964,7 @@ export interface StudentUpdateManyDataInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3106,6 +3310,7 @@ export interface StudentCreateInput {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3125,6 +3330,7 @@ export interface StudentUpdateInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3144,6 +3350,7 @@ export interface StudentUpdateManyMutationInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3191,6 +3398,7 @@ export interface StudentUpdateDataInput {
   phone?: String;
   name?: String;
   university?: University;
+  grades?: String;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3236,19 +3444,113 @@ export interface TryOrderCreateInput {
   student: StudentCreateOneInput;
   parent: ParentCreateOneInput;
   address: String;
-  time: DateTimeInput;
+  startTime?: DateTimeInput;
+  endTime?: DateTimeInput;
+  phone?: String;
+  otherInfo?: String;
+  emerContact?: emerContactCreateManyInput;
+  status: tryOrderStatus;
+  rejectInfo?: String;
+}
+
+export interface emerContactCreateManyInput {
+  create?: emerContactCreateInput[] | emerContactCreateInput;
+}
+
+export interface emerContactCreateInput {
+  name: String;
+  phone: String;
+  relation: String;
 }
 
 export interface TryOrderUpdateInput {
   student?: StudentUpdateOneRequiredInput;
   parent?: ParentUpdateOneRequiredInput;
   address?: String;
-  time?: DateTimeInput;
+  startTime?: DateTimeInput;
+  endTime?: DateTimeInput;
+  phone?: String;
+  otherInfo?: String;
+  emerContact?: emerContactUpdateManyInput;
+  status?: tryOrderStatus;
+  rejectInfo?: String;
+}
+
+export interface emerContactUpdateManyInput {
+  create?: emerContactCreateInput[] | emerContactCreateInput;
+  deleteMany?: emerContactScalarWhereInput[] | emerContactScalarWhereInput;
+  updateMany?:
+    | emerContactUpdateManyWithWhereNestedInput[]
+    | emerContactUpdateManyWithWhereNestedInput;
+}
+
+export interface emerContactScalarWhereInput {
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  phone?: String;
+  phone_not?: String;
+  phone_in?: String[] | String;
+  phone_not_in?: String[] | String;
+  phone_lt?: String;
+  phone_lte?: String;
+  phone_gt?: String;
+  phone_gte?: String;
+  phone_contains?: String;
+  phone_not_contains?: String;
+  phone_starts_with?: String;
+  phone_not_starts_with?: String;
+  phone_ends_with?: String;
+  phone_not_ends_with?: String;
+  relation?: String;
+  relation_not?: String;
+  relation_in?: String[] | String;
+  relation_not_in?: String[] | String;
+  relation_lt?: String;
+  relation_lte?: String;
+  relation_gt?: String;
+  relation_gte?: String;
+  relation_contains?: String;
+  relation_not_contains?: String;
+  relation_starts_with?: String;
+  relation_not_starts_with?: String;
+  relation_ends_with?: String;
+  relation_not_ends_with?: String;
+  AND?: emerContactScalarWhereInput[] | emerContactScalarWhereInput;
+  OR?: emerContactScalarWhereInput[] | emerContactScalarWhereInput;
+  NOT?: emerContactScalarWhereInput[] | emerContactScalarWhereInput;
+}
+
+export interface emerContactUpdateManyWithWhereNestedInput {
+  where: emerContactScalarWhereInput;
+  data: emerContactUpdateManyDataInput;
+}
+
+export interface emerContactUpdateManyDataInput {
+  name?: String;
+  phone?: String;
+  relation?: String;
 }
 
 export interface TryOrderUpdateManyMutationInput {
   address?: String;
-  time?: DateTimeInput;
+  startTime?: DateTimeInput;
+  endTime?: DateTimeInput;
+  phone?: String;
+  otherInfo?: String;
+  status?: tryOrderStatus;
+  rejectInfo?: String;
 }
 
 export interface UserCreateInput {
@@ -3261,6 +3563,12 @@ export interface UserUpdateInput {
 
 export interface UserUpdateManyMutationInput {
   UnionID?: String;
+}
+
+export interface emerContactUpdateManyMutationInput {
+  name?: String;
+  phone?: String;
+  relation?: String;
 }
 
 export interface AdminSubscriptionWhereInput {
@@ -3456,6 +3764,17 @@ export interface UserSubscriptionWhereInput {
   AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface emerContactSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: emerContactWhereInput;
+  AND?: emerContactSubscriptionWhereInput[] | emerContactSubscriptionWhereInput;
+  OR?: emerContactSubscriptionWhereInput[] | emerContactSubscriptionWhereInput;
+  NOT?: emerContactSubscriptionWhereInput[] | emerContactSubscriptionWhereInput;
 }
 
 export interface NodeNode {
@@ -3829,6 +4148,7 @@ export interface Student {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   createdAt: DateTimeOutput;
@@ -3845,6 +4165,7 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
   phone: () => Promise<String>;
   name: () => Promise<String>;
   university: () => Promise<University>;
+  grades: () => Promise<String>;
   email: () => Promise<String>;
   Gender: () => Promise<Gender>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -3909,6 +4230,7 @@ export interface StudentSubscription
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
+  grades: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   Gender: () => Promise<AsyncIterator<Gender>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -4743,7 +5065,12 @@ export interface AggregateSubjectSubscription
 export interface TryOrder {
   id: ID_Output;
   address: String;
-  time: DateTimeOutput;
+  startTime?: DateTimeOutput;
+  endTime?: DateTimeOutput;
+  phone?: String;
+  otherInfo?: String;
+  status: tryOrderStatus;
+  rejectInfo?: String;
 }
 
 export interface TryOrderPromise extends Promise<TryOrder>, Fragmentable {
@@ -4751,7 +5078,21 @@ export interface TryOrderPromise extends Promise<TryOrder>, Fragmentable {
   student: <T = StudentPromise>() => T;
   parent: <T = ParentPromise>() => T;
   address: () => Promise<String>;
-  time: () => Promise<DateTimeOutput>;
+  startTime: () => Promise<DateTimeOutput>;
+  endTime: () => Promise<DateTimeOutput>;
+  phone: () => Promise<String>;
+  otherInfo: () => Promise<String>;
+  emerContact: <T = FragmentableArray<emerContact>>(args?: {
+    where?: emerContactWhereInput;
+    orderBy?: emerContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  status: () => Promise<tryOrderStatus>;
+  rejectInfo: () => Promise<String>;
 }
 
 export interface TryOrderSubscription
@@ -4761,7 +5102,41 @@ export interface TryOrderSubscription
   student: <T = StudentSubscription>() => T;
   parent: <T = ParentSubscription>() => T;
   address: () => Promise<AsyncIterator<String>>;
-  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+  startTime: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endTime: () => Promise<AsyncIterator<DateTimeOutput>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  otherInfo: () => Promise<AsyncIterator<String>>;
+  emerContact: <T = Promise<AsyncIterator<emerContactSubscription>>>(args?: {
+    where?: emerContactWhereInput;
+    orderBy?: emerContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  status: () => Promise<AsyncIterator<tryOrderStatus>>;
+  rejectInfo: () => Promise<AsyncIterator<String>>;
+}
+
+export interface emerContact {
+  name: String;
+  phone: String;
+  relation: String;
+}
+
+export interface emerContactPromise extends Promise<emerContact>, Fragmentable {
+  name: () => Promise<String>;
+  phone: () => Promise<String>;
+  relation: () => Promise<String>;
+}
+
+export interface emerContactSubscription
+  extends Promise<AsyncIterator<emerContact>>,
+    Fragmentable {
+  name: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  relation: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TryOrderConnection {
@@ -4884,6 +5259,62 @@ export interface AggregateUserPromise
 
 export interface AggregateUserSubscription
   extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface emerContactConnection {
+  pageInfo: PageInfo;
+  edges: emerContactEdge[];
+}
+
+export interface emerContactConnectionPromise
+  extends Promise<emerContactConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<emerContactEdge>>() => T;
+  aggregate: <T = AggregateemerContactPromise>() => T;
+}
+
+export interface emerContactConnectionSubscription
+  extends Promise<AsyncIterator<emerContactConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<emerContactEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateemerContactSubscription>() => T;
+}
+
+export interface emerContactEdge {
+  node: emerContact;
+  cursor: String;
+}
+
+export interface emerContactEdgePromise
+  extends Promise<emerContactEdge>,
+    Fragmentable {
+  node: <T = emerContactPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface emerContactEdgeSubscription
+  extends Promise<AsyncIterator<emerContactEdge>>,
+    Fragmentable {
+  node: <T = emerContactSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateemerContact {
+  count: Int;
+}
+
+export interface AggregateemerContactPromise
+  extends Promise<AggregateemerContact>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateemerContactSubscription
+  extends Promise<AsyncIterator<AggregateemerContact>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -5404,6 +5835,7 @@ export interface StudentPreviousValues {
   phone: String;
   name: String;
   university: University;
+  grades: String;
   email: String;
   Gender?: Gender;
   createdAt: DateTimeOutput;
@@ -5422,6 +5854,7 @@ export interface StudentPreviousValuesPromise
   phone: () => Promise<String>;
   name: () => Promise<String>;
   university: () => Promise<University>;
+  grades: () => Promise<String>;
   email: () => Promise<String>;
   Gender: () => Promise<Gender>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -5440,6 +5873,7 @@ export interface StudentPreviousValuesSubscription
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
+  grades: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   Gender: () => Promise<AsyncIterator<Gender>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -5624,7 +6058,12 @@ export interface TryOrderSubscriptionPayloadSubscription
 export interface TryOrderPreviousValues {
   id: ID_Output;
   address: String;
-  time: DateTimeOutput;
+  startTime?: DateTimeOutput;
+  endTime?: DateTimeOutput;
+  phone?: String;
+  otherInfo?: String;
+  status: tryOrderStatus;
+  rejectInfo?: String;
 }
 
 export interface TryOrderPreviousValuesPromise
@@ -5632,7 +6071,12 @@ export interface TryOrderPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   address: () => Promise<String>;
-  time: () => Promise<DateTimeOutput>;
+  startTime: () => Promise<DateTimeOutput>;
+  endTime: () => Promise<DateTimeOutput>;
+  phone: () => Promise<String>;
+  otherInfo: () => Promise<String>;
+  status: () => Promise<tryOrderStatus>;
+  rejectInfo: () => Promise<String>;
 }
 
 export interface TryOrderPreviousValuesSubscription
@@ -5640,7 +6084,12 @@ export interface TryOrderPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   address: () => Promise<AsyncIterator<String>>;
-  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+  startTime: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endTime: () => Promise<AsyncIterator<DateTimeOutput>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  otherInfo: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<tryOrderStatus>>;
+  rejectInfo: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -5682,6 +6131,53 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   UnionID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface emerContactSubscriptionPayload {
+  mutation: MutationType;
+  node: emerContact;
+  updatedFields: String[];
+  previousValues: emerContactPreviousValues;
+}
+
+export interface emerContactSubscriptionPayloadPromise
+  extends Promise<emerContactSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = emerContactPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = emerContactPreviousValuesPromise>() => T;
+}
+
+export interface emerContactSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<emerContactSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = emerContactSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = emerContactPreviousValuesSubscription>() => T;
+}
+
+export interface emerContactPreviousValues {
+  name: String;
+  phone: String;
+  relation: String;
+}
+
+export interface emerContactPreviousValuesPromise
+  extends Promise<emerContactPreviousValues>,
+    Fragmentable {
+  name: () => Promise<String>;
+  phone: () => Promise<String>;
+  relation: () => Promise<String>;
+}
+
+export interface emerContactPreviousValuesSubscription
+  extends Promise<AsyncIterator<emerContactPreviousValues>>,
+    Fragmentable {
+  name: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  relation: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -5824,6 +6320,14 @@ export const models: Model[] = [
   },
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "emerContact",
+    embedded: false
+  },
+  {
+    name: "tryOrderStatus",
     embedded: false
   }
 ];

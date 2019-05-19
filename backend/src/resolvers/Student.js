@@ -1,7 +1,7 @@
 const studentRepo = require("../Dao/studentsRepository")
 const authRepo = require("../Dao/authRepo")
 const filter = require("../util/filter")
-
+const jwt = require("../util/jwt")
 /*-------finish basic test--------  */
 
 /*-------------------------- */
@@ -43,7 +43,13 @@ async function signup(req, res) {
     const data = req.body
     let {create,student} = await studentRepo.createStudent(data)
     // const{name,uni,email,phone,}
-    res.json({ "create": create,student:student })
+    if(create){
+        const token = jwt.newJwt("STUDENT",student.UnionID,student.authStatus)
+        res.append("Authorization",`Bearer ${token}`)
+        res.status(200).json({student:student})
+        return 
+    }
+    res.status(400).json({ "create": create,student:student })
 }
 
 /*---------------  */

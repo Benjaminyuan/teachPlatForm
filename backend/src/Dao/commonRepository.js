@@ -191,7 +191,7 @@ async function updatePublishStatus(data,role){
         }
     }
     try{
-        if(role === "student"){
+        if(role === "STUDENT"){
             await  prisma.updateStudent(query)
          }else {
              await prisma.updateParent(query)
@@ -226,7 +226,7 @@ async function createTryOrder(data,invitationId){
                     }
                 },
                 address: data.parent.address
-            })
+            }).$fragment()
         })
        
     }catch(e){
@@ -238,6 +238,29 @@ async function createTryOrder(data,invitationId){
         result: TryOrder
     }
 }
+async function getPublishStatus(data,role){
+    let result 
+    try{
+        if(role === "STUDNET"){
+            result = await prisma.student({
+                id: data.id
+            }).$fragment(`
+            fragment Sstatus on Student{
+                publish
+            }
+            `)
+    }else if (role === "PARENT"){
+            result = await prisma.parent({
+                id: data.id
+            }).$fragment(`
+            fragment Pstatus on Parent{
+                publish
+            }`)
+    }
+}catch(e){
+
+}
+}
 module.exports = {
     createInvitation,
     getInvitation,
@@ -245,7 +268,7 @@ module.exports = {
     deleteInvitation,
     invitationExist,
     getInvitationStatus,
-    createOrder,
+    createTryOrder,
     getRoleInvitations,
     getPublishList,
     updatePublishStatus,

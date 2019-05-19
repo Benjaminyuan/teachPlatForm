@@ -279,6 +279,10 @@ async function updatePublishStatus(res,req){
        res.status(404).json({info:"更新失败，请检查参数"})
    }
 }
+async function getPublishStatus(res,req){
+    const id = req.params.id
+    const Status = await commonRepo.getPublishStatus()
+}
 module.exports = {
     createInvitation,
     isExist,

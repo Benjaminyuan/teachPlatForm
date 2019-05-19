@@ -44,14 +44,14 @@ async function weChatAuth(req, response) {
         if (studentExist === true) {
             //已经注册为学生
             student = studentRepo.getStudentById(data.unionid)
-            let { res, token } = jwt.newJwt("STUDENT", student.id, student.authstatus, data.unionid)
+            let { res, token } = jwt.newJwt("STUDENT",data.unionid, student.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "STUDENT" })
         } else if (parentExist === true) {
             //已经注册为parent
             parent = studentRepo.getParentById(data.unionid)
-            let { res, token } = jwt.newJwt("PARENT", parent.id, parent.authstatus)
+            let { res, token } = jwt.newJwt("PARENT",data.unionid,parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "PARENT" })

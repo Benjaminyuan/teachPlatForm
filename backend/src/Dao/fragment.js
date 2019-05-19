@@ -85,8 +85,9 @@ fragment studentInvitation on Parent{
         status
       }
 }`
-const orderChangeResult = `
+const orderChangeResult  = `
 fragment OrderChange on  TryOder{
+    id
     parent{
     name
     address
@@ -99,7 +100,9 @@ fragment OrderChange on  TryOder{
         university
         expectPay
     }
-    phone 
+    phone
+    status 
+    
 }
 `
 module.exports={
@@ -112,5 +115,5 @@ module.exports={
     parentRoleResult,
     studentInvitationResult,
     parentInvitationResult,
-    Orderfragment,
+    orderChangeResult
 }

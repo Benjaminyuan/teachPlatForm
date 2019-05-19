@@ -204,6 +204,10 @@ type AggregateBasicTermInfo {
   count: Int!
 }
 
+type AggregateemerContact {
+  count: Int!
+}
+
 type AggregateInvitation {
   count: Int!
 }
@@ -614,6 +618,191 @@ enum DetailTime {
   MORN
   NOON
   AFTER
+}
+
+type emerContact {
+  name: String!
+  phone: String!
+  relation: String!
+}
+
+type emerContactConnection {
+  pageInfo: PageInfo!
+  edges: [emerContactEdge]!
+  aggregate: AggregateemerContact!
+}
+
+input emerContactCreateInput {
+  name: String!
+  phone: String!
+  relation: String!
+}
+
+input emerContactCreateManyInput {
+  create: [emerContactCreateInput!]
+}
+
+type emerContactEdge {
+  node: emerContact!
+  cursor: String!
+}
+
+enum emerContactOrderByInput {
+  name_ASC
+  name_DESC
+  phone_ASC
+  phone_DESC
+  relation_ASC
+  relation_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type emerContactPreviousValues {
+  name: String!
+  phone: String!
+  relation: String!
+}
+
+input emerContactScalarWhereInput {
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  relation: String
+  relation_not: String
+  relation_in: [String!]
+  relation_not_in: [String!]
+  relation_lt: String
+  relation_lte: String
+  relation_gt: String
+  relation_gte: String
+  relation_contains: String
+  relation_not_contains: String
+  relation_starts_with: String
+  relation_not_starts_with: String
+  relation_ends_with: String
+  relation_not_ends_with: String
+  AND: [emerContactScalarWhereInput!]
+  OR: [emerContactScalarWhereInput!]
+  NOT: [emerContactScalarWhereInput!]
+}
+
+type emerContactSubscriptionPayload {
+  mutation: MutationType!
+  node: emerContact
+  updatedFields: [String!]
+  previousValues: emerContactPreviousValues
+}
+
+input emerContactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: emerContactWhereInput
+  AND: [emerContactSubscriptionWhereInput!]
+  OR: [emerContactSubscriptionWhereInput!]
+  NOT: [emerContactSubscriptionWhereInput!]
+}
+
+input emerContactUpdateManyDataInput {
+  name: String
+  phone: String
+  relation: String
+}
+
+input emerContactUpdateManyInput {
+  create: [emerContactCreateInput!]
+  deleteMany: [emerContactScalarWhereInput!]
+  updateMany: [emerContactUpdateManyWithWhereNestedInput!]
+}
+
+input emerContactUpdateManyMutationInput {
+  name: String
+  phone: String
+  relation: String
+}
+
+input emerContactUpdateManyWithWhereNestedInput {
+  where: emerContactScalarWhereInput!
+  data: emerContactUpdateManyDataInput!
+}
+
+input emerContactWhereInput {
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  relation: String
+  relation_not: String
+  relation_in: [String!]
+  relation_not_in: [String!]
+  relation_lt: String
+  relation_lte: String
+  relation_gt: String
+  relation_gte: String
+  relation_contains: String
+  relation_not_contains: String
+  relation_starts_with: String
+  relation_not_starts_with: String
+  relation_ends_with: String
+  relation_not_ends_with: String
+  AND: [emerContactWhereInput!]
+  OR: [emerContactWhereInput!]
+  NOT: [emerContactWhereInput!]
 }
 
 enum Gender {
@@ -1134,6 +1323,9 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createemerContact(data: emerContactCreateInput!): emerContact!
+  updateManyemerContacts(data: emerContactUpdateManyMutationInput!, where: emerContactWhereInput): BatchPayload!
+  deleteManyemerContacts(where: emerContactWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -2108,6 +2300,8 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  emerContacts(where: emerContactWhereInput, orderBy: emerContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [emerContact]!
+  emerContactsConnection(where: emerContactWhereInput, orderBy: emerContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): emerContactConnection!
   node(id: ID!): Node
 }
 
@@ -2245,6 +2439,7 @@ type Student {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   createdAt: DateTime!
@@ -2426,6 +2621,7 @@ input StudentCreateInput {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2465,6 +2661,7 @@ input StudentCreateWithoutInvitationsInput {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2483,6 +2680,7 @@ input StudentCreateWithoutOrderInput {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2501,6 +2699,7 @@ input StudentCreateWithoutStarListInput {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2683,6 +2882,8 @@ enum StudentOrderByInput {
   name_DESC
   university_ASC
   university_DESC
+  grades_ASC
+  grades_DESC
   email_ASC
   email_DESC
   Gender_ASC
@@ -2706,6 +2907,7 @@ type StudentPreviousValues {
   phone: String!
   name: String!
   university: University!
+  grades: String!
   email: String!
   Gender: Gender
   createdAt: DateTime!
@@ -2790,6 +2992,20 @@ input StudentScalarWhereInput {
   university_not: University
   university_in: [University!]
   university_not_in: [University!]
+  grades: String
+  grades_not: String
+  grades_in: [String!]
+  grades_not_in: [String!]
+  grades_lt: String
+  grades_lte: String
+  grades_gt: String
+  grades_gte: String
+  grades_contains: String
+  grades_not_contains: String
+  grades_starts_with: String
+  grades_not_starts_with: String
+  grades_ends_with: String
+  grades_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -2867,6 +3083,7 @@ input StudentUpdateDataInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -2886,6 +3103,7 @@ input StudentUpdateInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -2905,6 +3123,7 @@ input StudentUpdateManyDataInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -2918,6 +3137,7 @@ input StudentUpdateManyMutationInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -2968,6 +3188,7 @@ input StudentUpdateWithoutInvitationsDataInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -2986,6 +3207,7 @@ input StudentUpdateWithoutOrderDataInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -3004,6 +3226,7 @@ input StudentUpdateWithoutStarListDataInput {
   phone: String
   name: String
   university: University
+  grades: String
   email: String
   Gender: Gender
   expectPay: Int
@@ -3117,6 +3340,20 @@ input StudentWhereInput {
   university_not: University
   university_in: [University!]
   university_not_in: [University!]
+  grades: String
+  grades_not: String
+  grades_in: [String!]
+  grades_not_in: [String!]
+  grades_lt: String
+  grades_lte: String
+  grades_gt: String
+  grades_gte: String
+  grades_contains: String
+  grades_not_contains: String
+  grades_starts_with: String
+  grades_not_starts_with: String
+  grades_ends_with: String
+  grades_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -3331,6 +3568,7 @@ type Subscription {
   subject(where: SubjectSubscriptionWhereInput): SubjectSubscriptionPayload
   tryOrder(where: TryOrderSubscriptionWhereInput): TryOrderSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  emerContact(where: emerContactSubscriptionWhereInput): emerContactSubscriptionPayload
 }
 
 type TryOrder {
@@ -3338,7 +3576,13 @@ type TryOrder {
   student: Student!
   parent: Parent!
   address: String!
-  time: DateTime!
+  startTime: DateTime
+  endTime: DateTime
+  phone: String
+  otherInfo: String
+  emerContact(where: emerContactWhereInput, orderBy: emerContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [emerContact!]
+  status: tryOrderStatus!
+  rejectInfo: String
 }
 
 type TryOrderConnection {
@@ -3351,7 +3595,13 @@ input TryOrderCreateInput {
   student: StudentCreateOneInput!
   parent: ParentCreateOneInput!
   address: String!
-  time: DateTime!
+  startTime: DateTime
+  endTime: DateTime
+  phone: String
+  otherInfo: String
+  emerContact: emerContactCreateManyInput
+  status: tryOrderStatus!
+  rejectInfo: String
 }
 
 type TryOrderEdge {
@@ -3364,8 +3614,18 @@ enum TryOrderOrderByInput {
   id_DESC
   address_ASC
   address_DESC
-  time_ASC
-  time_DESC
+  startTime_ASC
+  startTime_DESC
+  endTime_ASC
+  endTime_DESC
+  phone_ASC
+  phone_DESC
+  otherInfo_ASC
+  otherInfo_DESC
+  status_ASC
+  status_DESC
+  rejectInfo_ASC
+  rejectInfo_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -3375,7 +3635,21 @@ enum TryOrderOrderByInput {
 type TryOrderPreviousValues {
   id: ID!
   address: String!
-  time: DateTime!
+  startTime: DateTime
+  endTime: DateTime
+  phone: String
+  otherInfo: String
+  status: tryOrderStatus!
+  rejectInfo: String
+}
+
+enum tryOrderStatus {
+  INIT
+  INFOCOMPLETE
+  PACK
+  SACK
+  CANCLED
+  FINISHED
 }
 
 type TryOrderSubscriptionPayload {
@@ -3400,12 +3674,23 @@ input TryOrderUpdateInput {
   student: StudentUpdateOneRequiredInput
   parent: ParentUpdateOneRequiredInput
   address: String
-  time: DateTime
+  startTime: DateTime
+  endTime: DateTime
+  phone: String
+  otherInfo: String
+  emerContact: emerContactUpdateManyInput
+  status: tryOrderStatus
+  rejectInfo: String
 }
 
 input TryOrderUpdateManyMutationInput {
   address: String
-  time: DateTime
+  startTime: DateTime
+  endTime: DateTime
+  phone: String
+  otherInfo: String
+  status: tryOrderStatus
+  rejectInfo: String
 }
 
 input TryOrderWhereInput {
@@ -3439,14 +3724,71 @@ input TryOrderWhereInput {
   address_not_starts_with: String
   address_ends_with: String
   address_not_ends_with: String
-  time: DateTime
-  time_not: DateTime
-  time_in: [DateTime!]
-  time_not_in: [DateTime!]
-  time_lt: DateTime
-  time_lte: DateTime
-  time_gt: DateTime
-  time_gte: DateTime
+  startTime: DateTime
+  startTime_not: DateTime
+  startTime_in: [DateTime!]
+  startTime_not_in: [DateTime!]
+  startTime_lt: DateTime
+  startTime_lte: DateTime
+  startTime_gt: DateTime
+  startTime_gte: DateTime
+  endTime: DateTime
+  endTime_not: DateTime
+  endTime_in: [DateTime!]
+  endTime_not_in: [DateTime!]
+  endTime_lt: DateTime
+  endTime_lte: DateTime
+  endTime_gt: DateTime
+  endTime_gte: DateTime
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  otherInfo: String
+  otherInfo_not: String
+  otherInfo_in: [String!]
+  otherInfo_not_in: [String!]
+  otherInfo_lt: String
+  otherInfo_lte: String
+  otherInfo_gt: String
+  otherInfo_gte: String
+  otherInfo_contains: String
+  otherInfo_not_contains: String
+  otherInfo_starts_with: String
+  otherInfo_not_starts_with: String
+  otherInfo_ends_with: String
+  otherInfo_not_ends_with: String
+  emerContact_every: emerContactWhereInput
+  emerContact_some: emerContactWhereInput
+  emerContact_none: emerContactWhereInput
+  status: tryOrderStatus
+  status_not: tryOrderStatus
+  status_in: [tryOrderStatus!]
+  status_not_in: [tryOrderStatus!]
+  rejectInfo: String
+  rejectInfo_not: String
+  rejectInfo_in: [String!]
+  rejectInfo_not_in: [String!]
+  rejectInfo_lt: String
+  rejectInfo_lte: String
+  rejectInfo_gt: String
+  rejectInfo_gte: String
+  rejectInfo_contains: String
+  rejectInfo_not_contains: String
+  rejectInfo_starts_with: String
+  rejectInfo_not_starts_with: String
+  rejectInfo_ends_with: String
+  rejectInfo_not_ends_with: String
   AND: [TryOrderWhereInput!]
   OR: [TryOrderWhereInput!]
   NOT: [TryOrderWhereInput!]

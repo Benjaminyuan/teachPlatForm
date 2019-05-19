@@ -56,12 +56,13 @@ async function getParents(skip,first,status){
 }
  async function createParent(data){
     //未加锁，
+    let parent
    try{ 
-       await prisma.createParent(data)
+       parent = await prisma.createParent(data)
     }catch(e){
-       return false
+       return ""
    }
-   return true
+   return parent
 }
 async function updateInfo(data,id){
 

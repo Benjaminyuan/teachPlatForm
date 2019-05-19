@@ -7,18 +7,19 @@ const filter = require('./util/filter')
 const admin = require("./resolvers/admin")
 const {app,Server,io,upload} = require("./app")
 const sokcet= require("./socket/chatServer")
-
+const tryOrder = require("./resolvers/tryOrder")
 app.use('/student*', (req, res, next) => {
     console.log("handle!!")
     req.prisma = prisma
     next()
 })
 
+app.post('/signup', selfAuth.weChatAuth)
 
-
-app.post('/student/signup', student.signup)
 //这条路由优先级高一些，位置不要调换
 app.all("/*", filter.extractJwtInfo)
+app.post('/parent/signup', parent.signup)
+app.post('/student/signup', student.signup)
 
 app.post("/:role/auth/upload",upload.array("auth",5),common.sendAuth)
 app.get("/:role/auth/status/:id",common.getAuthStatus)
@@ -67,10 +68,13 @@ app.get('/invitation/status/:id', common.getInvitationStatus)
 app.post('/invitation/status', common.updateInvitaion)
 /**-------邀请------------- */
 
-app.post('/signup', selfAuth.weChatAuth)
+
 // app.post('/auth/login',)
 
-
+app.get("/orders/status",tryOrder.getStatus)
+app.get("/orders/info",tryOrder.getTryOrderInfo)
+app.post("/order/info",tryOrder.updateInfo)
+app.post("/order/status",tryOrder.updateOrderstatus)
 /*-----------student------------ */
 app.post('/student/update', student.updateInfo)
 /*-------------暂时暴露----------------*/
@@ -79,7 +83,6 @@ app.post('/student/update', student.updateInfo)
 /*------------------------------ */
 /*-----------parent--------------*/
 
-app.post('/parent/signup', parent.signup)
 app.post('/parent/update', parent.updateInfo)
 /*------------------------------- */
 app.use((req, res) => {

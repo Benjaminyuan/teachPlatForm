@@ -38,7 +38,7 @@ async function getRoles(req,res){
          data  = await studentRepo.getStudents(skip,first,s)
     }else if(role === "parent"){
         data = await parentRepo.getParents(skip,first,s)
-    }
+    } 
     if(data){
         res.status(200).send(data)
     }else{
