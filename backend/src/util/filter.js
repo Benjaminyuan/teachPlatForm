@@ -16,6 +16,7 @@ function extractJwtInfo(req,res,next){
             res.status(403).json({info:"非法token"})
         }
         req.tokenData = parseRes
+        console.log(req.tokenData)
     console.log("jwt data extracted!!")
         next()
     }

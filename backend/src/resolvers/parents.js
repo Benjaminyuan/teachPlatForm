@@ -1,13 +1,19 @@
 const  parentRepo  = require("../Dao/parentsRepository")
-async function signup(req,res){
-    let parent =parentRepo.createParent(req.data)
+const jwt = require("../util/jwt")
+async function signup(req,response){
+    try{
+        let parent =await parentRepo.createParent(req.body)
     if(parent){
-        const token = jwt.newJwt("STUDENT",parent.UnionID,parent.authStatus)
-        res.append("Authorization",`Bearer ${token}`)
-       res.status(200).json({create: true})
+        const {res,token} = jwt.newJwt("PARENT",parent.UnionID,parent.authStatus)
+        response.append("Authorization",`Bearer ${token}`)
+       response.status(200).json({create: true})
    }else{
        res.status(403).json({create: false})
    }
+    }catch(e){
+        res.status(500).json({info:"服务器出现问题"})
+    }
+    
 }
 async function updateInfo(req,res){
     if(parentRepo.updateInfo(req.body.data,req.body.id)){

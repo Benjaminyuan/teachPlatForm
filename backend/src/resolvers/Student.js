@@ -36,7 +36,7 @@ async function sendAuth(req,res){
   }
   
  */
-async function signup(req, res) {
+async function signup(req, response) {
     console.log(req.body)
     // const {name,uni,email,phone,auth,subjects,order,invitations} = req.body
     // console.log({name,uni,email,phone,auth,subjects,order,invitations})
@@ -44,12 +44,12 @@ async function signup(req, res) {
     let {create,student} = await studentRepo.createStudent(data)
     // const{name,uni,email,phone,}
     if(create){
-        const token = jwt.newJwt("STUDENT",student.UnionID,student.authStatus)
-        res.append("Authorization",`Bearer ${token}`)
-        res.status(200).json({student:student})
+        const {res,token} = jwt.newJwt("STUDENT",student.UnionID,student.authStatus)
+        response.append("Authorization",`Bearer ${token}`)
+        response.status(200).json({student:student})
         return 
     }
-    res.status(400).json({ "create": create,student:student })
+    response.status(400).json({ "create": create,student:student })
 }
 
 /*---------------  */

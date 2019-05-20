@@ -5,6 +5,7 @@ const parentRepo = require("../Dao/parentsRepository")
 const authRepo = require("../Dao/authRepo")
 const PATH = require("path")
 const jwt = require("jsonwebtoken")
+const jwtUtil = require("../util/jwt")
 function star(req, res) {
     let result
     try {
@@ -208,27 +209,32 @@ async function getAuthInfo(res,req){
     const id =res.tokenData.jti
 
 }
-async function sendAuth(req,res){
+async function sendAuth(req,response){
     let files = req.files
-    const role = req.params.role
     let data = {}
-    data.sourceUrl =[ ]
+    let tokenData = req.tokenData
+    data.id = tokenData.jti
+    let status = tokenData.authStatus;
+    data.sourceUrl =[]
+    const role = tokenData.role
     files.forEach(element => {
         console.log(element)
         data.sourceUrl.push(element.originalname)
     });
     console.log(data.sourceUrl)
-    let tokenData = req.tokenData
-    data.id = tokenData.jti
-    let status = tokenData.authStatus;
+    
     if( status === "AUTHED"){
-        res.status(403).json({info:"您已经通过认证"})
+        response.status(403).json({info:"您已经通过认证"})
     }else{
-        const{ create,info ,res,update}=authRepo.createAuth(data,role)
-        if(create && res ){
-             res.status(200).json({info:info,authId:res.id,role:update.UnionID})
+        console.log("createAuth")
+        const{create,info}= await authRepo.createAuth(data,role)
+        console.log(create)
+        if(create){
+            const {res,token} = jwtUtil.newJwt(role,tokenData.jti,"AUTHCOMMITED")
+            response.append("Authorization",`Bearer ${token}`)
+             response.status(200).json({info:info})
         }else{
-            res.status(400).json({info:info})
+            response.status(400).json({info:info})
         }
     }
     //存储图片

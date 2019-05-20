@@ -1,5 +1,5 @@
 const jwt = require("../util/jwt")
-const {res,token} = jwt.newJwt("STUDENT","cjv9b6kwh00go07421skgs41h","AUTHED","12333333333")
+const {res,token} = jwt.newJwt("USER","22222222","UNCOMMITED")
 if(res){
     console.log(token)
 }

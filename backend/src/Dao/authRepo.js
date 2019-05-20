@@ -2,20 +2,22 @@ const {prisma} = require("../generated/prisma-client")
 const {studentAuthStatus,parentAuthStatus,studentAuthUpdateResult,
     parentAuthUpdateResult,studentRoleResult,parentRoleResult} = require("./fragment")
 async function createAuth(data,role){ 
-    let res, update
+    let res
    try{
-       await prisma.transaction(async () =>{
-        if(role === "student"){
+        if(role === "STUDENT"){
             res = await prisma.createStudentAuthInfo({
                  student:{
                      connect:{
                          UnionID:data.id
                      }
                  },
-                 sourceUrl:data.sourceUrl,
+                 UnionID:data.id,
+                 sourceUrl:{
+                     set:data.sourceUrl
+                 },
                  res:"AUTHCOMMITED",
              })
-             update = await prisma.updateStudent({
+              await prisma.updateStudent({
                  data:{
                      authStatus:"AUTHCOMMITED"
                  },
@@ -23,17 +25,21 @@ async function createAuth(data,role){
                      UnionID:data.id
                  }
              })
-         }else if(role === "parent"){
+         }else if(role === "PARENT"){
+             console.log(data.sourceUrl)
          res =  await prisma.createParentAuthInfo({
                  parent:{
                      connect:{
                          UnionID:data.id
                      }
                  },
-                 sourceUrl:data.sourceUrl,
+                 UnionID: data.id,
+                 sourceUrl:{
+                     set:data.sourceUrl
+                    },
                  res:"AUTHCOMMITED",
              })
-         update = await prisma.updateParent({
+          await prisma.updateParent({
              data:{
                  authStatus:"AUTHCOMMITED",
              },
@@ -42,13 +48,11 @@ async function createAuth(data,role){
              }
          })
          }
-       })
+         console.log(res)
        if(!res){
             return {
                 create:false,
                 info: "无法为未知角色创建认证请求",
-                res:"",
-                update:"",
             }
         }
    }catch(e){
@@ -56,15 +60,12 @@ async function createAuth(data,role){
        return {
            create: false,
            info:"请求失败，请重新创建",
-           res:"",
-           update:"",
        }
    }
+   console.log("return true ")
    return {
        create: true,
        info:"创建成功",
-       res:res,
-       update:update
    }
 }
 async function getAuthStatus(data,role){
@@ -152,7 +153,7 @@ async function updateAuthStatus(data,role){
         }
         }   
     try{
-        await prisma.transaction(async ()=>{
+       
             if(role === "student"){
                 authResult = await prisma.updateStudentAuthInfo(updateData).$fragment(studentAuthUpdateResult)
                 roleResult=prisma.updateStudent({
@@ -177,7 +178,7 @@ async function updateAuthStatus(data,role){
                     }
                 }).$fragment(parentRoleResult)
             }
-        })
+        
         if(!authResult){
             return {
                 authResult:"",

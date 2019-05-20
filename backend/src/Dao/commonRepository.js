@@ -204,7 +204,6 @@ async function updatePublishStatus(data,role){
 async function createTryOrder(data,invitationId){
     let TryOrder
     try{
-        prisma.transaction(async ()=>{
             await prisma.updateInvitation({
                 data: {
                     status: "PAIED"
@@ -227,7 +226,7 @@ async function createTryOrder(data,invitationId){
                 },
                 address: data.parent.address
             }).$fragment()
-        })
+    
        
     }catch(e){
         return {

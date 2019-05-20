@@ -42,13 +42,13 @@ type StudentDetail{
  
 type Parent{
   id: ID! @unique
+  UnionID: String!@unique
   phone: String! @unique
   name: String!@unique
   address: String!
   email: String!@unique
   #想要找的学科
   #是否认证
-  UnionID: String!@unique
   authStatus: AuthStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -56,16 +56,16 @@ type Parent{
   # 邀请
   invitations: [Invitation!] @relation(name:"InviteForParent" onDelete: CASCADE) 
   order: [Order!]@relation(name:"OrderParent" onDelete:CASCADE)   
-  publishTerm: BasicTermInfo!@unique
+  publishTerm: BasicTermInfo!
   publish: Boolean! @default(value:"false")
 }
 type BasicTermInfo{
-  termId: ID! @unique
+  id: ID! @unique
   Level:Level!
   subjects: [SubjectName]!
   pay: Int @default(value:50)
   childGender: Gender! @default(value:FEMALE)
-  TeacherGender: SelectGender! @default(value:BOTH)
+  teacherGender: SelectGender! @default(value:BOTH)
   teacherReuqire: String
   childStatus: String
   longTerm: LongTerm
@@ -77,9 +77,9 @@ type ShortTerm{
 }
 
 type LongTerm{
-  longTermId: ID! @unique
-  lessonTime: Int @default(value:1)
-  days: Int @default(value:1)
+  id: ID! @unique
+  lessonTime: Int! @default(value:1)
+  days: Int! @default(value:1)
   timeList: [AvalibelTime!]!
 }
 type AvalibelTime{
@@ -130,7 +130,9 @@ type TryOrder{
   otherInfo:String
   emerContact: [emerContact!]
   status: tryOrderStatus!
+  rejectInfo:String
 }
+
 type emerContact{
   name:String!
   phone:String!
@@ -142,9 +144,11 @@ type Subject{
 }
 enum tryOrderStatus{
   INIT
+  INFOCOMPLETE
   PACK
   SACK
   CANCLED
+  FINISHED
 }
 
 enum Gender{

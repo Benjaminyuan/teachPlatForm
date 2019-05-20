@@ -716,22 +716,20 @@ export type Gender = "MALE" | "FEMALE";
 export type SelectGender = "MALE" | "FEMALE" | "BOTH";
 
 export type BasicTermInfoOrderByInput =
-  | "termId_ASC"
-  | "termId_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "Level_ASC"
   | "Level_DESC"
   | "pay_ASC"
   | "pay_DESC"
   | "childGender_ASC"
   | "childGender_DESC"
-  | "TeacherGender_ASC"
-  | "TeacherGender_DESC"
+  | "teacherGender_ASC"
+  | "teacherGender_DESC"
   | "teacherReuqire_ASC"
   | "teacherReuqire_DESC"
   | "childStatus_ASC"
   | "childStatus_DESC"
-  | "id_ASC"
-  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -767,6 +765,8 @@ export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
 export type ParentOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "UnionID_ASC"
+  | "UnionID_DESC"
   | "phone_ASC"
   | "phone_DESC"
   | "name_ASC"
@@ -775,8 +775,6 @@ export type ParentOrderByInput =
   | "address_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
   | "authStatus_ASC"
   | "authStatus_DESC"
   | "createdAt_ASC"
@@ -839,14 +837,12 @@ export type OrderOrderByInput =
   | "updatedAt_DESC";
 
 export type LongTermOrderByInput =
-  | "longTermId_ASC"
-  | "longTermId_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "lessonTime_ASC"
   | "lessonTime_DESC"
   | "days_ASC"
   | "days_DESC"
-  | "id_ASC"
-  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1059,24 +1055,24 @@ export interface AvalibelTimeWhereInput {
 }
 
 export type BasicTermInfoWhereUniqueInput = AtLeastOne<{
-  termId: ID_Input;
+  id: ID_Input;
 }>;
 
 export interface BasicTermInfoWhereInput {
-  termId?: ID_Input;
-  termId_not?: ID_Input;
-  termId_in?: ID_Input[] | ID_Input;
-  termId_not_in?: ID_Input[] | ID_Input;
-  termId_lt?: ID_Input;
-  termId_lte?: ID_Input;
-  termId_gt?: ID_Input;
-  termId_gte?: ID_Input;
-  termId_contains?: ID_Input;
-  termId_not_contains?: ID_Input;
-  termId_starts_with?: ID_Input;
-  termId_not_starts_with?: ID_Input;
-  termId_ends_with?: ID_Input;
-  termId_not_ends_with?: ID_Input;
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   Level?: Level;
   Level_not?: Level;
   Level_in?: Level[] | Level;
@@ -1093,10 +1089,10 @@ export interface BasicTermInfoWhereInput {
   childGender_not?: Gender;
   childGender_in?: Gender[] | Gender;
   childGender_not_in?: Gender[] | Gender;
-  TeacherGender?: SelectGender;
-  TeacherGender_not?: SelectGender;
-  TeacherGender_in?: SelectGender[] | SelectGender;
-  TeacherGender_not_in?: SelectGender[] | SelectGender;
+  teacherGender?: SelectGender;
+  teacherGender_not?: SelectGender;
+  teacherGender_in?: SelectGender[] | SelectGender;
+  teacherGender_not_in?: SelectGender[] | SelectGender;
   teacherReuqire?: String;
   teacherReuqire_not?: String;
   teacherReuqire_in?: String[] | String;
@@ -1133,20 +1129,20 @@ export interface BasicTermInfoWhereInput {
 }
 
 export interface LongTermWhereInput {
-  longTermId?: ID_Input;
-  longTermId_not?: ID_Input;
-  longTermId_in?: ID_Input[] | ID_Input;
-  longTermId_not_in?: ID_Input[] | ID_Input;
-  longTermId_lt?: ID_Input;
-  longTermId_lte?: ID_Input;
-  longTermId_gt?: ID_Input;
-  longTermId_gte?: ID_Input;
-  longTermId_contains?: ID_Input;
-  longTermId_not_contains?: ID_Input;
-  longTermId_starts_with?: ID_Input;
-  longTermId_not_starts_with?: ID_Input;
-  longTermId_ends_with?: ID_Input;
-  longTermId_not_ends_with?: ID_Input;
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   lessonTime?: Int;
   lessonTime_not?: Int;
   lessonTime_in?: Int[] | Int;
@@ -1220,6 +1216,20 @@ export interface ParentWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  UnionID?: String;
+  UnionID_not?: String;
+  UnionID_in?: String[] | String;
+  UnionID_not_in?: String[] | String;
+  UnionID_lt?: String;
+  UnionID_lte?: String;
+  UnionID_gt?: String;
+  UnionID_gte?: String;
+  UnionID_contains?: String;
+  UnionID_not_contains?: String;
+  UnionID_starts_with?: String;
+  UnionID_not_starts_with?: String;
+  UnionID_ends_with?: String;
+  UnionID_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -1276,20 +1286,6 @@ export interface ParentWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
   authStatus?: AuthStatus;
   authStatus_not?: AuthStatus;
   authStatus_in?: AuthStatus[] | AuthStatus;
@@ -1606,7 +1602,7 @@ export interface OrderWhereInput {
 }
 
 export type LongTermWhereUniqueInput = AtLeastOne<{
-  longTermId: ID_Input;
+  id: ID_Input;
 }>;
 
 export type OrderWhereUniqueInput = AtLeastOne<{
@@ -1615,10 +1611,10 @@ export type OrderWhereUniqueInput = AtLeastOne<{
 
 export type ParentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  UnionID?: String;
   phone?: String;
   name?: String;
   email?: String;
-  UnionID?: String;
 }>;
 
 export type ParentAuthInfoWhereUniqueInput = AtLeastOne<{
@@ -1961,12 +1957,11 @@ export interface AvalibelTimeUpdateManyMutationInput {
 }
 
 export interface BasicTermInfoCreateInput {
-  termId: ID_Input;
   Level: Level;
   subjects?: BasicTermInfoCreatesubjectsInput;
   pay?: Int;
   childGender?: Gender;
-  TeacherGender?: SelectGender;
+  teacherGender?: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
   longTerm?: LongTermCreateOneInput;
@@ -1983,7 +1978,6 @@ export interface LongTermCreateOneInput {
 }
 
 export interface LongTermCreateInput {
-  longTermId: ID_Input;
   lessonTime?: Int;
   days?: Int;
   timeList?: AvalibelTimeCreateManyInput;
@@ -2008,12 +2002,11 @@ export interface ShortTermCreatetimeListInput {
 }
 
 export interface BasicTermInfoUpdateInput {
-  termId?: ID_Input;
   Level?: Level;
   subjects?: BasicTermInfoUpdatesubjectsInput;
   pay?: Int;
   childGender?: Gender;
-  TeacherGender?: SelectGender;
+  teacherGender?: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
   longTerm?: LongTermUpdateOneInput;
@@ -2034,7 +2027,6 @@ export interface LongTermUpdateOneInput {
 }
 
 export interface LongTermUpdateDataInput {
-  longTermId?: ID_Input;
   lessonTime?: Int;
   days?: Int;
   timeList?: AvalibelTimeUpdateManyInput;
@@ -2101,12 +2093,11 @@ export interface ShortTermUpsertNestedInput {
 }
 
 export interface BasicTermInfoUpdateManyMutationInput {
-  termId?: ID_Input;
   Level?: Level;
   subjects?: BasicTermInfoUpdatesubjectsInput;
   pay?: Int;
   childGender?: Gender;
-  TeacherGender?: SelectGender;
+  teacherGender?: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
 }
@@ -2163,11 +2154,11 @@ export interface ParentCreateManyWithoutStarListInput {
 }
 
 export interface ParentCreateWithoutStarListInput {
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   invitations?: InvitationCreateManyWithoutParentInput;
   order?: OrderCreateManyWithoutParentInput;
@@ -2256,11 +2247,11 @@ export interface ParentCreateOneWithoutInvitationsInput {
 }
 
 export interface ParentCreateWithoutInvitationsInput {
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
   order?: OrderCreateManyWithoutParentInput;
@@ -2310,11 +2301,11 @@ export interface ParentCreateOneWithoutOrderInput {
 }
 
 export interface ParentCreateWithoutOrderInput {
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
   invitations?: InvitationCreateManyWithoutParentInput;
@@ -2417,11 +2408,11 @@ export interface ParentUpdateWithWhereUniqueWithoutStarListInput {
 }
 
 export interface ParentUpdateWithoutStarListDataInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   invitations?: InvitationUpdateManyWithoutParentInput;
   order?: OrderUpdateManyWithoutParentInput;
@@ -2634,11 +2625,11 @@ export interface ParentUpdateOneRequiredWithoutInvitationsInput {
 }
 
 export interface ParentUpdateWithoutInvitationsDataInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
   order?: OrderUpdateManyWithoutParentInput;
@@ -2724,11 +2715,11 @@ export interface ParentUpdateOneRequiredWithoutOrderInput {
 }
 
 export interface ParentUpdateWithoutOrderDataInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
   invitations?: InvitationUpdateManyWithoutParentInput;
@@ -2744,12 +2735,11 @@ export interface BasicTermInfoUpdateOneRequiredInput {
 }
 
 export interface BasicTermInfoUpdateDataInput {
-  termId?: ID_Input;
   Level?: Level;
   subjects?: BasicTermInfoUpdatesubjectsInput;
   pay?: Int;
   childGender?: Gender;
-  TeacherGender?: SelectGender;
+  teacherGender?: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
   longTerm?: LongTermUpdateOneInput;
@@ -3015,6 +3005,20 @@ export interface ParentScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  UnionID?: String;
+  UnionID_not?: String;
+  UnionID_in?: String[] | String;
+  UnionID_not_in?: String[] | String;
+  UnionID_lt?: String;
+  UnionID_lte?: String;
+  UnionID_gt?: String;
+  UnionID_gte?: String;
+  UnionID_contains?: String;
+  UnionID_not_contains?: String;
+  UnionID_starts_with?: String;
+  UnionID_not_starts_with?: String;
+  UnionID_ends_with?: String;
+  UnionID_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -3071,20 +3075,6 @@ export interface ParentScalarWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
   authStatus?: AuthStatus;
   authStatus_not?: AuthStatus;
   authStatus_in?: AuthStatus[] | AuthStatus;
@@ -3118,11 +3108,11 @@ export interface ParentUpdateManyWithWhereNestedInput {
 }
 
 export interface ParentUpdateManyDataInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   publish?: Boolean;
 }
@@ -3138,14 +3128,12 @@ export interface InvitationUpdateManyMutationInput {
 }
 
 export interface LongTermUpdateInput {
-  longTermId?: ID_Input;
   lessonTime?: Int;
   days?: Int;
   timeList?: AvalibelTimeUpdateManyInput;
 }
 
 export interface LongTermUpdateManyMutationInput {
-  longTermId?: ID_Input;
   lessonTime?: Int;
   days?: Int;
 }
@@ -3167,11 +3155,11 @@ export interface OrderUpdateManyMutationInput {
 }
 
 export interface ParentCreateInput {
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   starList?: StudentCreateManyWithoutStarListInput;
   invitations?: InvitationCreateManyWithoutParentInput;
@@ -3181,11 +3169,11 @@ export interface ParentCreateInput {
 }
 
 export interface ParentUpdateInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
   invitations?: InvitationUpdateManyWithoutParentInput;
@@ -3195,11 +3183,11 @@ export interface ParentUpdateInput {
 }
 
 export interface ParentUpdateManyMutationInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   publish?: Boolean;
 }
@@ -3244,11 +3232,11 @@ export interface ParentUpdateOneRequiredInput {
 }
 
 export interface ParentUpdateDataInput {
+  UnionID?: String;
   phone?: String;
   name?: String;
   address?: String;
   email?: String;
-  UnionID?: String;
   authStatus?: AuthStatus;
   starList?: StudentUpdateManyWithoutStarListInput;
   invitations?: InvitationUpdateManyWithoutParentInput;
@@ -3960,12 +3948,12 @@ export interface AggregateAvalibelTimeSubscription
 }
 
 export interface BasicTermInfo {
-  termId: ID_Output;
+  id: ID_Output;
   Level: Level;
   subjects: SubjectName[];
   pay?: Int;
   childGender: Gender;
-  TeacherGender: SelectGender;
+  teacherGender: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
 }
@@ -3973,12 +3961,12 @@ export interface BasicTermInfo {
 export interface BasicTermInfoPromise
   extends Promise<BasicTermInfo>,
     Fragmentable {
-  termId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   Level: () => Promise<Level>;
   subjects: () => Promise<SubjectName[]>;
   pay: () => Promise<Int>;
   childGender: () => Promise<Gender>;
-  TeacherGender: () => Promise<SelectGender>;
+  teacherGender: () => Promise<SelectGender>;
   teacherReuqire: () => Promise<String>;
   childStatus: () => Promise<String>;
   longTerm: <T = LongTermPromise>() => T;
@@ -3988,12 +3976,12 @@ export interface BasicTermInfoPromise
 export interface BasicTermInfoSubscription
   extends Promise<AsyncIterator<BasicTermInfo>>,
     Fragmentable {
-  termId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   Level: () => Promise<AsyncIterator<Level>>;
   subjects: () => Promise<AsyncIterator<SubjectName[]>>;
   pay: () => Promise<AsyncIterator<Int>>;
   childGender: () => Promise<AsyncIterator<Gender>>;
-  TeacherGender: () => Promise<AsyncIterator<SelectGender>>;
+  teacherGender: () => Promise<AsyncIterator<SelectGender>>;
   teacherReuqire: () => Promise<AsyncIterator<String>>;
   childStatus: () => Promise<AsyncIterator<String>>;
   longTerm: <T = LongTermSubscription>() => T;
@@ -4001,13 +3989,13 @@ export interface BasicTermInfoSubscription
 }
 
 export interface LongTerm {
-  longTermId: ID_Output;
-  lessonTime?: Int;
-  days?: Int;
+  id: ID_Output;
+  lessonTime: Int;
+  days: Int;
 }
 
 export interface LongTermPromise extends Promise<LongTerm>, Fragmentable {
-  longTermId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   lessonTime: () => Promise<Int>;
   days: () => Promise<Int>;
   timeList: <T = FragmentableArray<AvalibelTime>>(args?: {
@@ -4024,7 +4012,7 @@ export interface LongTermPromise extends Promise<LongTerm>, Fragmentable {
 export interface LongTermSubscription
   extends Promise<AsyncIterator<LongTerm>>,
     Fragmentable {
-  longTermId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   lessonTime: () => Promise<AsyncIterator<Int>>;
   days: () => Promise<AsyncIterator<Int>>;
   timeList: <T = Promise<AsyncIterator<AvalibelTimeSubscription>>>(args?: {
@@ -4305,11 +4293,11 @@ export interface SubjectSubscription
 
 export interface Parent {
   id: ID_Output;
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -4318,11 +4306,11 @@ export interface Parent {
 
 export interface ParentPromise extends Promise<Parent>, Fragmentable {
   id: () => Promise<ID_Output>;
+  UnionID: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
   address: () => Promise<String>;
   email: () => Promise<String>;
-  UnionID: () => Promise<String>;
   authStatus: () => Promise<AuthStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -4361,11 +4349,11 @@ export interface ParentSubscription
   extends Promise<AsyncIterator<Parent>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  UnionID: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
   authStatus: () => Promise<AsyncIterator<AuthStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -5458,12 +5446,12 @@ export interface BasicTermInfoSubscriptionPayloadSubscription
 }
 
 export interface BasicTermInfoPreviousValues {
-  termId: ID_Output;
+  id: ID_Output;
   Level: Level;
   subjects: SubjectName[];
   pay?: Int;
   childGender: Gender;
-  TeacherGender: SelectGender;
+  teacherGender: SelectGender;
   teacherReuqire?: String;
   childStatus?: String;
 }
@@ -5471,12 +5459,12 @@ export interface BasicTermInfoPreviousValues {
 export interface BasicTermInfoPreviousValuesPromise
   extends Promise<BasicTermInfoPreviousValues>,
     Fragmentable {
-  termId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   Level: () => Promise<Level>;
   subjects: () => Promise<SubjectName[]>;
   pay: () => Promise<Int>;
   childGender: () => Promise<Gender>;
-  TeacherGender: () => Promise<SelectGender>;
+  teacherGender: () => Promise<SelectGender>;
   teacherReuqire: () => Promise<String>;
   childStatus: () => Promise<String>;
 }
@@ -5484,12 +5472,12 @@ export interface BasicTermInfoPreviousValuesPromise
 export interface BasicTermInfoPreviousValuesSubscription
   extends Promise<AsyncIterator<BasicTermInfoPreviousValues>>,
     Fragmentable {
-  termId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   Level: () => Promise<AsyncIterator<Level>>;
   subjects: () => Promise<AsyncIterator<SubjectName[]>>;
   pay: () => Promise<AsyncIterator<Int>>;
   childGender: () => Promise<AsyncIterator<Gender>>;
-  TeacherGender: () => Promise<AsyncIterator<SelectGender>>;
+  teacherGender: () => Promise<AsyncIterator<SelectGender>>;
   teacherReuqire: () => Promise<AsyncIterator<String>>;
   childStatus: () => Promise<AsyncIterator<String>>;
 }
@@ -5573,15 +5561,15 @@ export interface LongTermSubscriptionPayloadSubscription
 }
 
 export interface LongTermPreviousValues {
-  longTermId: ID_Output;
-  lessonTime?: Int;
-  days?: Int;
+  id: ID_Output;
+  lessonTime: Int;
+  days: Int;
 }
 
 export interface LongTermPreviousValuesPromise
   extends Promise<LongTermPreviousValues>,
     Fragmentable {
-  longTermId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   lessonTime: () => Promise<Int>;
   days: () => Promise<Int>;
 }
@@ -5589,7 +5577,7 @@ export interface LongTermPreviousValuesPromise
 export interface LongTermPreviousValuesSubscription
   extends Promise<AsyncIterator<LongTermPreviousValues>>,
     Fragmentable {
-  longTermId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   lessonTime: () => Promise<AsyncIterator<Int>>;
   days: () => Promise<AsyncIterator<Int>>;
 }
@@ -5665,11 +5653,11 @@ export interface ParentSubscriptionPayloadSubscription
 
 export interface ParentPreviousValues {
   id: ID_Output;
+  UnionID: String;
   phone: String;
   name: String;
   address: String;
   email: String;
-  UnionID: String;
   authStatus: AuthStatus;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -5680,11 +5668,11 @@ export interface ParentPreviousValuesPromise
   extends Promise<ParentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  UnionID: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
   address: () => Promise<String>;
   email: () => Promise<String>;
-  UnionID: () => Promise<String>;
   authStatus: () => Promise<AuthStatus>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -5695,11 +5683,11 @@ export interface ParentPreviousValuesSubscription
   extends Promise<AsyncIterator<ParentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  UnionID: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
   authStatus: () => Promise<AsyncIterator<AuthStatus>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
