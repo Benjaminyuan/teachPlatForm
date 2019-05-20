@@ -8,10 +8,10 @@ async function signup(req,response){
         response.append("Authorization",`Bearer ${token}`)
        response.status(200).json({create: true})
    }else{
-       res.status(403).json({create: false})
+       response.status(403).json({create: false})
    }
     }catch(e){
-        res.status(500).json({info:"服务器出现问题"})
+        response.status(500).json({info:"服务器出现问题"})
     }
     
 }

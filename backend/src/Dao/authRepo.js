@@ -68,6 +68,42 @@ async function createAuth(data,role){
        info:"创建成功",
    }
 }
+async function getAuthInfo(data,role){
+    let result 
+    try{
+        if(role ==="student"){
+            result = await prisma.studentAuthInfo({
+                UnionID:data.id
+            })
+        }else if (role === "parent"){
+            result = await prisma.parentAuthInfo({
+                UnionID:data.id
+            })
+            
+        }else{
+            return {
+                result:"",
+                info:"非合法请求"
+            }
+        }
+    }catch(e){
+        return {
+            result:"",
+            info:"更新失败"
+        }
+    }
+    if(result){
+        return {
+            result:result,
+            info:"更新成功"
+        }
+    }else{
+        return {
+            result:"",
+            info:"查询不存在"
+        }
+    }
+}
 async function getAuthStatus(data,role){
     let status 
     try{
@@ -137,23 +173,24 @@ async function getAuthList(data,role){
    
 }
 async function updateAuthStatus(data,role){
+
+    console.log(data)
     let authResult ,roleResult
     const updateData = {
         data:{
-                res:data.status,
-                Auth:{
-                    connect:{
-                        UnionID:data.admin
-                    }
-                 },
-                 info:data.info
-            },
+            info:data.info,
+            res:data.status,
+            Auth:{
+                connect:{
+                    UnionID:data.admin
+                }
+            }
+        },
         where:{
-            id:data.id
+            UnionID:data.id
         }
         }   
     try{
-       
             if(role === "student"){
                 authResult = await prisma.updateStudentAuthInfo(updateData).$fragment(studentAuthUpdateResult)
                 roleResult=prisma.updateStudent({
@@ -167,6 +204,7 @@ async function updateAuthStatus(data,role){
                 }).$fragment(studentRoleResult)
             }else if(role === "parent"){
                 authResult = await prisma.updateParentAuthInfo(updateData).$fragment(parentAuthUpdateResult)
+                console.log(authResult)
                 roleResult = prisma.updateParent({
                     data:
                     {
@@ -174,7 +212,7 @@ async function updateAuthStatus(data,role){
                         publish:true
                     },
                     where:{
-                        UnionID:data.parent.UnionID
+                        UnionID:authResult.parent.UnionID
                     }
                 }).$fragment(parentRoleResult)
             }
@@ -206,5 +244,6 @@ module.exports={
     createAuth,
     getAuthStatus,
     getAuthList,
-    updateAuthStatus
+    updateAuthStatus,
+    getAuthInfo
 }

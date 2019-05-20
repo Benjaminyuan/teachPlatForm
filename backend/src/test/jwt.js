@@ -1,8 +1,10 @@
 const jwt = require("../util/jwt")
-const {res,token} = jwt.newJwt("USER","22222222","UNCOMMITED")
+const {res,token} = jwt.newJwt("ADMIN", "33333333","AUTHED")
 if(res){
     console.log(token)
 }
+const {valid,parseRes} = jwt.verifyJwt(token)
+console.log(parseRes)
 // function jestJson(key,value){
 //     const res = {
 //         key:value

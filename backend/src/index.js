@@ -15,9 +15,22 @@ app.use('/student*', (req, res, next) => {
 })
 
 app.post('/signup', selfAuth.weChatAuth)
-
+// app.post('/admin/signup',admin.signup)
+//查看parent或者student
 //这条路由优先级高一些，位置不要调换
 app.all("/*", filter.extractJwtInfo)
+app.all('/admin/*',filter.isAdmin)
+app.get('/admin/role/:role/:id', admin.getRole)
+app.get('/admin/roles/:role/:status',admin.getRoles)
+//查看授权列表
+app.get('/admin/auth/:role/:status',admin.getAuthList)
+app.get("/admin/auth/:role/info/:id",admin.getAuthInfo)
+app.post('/admin/:role/status/:id',admin.updateAuthStatus)
+/**
+ * /star/:role/:roleid?id=id
+ * 
+ */
+
 app.post('/parent/signup', parent.signup)
 app.post('/student/signup', student.signup)
 
@@ -41,20 +54,12 @@ app.post("/:role/publish/:status",common.getPublishStatus)
 app.post('/*', (req, res, next) => {
     if (filter.isEmpty(req.body)) {
         res.status(400).json({ info: "请求为空，请输入有效请求！！" })
+        next()
     }else{
         next()
     }
 })
-//查看parent或者student
-app.get('/admin/role/:role/:id', admin.getRole)
-app.get('/admin/roles/:role/:status',admin.getRoles)
-//查看授权列表
-app.get('/auth/:role/:status',admin.getAuthList)
-app.post('/admin/:role/status/:id',admin.updateAuthStatus)
-/**
- * /star/:role/:roleid?id=id
- * 
- */
+
 app.get('/star/:role/:id',common.star)
 app.get('/unstar/:role/:id',common.unStar)
 //检查用户是否存在，用于填写表单校验

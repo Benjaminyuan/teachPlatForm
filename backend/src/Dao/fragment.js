@@ -24,7 +24,7 @@ fragment studentAuthUpdateResult on StudentAuthInfo{
 `
 const parentAuthUpdateResult = `
 fragment parentAuthUpdateResult on ParentAuthInfo{
-    if
+    id
     parent{
      UnionID
     }

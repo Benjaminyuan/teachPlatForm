@@ -1,6 +1,7 @@
 const studentRepo = require("../Dao/studentsRepository")
 const parentRepo = require("../Dao/parentsRepository")
 const authRepo = require("../Dao/authRepo")
+const {prisma} = require('../generated/prisma-client')
 const statusMap = {
     uncommited:"UNCOMMITED",
     authcommited:"AUTHCOMMITED",
@@ -70,6 +71,7 @@ async function updateAuthStatus(req,res){
    const info = req.body.info
    if(status === "AUTHED" || status === "REJECTED"){
        try{
+           console.log("try to update ")
             const{authResult,authUpdate} =await authRepo.updateAuthStatus({
                 status:status,
                 id:id,
@@ -79,7 +81,7 @@ async function updateAuthStatus(req,res){
             //没有使用事务，有危险
             if(authUpdate && authResult){
                     res.status(200).json({info:"更新成功"})
-                
+               return
             }
                 res.status(404).json({info:"更新失败"})
             return 
@@ -100,9 +102,21 @@ async function isAdmin(req,res,next){
          next()
     }
 }
+async function getAuthInfo(req,res){
+    let role = req.params.role
+    let id = req.params.id
+    const {result,info} = await authRepo.getAuthInfo({id:id},role)
+    if(result){
+        res.status(200).json({result:result,info:info})
+    }else{
+        res.status(404).json({info:info})
+    }
+}
+
 module.exports={
     getRoles,
     getRole,
     getAuthList,
     updateAuthStatus,
+    getAuthInfo
 }
