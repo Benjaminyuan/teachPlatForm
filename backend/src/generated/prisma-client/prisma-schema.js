@@ -2300,7 +2300,7 @@ enum SelectGender {
 }
 
 type ShortTerm {
-  shortTermId: ID!
+  id: ID!
   timeList: [DateTime!]!
 }
 
@@ -2311,7 +2311,6 @@ type ShortTermConnection {
 }
 
 input ShortTermCreateInput {
-  shortTermId: ID!
   timeList: ShortTermCreatetimeListInput
 }
 
@@ -2330,8 +2329,6 @@ type ShortTermEdge {
 }
 
 enum ShortTermOrderByInput {
-  shortTermId_ASC
-  shortTermId_DESC
   id_ASC
   id_DESC
   createdAt_ASC
@@ -2341,7 +2338,7 @@ enum ShortTermOrderByInput {
 }
 
 type ShortTermPreviousValues {
-  shortTermId: ID!
+  id: ID!
   timeList: [DateTime!]!
 }
 
@@ -2364,17 +2361,14 @@ input ShortTermSubscriptionWhereInput {
 }
 
 input ShortTermUpdateDataInput {
-  shortTermId: ID
   timeList: ShortTermUpdatetimeListInput
 }
 
 input ShortTermUpdateInput {
-  shortTermId: ID
   timeList: ShortTermUpdatetimeListInput
 }
 
 input ShortTermUpdateManyMutationInput {
-  shortTermId: ID
   timeList: ShortTermUpdatetimeListInput
 }
 
@@ -2397,27 +2391,27 @@ input ShortTermUpsertNestedInput {
 }
 
 input ShortTermWhereInput {
-  shortTermId: ID
-  shortTermId_not: ID
-  shortTermId_in: [ID!]
-  shortTermId_not_in: [ID!]
-  shortTermId_lt: ID
-  shortTermId_lte: ID
-  shortTermId_gt: ID
-  shortTermId_gte: ID
-  shortTermId_contains: ID
-  shortTermId_not_contains: ID
-  shortTermId_starts_with: ID
-  shortTermId_not_starts_with: ID
-  shortTermId_ends_with: ID
-  shortTermId_not_ends_with: ID
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   AND: [ShortTermWhereInput!]
   OR: [ShortTermWhereInput!]
   NOT: [ShortTermWhereInput!]
 }
 
 input ShortTermWhereUniqueInput {
-  shortTermId: ID
+  id: ID
 }
 
 type Student {

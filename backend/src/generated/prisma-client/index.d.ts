@@ -863,8 +863,6 @@ export type ParentAuthInfoOrderByInput =
   | "updatedAt_DESC";
 
 export type ShortTermOrderByInput =
-  | "shortTermId_ASC"
-  | "shortTermId_DESC"
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
@@ -1168,20 +1166,20 @@ export interface LongTermWhereInput {
 }
 
 export interface ShortTermWhereInput {
-  shortTermId?: ID_Input;
-  shortTermId_not?: ID_Input;
-  shortTermId_in?: ID_Input[] | ID_Input;
-  shortTermId_not_in?: ID_Input[] | ID_Input;
-  shortTermId_lt?: ID_Input;
-  shortTermId_lte?: ID_Input;
-  shortTermId_gt?: ID_Input;
-  shortTermId_gte?: ID_Input;
-  shortTermId_contains?: ID_Input;
-  shortTermId_not_contains?: ID_Input;
-  shortTermId_starts_with?: ID_Input;
-  shortTermId_not_starts_with?: ID_Input;
-  shortTermId_ends_with?: ID_Input;
-  shortTermId_not_ends_with?: ID_Input;
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   AND?: ShortTermWhereInput[] | ShortTermWhereInput;
   OR?: ShortTermWhereInput[] | ShortTermWhereInput;
   NOT?: ShortTermWhereInput[] | ShortTermWhereInput;
@@ -1677,7 +1675,7 @@ export interface ParentAuthInfoWhereInput {
 }
 
 export type ShortTermWhereUniqueInput = AtLeastOne<{
-  shortTermId: ID_Input;
+  id: ID_Input;
 }>;
 
 export type StudentWhereUniqueInput = AtLeastOne<{
@@ -1993,7 +1991,6 @@ export interface ShortTermCreateOneInput {
 }
 
 export interface ShortTermCreateInput {
-  shortTermId: ID_Input;
   timeList?: ShortTermCreatetimeListInput;
 }
 
@@ -2079,7 +2076,6 @@ export interface ShortTermUpdateOneInput {
 }
 
 export interface ShortTermUpdateDataInput {
-  shortTermId?: ID_Input;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
@@ -3283,12 +3279,10 @@ export interface ParentAuthInfoUpdateManyMutationInput {
 }
 
 export interface ShortTermUpdateInput {
-  shortTermId?: ID_Input;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
 export interface ShortTermUpdateManyMutationInput {
-  shortTermId?: ID_Input;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
@@ -4027,19 +4021,19 @@ export interface LongTermSubscription
 }
 
 export interface ShortTerm {
-  shortTermId: ID_Output;
+  id: ID_Output;
   timeList: DateTimeOutput[];
 }
 
 export interface ShortTermPromise extends Promise<ShortTerm>, Fragmentable {
-  shortTermId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   timeList: () => Promise<DateTimeOutput[]>;
 }
 
 export interface ShortTermSubscription
   extends Promise<AsyncIterator<ShortTerm>>,
     Fragmentable {
-  shortTermId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   timeList: () => Promise<AsyncIterator<DateTimeOutput[]>>;
 }
 
@@ -5773,21 +5767,21 @@ export interface ShortTermSubscriptionPayloadSubscription
 }
 
 export interface ShortTermPreviousValues {
-  shortTermId: ID_Output;
+  id: ID_Output;
   timeList: DateTimeOutput[];
 }
 
 export interface ShortTermPreviousValuesPromise
   extends Promise<ShortTermPreviousValues>,
     Fragmentable {
-  shortTermId: () => Promise<ID_Output>;
+  id: () => Promise<ID_Output>;
   timeList: () => Promise<DateTimeOutput[]>;
 }
 
 export interface ShortTermPreviousValuesSubscription
   extends Promise<AsyncIterator<ShortTermPreviousValues>>,
     Fragmentable {
-  shortTermId: () => Promise<AsyncIterator<ID_Output>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   timeList: () => Promise<AsyncIterator<DateTimeOutput[]>>;
 }
 

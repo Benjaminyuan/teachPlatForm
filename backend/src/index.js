@@ -37,28 +37,35 @@ app.post('/student/signup', student.signup)
 app.post("/:role/auth/upload",upload.array("auth",5),common.sendAuth)
 app.get("/:role/auth/status/:id",common.getAuthStatus)
 app.get("/auth/info/pic/:name",common.getPic)
-app.post("/*", (res, req, next) => {
-    let status = res.tokenData.authStatus;
+// app.post('/*', (req, res, next) => {
+//     if (filter.isEmpty(req.body)) {
+//         res.status(400).json({ info: "请求为空，请输入有效请求！！" })
+//         next()
+//     }else{
+//         next()
+//     }
+// })
+app.post("/*", (req, res, next) => {
+    let status = req.tokenData.authStatus;
     console.log("auth check")
     if (status !== "AUTHED") {
-        req.status(403).json({ info: "未授权访问" })
+        res.status(403).json({ info: "未授权访问" })
     }
     console.log("auth check finished !!")
     next()
 })
+app.get("/:role/publishlist",common.getPublishList)
+app.get("/:role/publish/status",common.getPublishStatus)
+app.post("/:role/publish/:status",common.updatePublishStatus)
 app.get("/:role/invitations",common.getInvitations)
 //
-app.get("/:role/publishlist",common.getPublishList)
-app.post("/:role/publish/:status",common.getPublishStatus)
+app.post('/invitation/init', common.createInvitation)
+//改变邀请状态：参数  invitationId，状态
+app.get('/invitation/status/:id', common.getInvitationStatus)
+app.post('/invitation/status/:id', common.updateInvitaion)
+
 //
-app.post('/*', (req, res, next) => {
-    if (filter.isEmpty(req.body)) {
-        res.status(400).json({ info: "请求为空，请输入有效请求！！" })
-        next()
-    }else{
-        next()
-    }
-})
+
 
 app.get('/star/:role/:id',common.star)
 app.get('/unstar/:role/:id',common.unStar)
@@ -67,17 +74,15 @@ app.post('/user/exist', common.isExist)
 /**-------邀请------------- */
 // app.post('/invitation',filter.extractJwtInfo)
 //发送邀请
-app.post('/invitation/init', common.createInvitation)
-//改变邀请状态：参数  invitationId，状态
-app.get('/invitation/status/:id', common.getInvitationStatus)
-app.post('/invitation/status', common.updateInvitaion)
+
 /**-------邀请------------- */
 
 
 // app.post('/auth/login',)
-
-app.get("/orders/status",tryOrder.getStatus)
-app.get("/orders/info",tryOrder.getTryOrderInfo)
+app.get("/order/status/:id",tryOrder.getStatus)
+app.post("/orders/status",tryOrder.getAllStatus)
+app.get("/order/info/:id",tryOrder.getTryOrderInfo)
+app.post("/orders/info",tryOrder.getAllTryOrderInfo)
 app.post("/order/info",tryOrder.updateInfo)
 app.post("/order/status",tryOrder.updateOrderstatus)
 /*-----------student------------ */

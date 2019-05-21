@@ -105,6 +105,47 @@ fragment OrderChange on  TryOder{
     
 }
 `
+const studentBasicPublishInfo = 
+`fragment studentPublishInfo on Student{
+    UnionID
+    name
+    university
+    grades
+    Gender
+    subjects{
+      name
+      level
+    }
+    expectPay
+    avalible{
+      day
+      detail
+    }
+}
+`
+const parentBasicPublishInfo=`
+fragment parentPublishInfo on Parent{
+    address
+    name
+  	publishTerm{
+    	Level
+      pay
+      subjects
+      childGender
+      teacherGender
+      longTerm{
+        days
+        lessonTime
+        timeList{
+          day
+          detail
+        } 
+      }
+      shortTerm{
+        timeList
+      }
+    }
+}`
 module.exports={
     invitationStatus,
     studentAuthStatus,
@@ -115,5 +156,8 @@ module.exports={
     parentRoleResult,
     studentInvitationResult,
     parentInvitationResult,
-    orderChangeResult
+    orderChangeResult,
+    studentBasicPublishInfo ,
+    parentBasicPublishInfo
+
 }

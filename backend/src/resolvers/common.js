@@ -75,9 +75,10 @@ async function createInvitation(req, res) {
         //邀请初始化，waiting 写死！！
         status: "WAITING",
     }
-    if(role === 'parent'){
-        data.invitor="PARENT"
-        query.invitor="PARENT"
+    data.invitor=role
+    query.invitor=role
+    if(role === 'PARENT'){
+        
         data.student={
             connect:{
                 UnionID: UnionID
@@ -95,8 +96,6 @@ async function createInvitation(req, res) {
             UnionID:roleId
         }
     }else{
-        data.invitor="STUDENT"
-        query.invitor="STUDENT"
         data.student={
             connect:{
                 UnionID:roleId
@@ -145,27 +144,34 @@ async function getInvitationStatus(req,res){
     }else if(status === null){
         res.status(404).json({info:"查找邀请不存在"})
     }else{
-        res.status(200).json({status:status})
+        res.status(200).json({status:status.status})
     }
 }
 async function updateInvitaion(req,res){
     let role = req.tokenData.role
-    let invitationId = req.body.invitationId
+    let invitationId = req.params.id
     let status = req.body.status
     let {get,data}=await commonRepo.getInvitation({id:invitationId})
     if(!get){
         res.status(404).json({info:"请求不存在"})
     }
     let result 
+    console.log(data)
     //上一层需要校验jwt,roleId和自身ID，role和jwt.role
     if(role === data.invitor){
+        console.log(role)
         if(status === "DELETE" && data.status === "REJECTED"){
             result = await  commonRepo.deleteInvitation({id:invitationId})
         }else if(status === "REBACK" && data.status === "WAITING"){
             result = await commonRepo.updateInvitation({status: "REBACK",id:invitationId})
-        }else if(status === "PAY" && data.status === "ACCPTED"){
+        }else if(status === "PAY" && data.status === "ACCEPT"){
             //to do  wechat pay 
-            result  = await commonRepo.createTryOrder(data,invitationId)
+            console.log("create tryOrder")
+            result  = await commonRepo.createTryOrder(invitationId)
+            if(result){
+                res.status(200).json({result:result})
+                return 
+            }
         }
      
         //邀请者有两个权限，删除和取消
@@ -179,7 +185,7 @@ async function updateInvitaion(req,res){
        }
     }
     if(result){
-        res.status(200).json({status: status})
+        res.status(200).json({status: result.status})
     }else{
         res.status(403).json({info:"根据平台规定，无法进行响应操作订单"})
     }
@@ -242,18 +248,24 @@ async function sendAuth(req,response){
 
 async function getAuthStatus(req,res){
     const role = req.params.role
-    let data
-    data.id = req.parems.id
-   const {status,info}= authRepo.getAuthStatus(data,role)
+    let data ={}
+    data.id = req.params.id
+    console.log(data)
+    console.log(role)
+   const {status,info}= await authRepo.getAuthStatus(data,role)
+  console.log(status)
    if(status){
        if(status !== req.tokenData.authStatus){
-           req.tokenData.authStatus = status
+           console.log(status.res)
+           req.tokenData.authStatus = status.res
            newToken = jwt.sign(req.tokenData,process.env.JWTSECRET)
         //    res.setHeader('Authorization',`Bearer ${newToken}`)
            res.append("Authorization", `Bearer ${newToken}`)
            res.status(200).json({status:status,info:"授权状态更新成功"})
+           return 
        }
        res.status(200).json({status:status,info:info})
+       return 
    }else{
        res.status(403).json({status:status,info:info})
    }
@@ -265,10 +277,10 @@ async function getPic(req,res){
    console.log(path)
    res.sendFile(path)
 }
-async function getPublishList(res,req){
-    const skip = parseInt(res.query.skip)
-    const first = parseInt(res.query.first)
-    const role = res.tokenData.role
+async function getPublishList(req,res){
+    const skip = parseInt(req.query.skip)
+    const first = parseInt(req.query.first)
+    const role = req.params.role
     const data = await commonRepo.getPublishList(skip,first,role)
     if(data){
         res.status(200).json({data:data})
@@ -276,8 +288,10 @@ async function getPublishList(res,req){
         res.status(404).json({info:"查询失败"})
     }
 }
-async function updatePublishStatus(res,req){
-   const status = Boolean(res.params.status)
+async function updatePublishStatus(req,res){
+    console.log(req.params.status)
+   const status = req.params.status==="false"?false:true
+   console.log(status)
    const update = await commonRepo.updatePublishStatus({status:status,UnionID:req.tokenData.jti},req.tokenData.role)
    if(update){
        res.status(200).json({info:"更新成功"})
@@ -285,9 +299,11 @@ async function updatePublishStatus(res,req){
        res.status(404).json({info:"更新失败，请检查参数"})
    }
 }
-async function getPublishStatus(res,req){
-    const id = req.params.id
-    const Status = await commonRepo.getPublishStatus()
+async function getPublishStatus(req,res){
+    const id = req.tokenData.jti
+    const role  =req.tokenData.role
+    const status = await commonRepo.getPublishStatus({id:id},role)
+    res.json({status:status})
 }
 module.exports = {
     createInvitation,

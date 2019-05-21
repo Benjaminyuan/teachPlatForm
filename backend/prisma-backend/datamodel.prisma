@@ -72,7 +72,7 @@ type BasicTermInfo{
   shortTerm: ShortTerm
 }
 type ShortTerm{
-  shortTermId: ID!@unique
+  id: ID!@unique
   timeList:[DateTime!]!
 }
 

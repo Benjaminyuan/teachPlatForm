@@ -1,5 +1,5 @@
 const { prisma } = require("../generated/prisma-client")
-const {invitationStatus,studentInvitationResult,parentInvitationResult} =  require("./fragment")
+const {invitationStatus,studentInvitationResult,parentInvitationResult,studentBasicPublishInfo,parentBasicPublishInfo} =  require("./fragment")
 async function createInvitation(data) {
     try {
         res = await prisma.createInvitation(data)
@@ -17,8 +17,9 @@ async function createInvitation(data) {
     }
 }
 async function updateInvitation(data) {
+    let result
     try {
-        await prisma.updateInvitation({
+       result =  await prisma.updateInvitation({
             data: {
                 status: data.status
             },
@@ -26,11 +27,11 @@ async function updateInvitation(data) {
                 id: data.id
                 //订单id
             }
-        })
+        }).$fragment(invitationStatus)
     } catch (e) {
-        return false
+        return ""
     }
-    return true
+    return result
 }
 async function deleteInvitation(data) {
     try {
@@ -150,11 +151,14 @@ async function getInvitationStatus(data){
     console.log(status)
     return {
         error: "",
-        status:status.status
+        status:status
     }
 }
-async function getPublishList(skip,first,filter,role){
+async function getPublishList(skip,first,role){
     let resData
+    console.log(skip)
+    console.log(first)
+    console.log(role)
     try{
         if(role === "student"){
             //学生获取的是parent的
@@ -164,17 +168,18 @@ async function getPublishList(skip,first,filter,role){
                 },
                 skip:skip,
                 first:first,
-            }).$fragment(parentInvitationResult)
+            }).$fragment(parentBasicPublishInfo)
         }else if(role === "parent"){
-            resData = await prisma.student({
+            resData = await prisma.students({
                 where:{
                     publish:true
                 },
                 skip:skip,
                 first:first
-            }).$fragment(studentInvitationResult)
+            }).$fragment(studentBasicPublishInfo)
         }
     }catch(e){
+        console.log(e)
         return resData
     }
     return resData
@@ -201,10 +206,10 @@ async function updatePublishStatus(data,role){
     }
     return true 
 }
-async function createTryOrder(data,invitationId){
+async function createTryOrder(invitationId){
     let TryOrder
     try{
-            await prisma.updateInvitation({
+           const res =  await prisma.updateInvitation({
                 data: {
                     status: "PAIED"
                 },
@@ -212,37 +217,48 @@ async function createTryOrder(data,invitationId){
                     id:invitationId
                     //订单id
                 }
-            })
+            }).$fragment(`fragment  updateInvi on Invitaion{
+                parent{
+                    UnionID
+                    address
+                    phone
+                }
+                student{
+                    UnionID
+                }
+                
+            } `)
+            console.log(res)
           TryOrder =   await prisma.createTryOrder({
                 parent:{
                     connect:{
-                        UnionID: data.parent.UnionID
+                        UnionID: res.parent.UnionID
                     }
                 },
                 student:{
                     connect:{
-                        UnionID: data.student.UnionID
+                        UnionID: res.student.UnionID
                     }
                 },
-                address: data.parent.address
-            }).$fragment()
+                address: res.parent.address,
+                status:"INIT",
+                phone:res.parent.phone
+            })
     
        
     }catch(e){
-        return {
-            result:""
-        }
+        console.log(e)
+        return  ""
+        
     }
-    return {
-        result: TryOrder
-    }
+    return TryOrder
 }
 async function getPublishStatus(data,role){
     let result 
     try{
         if(role === "STUDNET"){
             result = await prisma.student({
-                id: data.id
+                UnionID: data.id
             }).$fragment(`
             fragment Sstatus on Student{
                 publish
@@ -250,15 +266,16 @@ async function getPublishStatus(data,role){
             `)
     }else if (role === "PARENT"){
             result = await prisma.parent({
-                id: data.id
+                UnionID: data.id
             }).$fragment(`
             fragment Pstatus on Parent{
                 publish
             }`)
     }
 }catch(e){
-
+    console.log(e)
 }
+return result
 }
 module.exports = {
     createInvitation,
@@ -271,5 +288,6 @@ module.exports = {
     getRoleInvitations,
     getPublishList,
     updatePublishStatus,
-    createTryOrder
+    createTryOrder,
+    getPublishStatus
 }

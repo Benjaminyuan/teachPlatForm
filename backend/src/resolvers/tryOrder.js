@@ -1,6 +1,26 @@
 const {prisma } = require("../generated/prisma-client")
 const { isPhoneNum } = require("../util/filter")
 const {orderChangeResult} = require("../Dao/fragment")
+const statusFragment = ` fragment statusFra on TryOder{
+    status
+}`
+const infoFragment = `
+fragment tryOrderInfo on TryOrder{
+    address
+    startTime
+    endTime
+    phone
+    otherInfo
+    parent{
+        UnionID
+        name
+      }
+        student{
+          UnionID
+          name
+        }
+      
+}`
 async function updateInfo(req,res){
     let data = req.body
     if(!isPhoneNum(data.phone)){
@@ -84,6 +104,20 @@ async function updateOrderstatus(req,res) {
        
 }
 async function getTryOrderInfo(req,res){
+    const id = req.params.id
+    let result 
+    try{
+        result = await prisma.tryOrder({
+            id:id
+        }).$fragment(infoFragment)
+    }catch(e){
+        console.log(e)
+        res.status(400).json({info:"请重试"})
+        return
+    }
+    res.status(200).send(result)
+}
+async function getAllTryOrderInfo(req,res){
     let data= req.body
     let result 
     try {
@@ -91,21 +125,14 @@ async function getTryOrderInfo(req,res){
             where:{
                 id_in:data.ids
             }
-        }).$fragment(`
-        fragement tryOrderInfo on TryOrder({
-            address
-            startTime
-            endTime
-            phone
-            otherInfo
-        })
-        `)
+        }).$fragment(infoFragment)
     }catch(e){
+        console.log(e)
         res.status(400).json({info:"请重试"})
     }
     res.status(200).send(result)
 }
-async function getStatus(req,res){
+async function getAllStatus(req,res){
     let result 
     let data = req.body 
     try {
@@ -113,9 +140,19 @@ async function getStatus(req,res){
             where:{
                 id_in:data.ids
             }
-        }).$fragment(`
-             status 
-        `)
+        }).$fragment(statusFragment)
+    }catch(e){
+        res.status(400)
+    }
+    res.status(200).send(result)
+}
+async function getStatus(req,res){
+    let result 
+    const id = req.params.id
+    try{
+        result = await prisma.tryOrder({
+            id:id
+        }).$fragment(statusFragment)
     }catch(e){
         res.status(400)
     }
@@ -124,6 +161,8 @@ async function getStatus(req,res){
 module.exports={
     updateInfo,
     updateOrderstatus,
+    getAllTryOrderInfo,
     getTryOrderInfo,
+    getAllStatus,
     getStatus
 }

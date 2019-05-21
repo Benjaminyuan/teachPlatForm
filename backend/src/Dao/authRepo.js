@@ -123,6 +123,7 @@ async function getAuthStatus(data,role){
             }
         }
     }catch(e){
+        console.log(e)
         return {
             status:"",
             info:"更新失败"
@@ -175,6 +176,7 @@ async function getAuthList(data,role){
 async function updateAuthStatus(data,role){
 
     console.log(data)
+    let publish = data.status==="AUTHED"?true:false;
     let authResult ,roleResult
     const updateData = {
         data:{
@@ -193,10 +195,10 @@ async function updateAuthStatus(data,role){
     try{
             if(role === "student"){
                 authResult = await prisma.updateStudentAuthInfo(updateData).$fragment(studentAuthUpdateResult)
-                roleResult=prisma.updateStudent({
+                roleResult=await prisma.updateStudent({
                     data:{
                       authStatus: authResult.res,
-                      publish:true
+                      publish:publish
                     },
                     where:{
                         UnionID:authResult.student.UnionID
@@ -204,17 +206,19 @@ async function updateAuthStatus(data,role){
                 }).$fragment(studentRoleResult)
             }else if(role === "parent"){
                 authResult = await prisma.updateParentAuthInfo(updateData).$fragment(parentAuthUpdateResult)
-                console.log(authResult)
-                roleResult = prisma.updateParent({
+        
+               
+                roleResult =  await prisma.updateParent({
                     data:
                     {
                         authStatus:authResult.res,
-                        publish:true
+                        publish:publish
                     },
                     where:{
                         UnionID:authResult.parent.UnionID
                     }
                 }).$fragment(parentRoleResult)
+               
             }
         
         if(!authResult){
