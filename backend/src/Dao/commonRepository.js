@@ -277,6 +277,23 @@ async function getPublishStatus(data,role){
 }
 return result
 }
+async function getRoleInfo(data,role){
+    let result
+    try{
+      if(role === "STUDENT"){
+        result = await prisma.student({
+            UnionID:data.id
+        }).$fragment(studentBasicPublishInfo)
+      }else if(role ==="PARENT"){
+          result =  await prisma.parent({
+              UnionID:id
+          }).$fragment(parentBasicPublishInfo)
+      }  
+    }catch(e){
+        return ""
+    }
+    return result
+}
 module.exports = {
     createInvitation,
     getInvitation,
@@ -289,5 +306,6 @@ module.exports = {
     getPublishList,
     updatePublishStatus,
     createTryOrder,
-    getPublishStatus
+    getPublishStatus,
+    getRoleInfo
 }

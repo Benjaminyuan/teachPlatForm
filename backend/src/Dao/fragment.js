@@ -62,8 +62,9 @@ fragment studentInvitation on Student{
            subjects
            Level
          }
-         
+        
          }
+      invitor
        status
      }
 }
@@ -82,6 +83,7 @@ fragment studentInvitation on Parent{
            detail
           }
         }
+        invitor
         status
       }
 }`
@@ -102,7 +104,6 @@ fragment OrderChange on  TryOder{
     }
     phone
     status 
-    
 }
 `
 const studentBasicPublishInfo = 
@@ -142,6 +143,8 @@ fragment parentPublishInfo on Parent{
         } 
       }
       shortTerm{
+      lessonTime
+      all
         timeList
       }
     }

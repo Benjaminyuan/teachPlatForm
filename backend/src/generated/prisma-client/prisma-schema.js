@@ -2301,6 +2301,8 @@ enum SelectGender {
 
 type ShortTerm {
   id: ID!
+  lessonTime: Int!
+  all: Int!
   timeList: [DateTime!]!
 }
 
@@ -2311,6 +2313,8 @@ type ShortTermConnection {
 }
 
 input ShortTermCreateInput {
+  lessonTime: Int!
+  all: Int!
   timeList: ShortTermCreatetimeListInput
 }
 
@@ -2331,6 +2335,10 @@ type ShortTermEdge {
 enum ShortTermOrderByInput {
   id_ASC
   id_DESC
+  lessonTime_ASC
+  lessonTime_DESC
+  all_ASC
+  all_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2339,6 +2347,8 @@ enum ShortTermOrderByInput {
 
 type ShortTermPreviousValues {
   id: ID!
+  lessonTime: Int!
+  all: Int!
   timeList: [DateTime!]!
 }
 
@@ -2361,14 +2371,20 @@ input ShortTermSubscriptionWhereInput {
 }
 
 input ShortTermUpdateDataInput {
+  lessonTime: Int
+  all: Int
   timeList: ShortTermUpdatetimeListInput
 }
 
 input ShortTermUpdateInput {
+  lessonTime: Int
+  all: Int
   timeList: ShortTermUpdatetimeListInput
 }
 
 input ShortTermUpdateManyMutationInput {
+  lessonTime: Int
+  all: Int
   timeList: ShortTermUpdatetimeListInput
 }
 
@@ -2405,6 +2421,22 @@ input ShortTermWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  lessonTime: Int
+  lessonTime_not: Int
+  lessonTime_in: [Int!]
+  lessonTime_not_in: [Int!]
+  lessonTime_lt: Int
+  lessonTime_lte: Int
+  lessonTime_gt: Int
+  lessonTime_gte: Int
+  all: Int
+  all_not: Int
+  all_in: [Int!]
+  all_not_in: [Int!]
+  all_lt: Int
+  all_lte: Int
+  all_gt: Int
+  all_gte: Int
   AND: [ShortTermWhereInput!]
   OR: [ShortTermWhereInput!]
   NOT: [ShortTermWhereInput!]

@@ -55,6 +55,7 @@ app.post("/*", (req, res, next) => {
     next()
 })
 app.get("/:role/publishlist",common.getPublishList)
+app.get("/:role/info/:id",common.getRoleInfo)
 app.get("/:role/publish/status",common.getPublishStatus)
 app.post("/:role/publish/:status",common.updatePublishStatus)
 app.get("/:role/invitations",common.getInvitations)
@@ -85,7 +86,8 @@ app.get("/order/info/:id",tryOrder.getTryOrderInfo)
 app.post("/orders/info",tryOrder.getAllTryOrderInfo)
 app.post("/order/info",tryOrder.updateInfo)
 app.post("/order/status",tryOrder.updateOrderstatus)
-/*-----------student------------ */
+
+/*-----------student------------*/
 app.post('/student/update', student.updateInfo)
 /*-------------暂时暴露----------------*/
 /*------------------------------------- */
@@ -102,5 +104,5 @@ const chat = io.of('/chat')
 chat.on('connection',sokcet.dispatcher)
 
 Server.listen(8009, 'localhost', () => {
-    console.log("listening ")
+    console.log("listening")
 })

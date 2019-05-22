@@ -46,10 +46,10 @@ async function signup(req, response) {
     if(create){
         const {res,token} = jwt.newJwt("STUDENT",student.UnionID,student.authStatus)
         response.append("Authorization",`Bearer ${token}`)
-        response.status(200).json({student:student})
+        response.status(200).json({create: true})
         return 
     }
-    response.status(400).json({ "create": create,student:student })
+    response.status(400).json({ create:false })
 }
 
 /*---------------  */

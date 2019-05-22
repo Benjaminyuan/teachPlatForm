@@ -73,6 +73,8 @@ type BasicTermInfo{
 }
 type ShortTerm{
   id: ID!@unique
+  lessonTime:Int!
+  all:Int!
   timeList:[DateTime!]!
 }
 

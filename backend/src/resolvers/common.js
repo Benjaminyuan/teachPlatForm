@@ -249,7 +249,7 @@ async function sendAuth(req,response){
 async function getAuthStatus(req,res){
     const role = req.params.role
     let data ={}
-    data.id = req.params.id
+    data.id = req.tokenData.jti
     console.log(data)
     console.log(role)
    const {status,info}= await authRepo.getAuthStatus(data,role)
@@ -264,7 +264,7 @@ async function getAuthStatus(req,res){
            res.status(200).json({status:status,info:"授权状态更新成功"})
            return 
        }
-       res.status(200).json({status:status,info:info})
+       res.status(200).json({status:status,info:"授权状态未变化"})
        return 
    }else{
        res.status(403).json({status:status,info:info})
@@ -303,7 +303,27 @@ async function getPublishStatus(req,res){
     const id = req.tokenData.jti
     const role  =req.tokenData.role
     const status = await commonRepo.getPublishStatus({id:id},role)
-    res.json({status:status})
+    if(status){
+        res.status(200).join({
+            status:status.publish
+        })
+        return 
+    }
+    res.status(403).json({info:"更新失败"})
+}
+async function getRoleInfo(req,res){
+    const id = req.params.id
+    const role =req.params.role
+    const data = {
+        id: req.tokenData.jti
+    }
+    const result = await commonRepo.getRoleInfo(data,role)
+    if(result){
+        res.status(200).json({data:result})
+        return 
+    }
+    res.status(404)
+    return
 }
 module.exports = {
     createInvitation,
@@ -318,5 +338,6 @@ module.exports = {
     getInvitations,
     getPublishList,
     getPublishStatus,
-    updatePublishStatus
+    updatePublishStatus,
+    getRoleInfo
 }

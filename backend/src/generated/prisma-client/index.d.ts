@@ -865,6 +865,10 @@ export type ParentAuthInfoOrderByInput =
 export type ShortTermOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "lessonTime_ASC"
+  | "lessonTime_DESC"
+  | "all_ASC"
+  | "all_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1180,6 +1184,22 @@ export interface ShortTermWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  lessonTime?: Int;
+  lessonTime_not?: Int;
+  lessonTime_in?: Int[] | Int;
+  lessonTime_not_in?: Int[] | Int;
+  lessonTime_lt?: Int;
+  lessonTime_lte?: Int;
+  lessonTime_gt?: Int;
+  lessonTime_gte?: Int;
+  all?: Int;
+  all_not?: Int;
+  all_in?: Int[] | Int;
+  all_not_in?: Int[] | Int;
+  all_lt?: Int;
+  all_lte?: Int;
+  all_gt?: Int;
+  all_gte?: Int;
   AND?: ShortTermWhereInput[] | ShortTermWhereInput;
   OR?: ShortTermWhereInput[] | ShortTermWhereInput;
   NOT?: ShortTermWhereInput[] | ShortTermWhereInput;
@@ -1991,6 +2011,8 @@ export interface ShortTermCreateOneInput {
 }
 
 export interface ShortTermCreateInput {
+  lessonTime: Int;
+  all: Int;
   timeList?: ShortTermCreatetimeListInput;
 }
 
@@ -2076,6 +2098,8 @@ export interface ShortTermUpdateOneInput {
 }
 
 export interface ShortTermUpdateDataInput {
+  lessonTime?: Int;
+  all?: Int;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
@@ -3279,10 +3303,14 @@ export interface ParentAuthInfoUpdateManyMutationInput {
 }
 
 export interface ShortTermUpdateInput {
+  lessonTime?: Int;
+  all?: Int;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
 export interface ShortTermUpdateManyMutationInput {
+  lessonTime?: Int;
+  all?: Int;
   timeList?: ShortTermUpdatetimeListInput;
 }
 
@@ -4022,11 +4050,15 @@ export interface LongTermSubscription
 
 export interface ShortTerm {
   id: ID_Output;
+  lessonTime: Int;
+  all: Int;
   timeList: DateTimeOutput[];
 }
 
 export interface ShortTermPromise extends Promise<ShortTerm>, Fragmentable {
   id: () => Promise<ID_Output>;
+  lessonTime: () => Promise<Int>;
+  all: () => Promise<Int>;
   timeList: () => Promise<DateTimeOutput[]>;
 }
 
@@ -4034,6 +4066,8 @@ export interface ShortTermSubscription
   extends Promise<AsyncIterator<ShortTerm>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  lessonTime: () => Promise<AsyncIterator<Int>>;
+  all: () => Promise<AsyncIterator<Int>>;
   timeList: () => Promise<AsyncIterator<DateTimeOutput[]>>;
 }
 
@@ -5768,6 +5802,8 @@ export interface ShortTermSubscriptionPayloadSubscription
 
 export interface ShortTermPreviousValues {
   id: ID_Output;
+  lessonTime: Int;
+  all: Int;
   timeList: DateTimeOutput[];
 }
 
@@ -5775,6 +5811,8 @@ export interface ShortTermPreviousValuesPromise
   extends Promise<ShortTermPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  lessonTime: () => Promise<Int>;
+  all: () => Promise<Int>;
   timeList: () => Promise<DateTimeOutput[]>;
 }
 
@@ -5782,6 +5820,8 @@ export interface ShortTermPreviousValuesSubscription
   extends Promise<AsyncIterator<ShortTermPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  lessonTime: () => Promise<AsyncIterator<Int>>;
+  all: () => Promise<AsyncIterator<Int>>;
   timeList: () => Promise<AsyncIterator<DateTimeOutput[]>>;
 }
 

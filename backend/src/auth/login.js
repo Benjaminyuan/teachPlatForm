@@ -24,7 +24,7 @@ async function weChatAuth(req, response) {
      * }
      */
     let user
-    data = await jwt.getInfoFromWeChat(req.body.code)
+    data = await jwtAuth.getInfoFromWeChat(req.body.code)
     console.log(data)
     if (data.errcode) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
