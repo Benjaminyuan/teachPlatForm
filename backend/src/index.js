@@ -6,7 +6,7 @@ const common = require('./resolvers/common')
 const filter = require('./util/filter')
 const admin = require("./resolvers/admin")
 const {app,Server,io,upload} = require("./app")
-const sokcet= require("./socket/chatServer")
+// const sokcet= require("./socket/chatServer")
 const tryOrder = require("./resolvers/tryOrder")
 app.get("/test",(req,res)=>{
     res.send("running !!")
@@ -104,7 +104,7 @@ app.use((req, res) => {
     res.status(404).send("板块尚未开发")
 })
 const chat = io.of('/chat')
-chat.on('connection',sokcet.dispatcher)
+// chat.on('connection',sokcet.dispatcher)
 
 Server.listen(8009, 'localhost', () => {
     console.log("listening")
