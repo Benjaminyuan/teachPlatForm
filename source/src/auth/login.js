@@ -64,7 +64,7 @@ async function weChatAuth(req, response) {
             response.status(301).jsonp({ role: "PARENT" })
         }
         //仍然是USER
-        const token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
+        const token = jwt.newJwt("USER", data.openid, "UNCOMMITED")
         response.append("Authorization", `Bearer ${token}`)
         response.status(301).jsonp({ role: "USER" })
     }
