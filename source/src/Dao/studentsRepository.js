@@ -50,10 +50,11 @@ async function createStudent(data){
     //未加锁，
     let student 
     data.authStatus="UNCOMMITED"
+
    try{ 
         student = await prisma.createStudent(data)
     }catch(e){
-        
+        console.log(e)
        return {
            create:false,
            student:student

@@ -41,6 +41,7 @@ async function signup(req, response) {
     // const {name,uni,email,phone,auth,subjects,order,invitations} = req.body
     // console.log({name,uni,email,phone,auth,subjects,order,invitations})
     const data = req.body
+    console.log(data)
     let {create,student} = await studentRepo.createStudent(data)
     // const{name,uni,email,phone,}
     if(create){
