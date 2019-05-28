@@ -26,9 +26,10 @@ module.exports = {
     production : {
       user : 'ubuntu',
       host : 'plus1sec.cn',
+      port: 22,
       ref  : 'origin/master',
       repo : "git@github.com:Benjaminyuan/teachPlatForm.git",
-      path : '/var/www/production',
+      path : '~/teach_production',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
