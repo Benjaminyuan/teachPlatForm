@@ -6,6 +6,7 @@ async function createUser(openid){
         })
         return user   
     }catch(e){
+        console.log(e)
         return false
     }
 }
@@ -17,7 +18,8 @@ async function userIsExist(openid){
         return res
     }catch(e){
         //查询失败
-        return -1
+        console.log(e)
+        return false
     }
 }
 module.exports={

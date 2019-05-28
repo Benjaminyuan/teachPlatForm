@@ -24,19 +24,24 @@ async function weChatAuth(req, response) {
      * }
      */
     let user
-    const data = await jwtAuth.getInfoFromWeChat(req.body.code)
-    const ob = JSON.parse(data)
-    console.log(ob.errcode)
-    if (ob.errcode) {
+    const data = JSON.parse(await jwtAuth.getInfoFromWeChat(req.body.code))
+    console.log(data)
+    if (data.errcode) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
         return 
     }
     exist = await userRepo.userIsExist(data.openid)
+    console.log(exist)
+    if(exist === -1){
+        response.status(500).json({info:"请重新发送"})
+    }
     if (exist === false) {
         //用户不存在，则创建
-        user = userRepo.createUser(data.openid)
-        token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
+       const  user = await userRepo.createUser(data.openid)
+        const token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
         //此时的访问权限最低
+        console.log(token)
+        console.log(user)
         response.append("Authorization", `Bearer ${token}`)
         response.status(200).jsonp({ auth: true })
     } else {
@@ -59,6 +64,8 @@ async function weChatAuth(req, response) {
             response.status(301).jsonp({ role: "PARENT" })
         }
         //仍然是USER
+        const token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
+        response.append("Authorization", `Bearer ${token}`)
         response.status(301).jsonp({ role: "USER" })
     }
 }
