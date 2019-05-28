@@ -38,7 +38,7 @@ async function weChatAuth(req, response) {
     if (exist === false) {
         //用户不存在，则创建
        const  user = await userRepo.createUser(data.openid)
-        const token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
+        const {res,token} = jwt.newJwt("USER", user.openid, "UNCOMMITED")
         //此时的访问权限最低
         console.log(token)
         console.log(user)
@@ -64,7 +64,7 @@ async function weChatAuth(req, response) {
             response.status(301).jsonp({ role: "PARENT" })
         }
         //仍然是USER
-        const token = jwt.newJwt("USER", data.openid, "UNCOMMITED")
+        const {res,token} = jwt.newJwt("USER", data.openid, "UNCOMMITED")
         response.append("Authorization", `Bearer ${token}`)
         response.status(301).jsonp({ role: "USER" })
     }
