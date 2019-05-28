@@ -58,8 +58,6 @@ function tokenAuth(req, response) {
     }
     
 }
-getInfoFromWeChat("033UEqCv1blBzg0hhaDv1z6yCv1UEqCg")
-
 module.exports = {
     getInfoFromWeChat,
     getAuthStatus,
