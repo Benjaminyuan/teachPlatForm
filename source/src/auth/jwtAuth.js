@@ -1,4 +1,6 @@
 const request = require("request")
+const util = require("util")
+const promiseRequest = util.promisify(request)
 const jwt = require("../util/jwt")
 const CODE = "023Wd4KY0LHS2W1w3MGY0rYZJY0Wd4Kf"
 const SECRET = "a2643e46e816fc31dcd6da2c2cdf3166" 
@@ -14,10 +16,12 @@ async function getInfoFromWeChat(code){
     //     console.log("body:",body)
     //     return body
     // })
-    const{err,response,body} = await request.get(url)
-    console.log(response)
-    console.log(body)
-    return body
+    const options = {
+        method: 'GET',
+        uri: url
+     }
+     const data = await promiseRequest(options)
+    return data
 }
 
 function getAuthStatus(token){
