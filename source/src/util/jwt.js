@@ -12,7 +12,7 @@ function getJwt(req){
         exist: true,
         token: token,
     }
-
+    
 }
 function newJwt(role,jti,auth){
     try{

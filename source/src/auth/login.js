@@ -43,7 +43,7 @@ async function weChatAuth(req, response) {
         console.log(token)
         console.log(user)
         response.append("Authorization", `Bearer ${token}`)
-        response.status(200).jsonp({ auth: true })
+        response.status(200).jsonp({ auth: true,id: user.openid })
     } else {
         //用户存在
         studentExist = studentRepo.findStudentById(data.openid)
@@ -54,19 +54,19 @@ async function weChatAuth(req, response) {
             let { res, token } = jwt.newJwt("STUDENT",data.openid, student.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
-            response.status(301).jsonp({ role: "STUDENT" })
+            response.status(301).jsonp({ role: "STUDENT",id:data.openid})
         } else if (parentExist === true) {
             //已经注册为parent
             parent = studentRepo.getParentById(data.openid)
             let { res, token } = jwt.newJwt("PARENT",data.openid,parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
-            response.status(301).jsonp({ role: "PARENT" })
+            response.status(301).jsonp({ role: "PARENT" ,id:data.openid})
         }
         //仍然是USER
         const {res,token} = jwt.newJwt("USER", data.openid, "UNCOMMITED")
         response.append("Authorization", `Bearer ${token}`)
-        response.status(301).jsonp({ role: "USER" })
+        response.status(301).jsonp({ role: "USER",id:data.openid})
     }
 }
 module.exports = {

@@ -27,7 +27,7 @@ type Student{
   starList: [Parent!]
   #平台认证
   avalible:[AvalibelTime!]!
-  studentDetail: StudentDetail  
+  studentDetail: StudentDetail
   invitations:[Invitation!]@relation(name:"InviteForStudent")
   order: [Order!] @relation(name:"OrderStudent" onDelete:CASCADE)
   publish: Boolean! @default(value:"false")

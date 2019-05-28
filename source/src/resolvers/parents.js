@@ -4,7 +4,7 @@ async function signup(req,response){
     try{
         let parent =await parentRepo.createParent(req.body)
     if(parent){
-        const {res,token} = jwt.newJwt("PARENT",parent.openid,parent.authStatus)
+        const {res,token} = jwt.newJwt("PARENT",parent.UnionID,parent.authStatus)
         response.append("Authorization",`Bearer ${token}`)
        response.status(200).json({create: true})
    }else{
