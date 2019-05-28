@@ -29,29 +29,29 @@ async function weChatAuth(req, response) {
     if (data.errcode) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
     }
-    exist = await userRepo.userIsExist(data.unionid)
+    exist = await userRepo.userIsExist(data.openid)
     if (exist === false) {
         //用户不存在，则创建
-        user = userRepo.createUser(data.unionid)
-        token = jwt.newJwt("USER", user.Unionid, "UNCOMMITED")
+        user = userRepo.createUser(data.openid)
+        token = jwt.newJwt("USER", user.openid, "UNCOMMITED")
         //此时的访问权限最低
         response.append("Authorization", `Bearer ${token}`)
         response.status(200).jsonp({ auth: true })
     } else {
         //用户存在
-        studentExist = studentRepo.findStudentById(data.unionid)
-        parentExist = parentRepo.findParentById(data.unionid)
+        studentExist = studentRepo.findStudentById(data.openid)
+        parentExist = parentRepo.findParentById(data.openid)
         if (studentExist === true) {
             //已经注册为学生
-            student = studentRepo.getStudentById(data.unionid)
-            let { res, token } = jwt.newJwt("STUDENT",data.unionid, student.authstatus)
+            student = studentRepo.getStudentById(data.openid)
+            let { res, token } = jwt.newJwt("STUDENT",data.openid, student.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "STUDENT" })
         } else if (parentExist === true) {
             //已经注册为parent
-            parent = studentRepo.getParentById(data.unionid)
-            let { res, token } = jwt.newJwt("PARENT",data.unionid,parent.authstatus)
+            parent = studentRepo.getParentById(data.openid)
+            let { res, token } = jwt.newJwt("PARENT",data.openid,parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "PARENT" })

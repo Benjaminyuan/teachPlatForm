@@ -14,9 +14,9 @@ const statusMap = {
     const role = req.params.role
     let data
     if(role === "parent"){
-          data = await parentRepo.getParent({UnionID:id})
+          data = await parentRepo.getParent({openid:id})
     }else if(role === "student"){
-            data = await studentRepo.getStudent({UnionID:id})
+            data = await studentRepo.getStudent({openid:id})
     }
    if(data && data.found){
        res.status(200).json({data:data.resData})

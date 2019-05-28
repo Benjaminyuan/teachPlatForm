@@ -1,7 +1,7 @@
 const{ prisma } = require("../generated/prisma-client")
-async function findParentById(UnionId){
+async function findParentById(openid){
     return await prisma.$exists.parent({
-        UnionID: UnionId
+        openid:openid
     })
 }
 async function parentExist(name,email,phone){
@@ -24,7 +24,7 @@ async function getParent(data){
         let info  
         try{
             info = await prisma.parent({
-                UnionID:data.UnionID
+                openid:data.openid
             })
         }catch(e){
             return {
@@ -81,9 +81,9 @@ async function updateInfo(data,id){
         return false
     }
 }
-async function getParentById(UnionID){
+async function getParentById(openid){
    Info =  prisma.parent({
-        UnionID:UnionID
+        openid:openid
     })
     return Info
 }

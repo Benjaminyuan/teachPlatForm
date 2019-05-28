@@ -24,7 +24,7 @@ async function sendAuth(req,res){
 /*------- TEST UNDO--------  */
 /**
   {
-    UnionID: String!@unique
+    openid: String!@unique
     openid: String! @unique
     phone: String!@unique
     name: String!@unique
@@ -44,7 +44,7 @@ async function signup(req, response) {
     let {create,student} = await studentRepo.createStudent(data)
     // const{name,uni,email,phone,}
     if(create){
-        const {res,token} = jwt.newJwt("STUDENT",student.UnionID,student.authStatus)
+        const {res,token} = jwt.newJwt("STUDENT",student.openid,student.authStatus)
         response.append("Authorization",`Bearer ${token}`)
         response.status(200).json({create: true})
         return 

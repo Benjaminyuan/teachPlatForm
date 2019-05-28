@@ -1,18 +1,18 @@
 const {prisma} = require("../generated/prisma-client")
-async function createUser(UnionID){
+async function createUser(openid){
     try{
         user = await prisma.createUser({
-            UnionID: UnionID
+            openid: openid
         })
         return user   
     }catch(e){
         return false
     }
 }
-async function userIsExist(UnionID){
+async function userIsExist(openid){
     try{
         res = await prisma.$exists.user({
-            UnionID: UnionID
+            openid: openid
         })
         return res
     }catch(e){

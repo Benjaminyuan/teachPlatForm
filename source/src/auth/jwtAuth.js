@@ -1,16 +1,23 @@
 const request = require("request")
 const jwt = require("../util/jwt")
 const CODE = "023Wd4KY0LHS2W1w3MGY0rYZJY0Wd4Kf"
-const SECRET = "4c3801dcc2a0f601b69aecdac20b12ff" 
+const SECRET = "a2643e46e816fc31dcd6da2c2cdf3166" 
 const APPID = "wxd48257c42c622c9d"
+/*GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+ */
 async function getInfoFromWeChat(code){
-    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}E&grant_type=authorization_code`
-    await request.get(url,(err,response,body)=>{
-        console.log("err",err)
-        // console.log("response",response)
-        console.log("body:",body)
-        return body
-    })
+    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`
+    console.log(url)
+    // await request.get(url,(err,response,body)=>{
+    //     console.log("err",err)
+    //     // console.log("response",response)
+    //     console.log("body:",body)
+    //     return body
+    // })
+    const{err,response,body} = await request.get(url)
+    console.log(response)
+    console.log(body)
+    return body
 }
 
 function getAuthStatus(token){
@@ -51,6 +58,8 @@ function tokenAuth(req, response) {
     }
     
 }
+getInfoFromWeChat("033UEqCv1blBzg0hhaDv1z6yCv1UEqCg")
+
 module.exports = {
     getInfoFromWeChat,
     getAuthStatus,

@@ -3,7 +3,7 @@ async function getStudent(data){
     let info  
     try{
         info = await prisma.student({
-            UnionID:data.UnionID
+            openid:data.openid
         })
     }catch(e){
         return {
@@ -25,9 +25,9 @@ async function getStudent(data){
     }
     
 }
-async function findStudentById(UnionId){
+async function findStudentById(openid){
     return await prisma.$exists.student({
-        UnionID:UnionId
+        openid:openid
     })
 }
 async function studentExist(name,email,phone){
@@ -81,9 +81,9 @@ async function updateInfo(data,id){
         return false
     }
 }
-async function  getStudentById(UnionID){
+async function  getStudentById(openid){
     Info = await prisma.student({
-        UnionID:UnionID
+        openid:openid
     })
     return Info
 }

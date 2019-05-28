@@ -669,8 +669,8 @@ export interface ClientConstructor<T> {
 export type AdminOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "name_ASC"
   | "name_DESC"
   | "phone_ASC"
@@ -765,8 +765,8 @@ export type OrderStatus = "PAIED" | "UNPAIED" | "FINISHED";
 export type ParentOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "phone_ASC"
   | "phone_DESC"
   | "name_ASC"
@@ -787,8 +787,6 @@ export type ParentOrderByInput =
 export type StudentOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
   | "openid_ASC"
   | "openid_DESC"
   | "phone_ASC"
@@ -851,8 +849,8 @@ export type LongTermOrderByInput =
 export type ParentAuthInfoOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "res_ASC"
   | "res_DESC"
   | "info_ASC"
@@ -877,8 +875,8 @@ export type ShortTermOrderByInput =
 export type StudentAuthInfoOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "UnionID_ASC"
-  | "UnionID_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "res_ASC"
   | "res_DESC"
   | "info_ASC"
@@ -947,8 +945,8 @@ export type TryOrderOrderByInput =
   | "updatedAt_DESC";
 
 export type UserOrderByInput =
-  | "UnionID_ASC"
-  | "UnionID_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
@@ -960,7 +958,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type AdminWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  UnionID?: String;
+  openid?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -981,20 +979,20 @@ export interface AdminWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   name?: String;
   name_not?: String;
   name_in?: String[] | String;
@@ -1234,20 +1232,20 @@ export interface ParentWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -1356,20 +1354,6 @@ export interface StudentWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
   openid?: String;
   openid_not?: String;
   openid_in?: String[] | String;
@@ -1629,7 +1613,7 @@ export type OrderWhereUniqueInput = AtLeastOne<{
 
 export type ParentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   email?: String;
@@ -1637,7 +1621,7 @@ export type ParentWhereUniqueInput = AtLeastOne<{
 
 export type ParentAuthInfoWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  UnionID?: String;
+  openid?: String;
 }>;
 
 export interface ParentAuthInfoWhereInput {
@@ -1656,20 +1640,20 @@ export interface ParentAuthInfoWhereInput {
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
   parent?: ParentWhereInput;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   res?: AuthStatus;
   res_not?: AuthStatus;
   res_in?: AuthStatus[] | AuthStatus;
@@ -1700,7 +1684,6 @@ export type ShortTermWhereUniqueInput = AtLeastOne<{
 
 export type StudentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -1709,7 +1692,7 @@ export type StudentWhereUniqueInput = AtLeastOne<{
 
 export type StudentAuthInfoWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  UnionID?: String;
+  openid?: String;
 }>;
 
 export interface StudentAuthInfoWhereInput {
@@ -1727,20 +1710,20 @@ export interface StudentAuthInfoWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   student?: StudentWhereInput;
   res?: AuthStatus;
   res_not?: AuthStatus;
@@ -1920,45 +1903,45 @@ export interface TryOrderWhereInput {
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
-  UnionID: String;
+  openid: String;
 }>;
 
 export interface UserWhereInput {
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
 export interface AdminCreateInput {
-  UnionID: String;
+  openid: String;
   name: String;
   phone: String;
   email: String;
 }
 
 export interface AdminUpdateInput {
-  UnionID?: String;
+  openid?: String;
   name?: String;
   phone?: String;
   email?: String;
 }
 
 export interface AdminUpdateManyMutationInput {
-  UnionID?: String;
+  openid?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -2135,7 +2118,6 @@ export interface StudentCreateOneWithoutInvitationsInput {
 }
 
 export interface StudentCreateWithoutInvitationsInput {
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -2174,7 +2156,7 @@ export interface ParentCreateManyWithoutStarListInput {
 }
 
 export interface ParentCreateWithoutStarListInput {
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -2215,7 +2197,6 @@ export interface StudentCreateOneWithoutOrderInput {
 }
 
 export interface StudentCreateWithoutOrderInput {
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -2267,7 +2248,7 @@ export interface ParentCreateOneWithoutInvitationsInput {
 }
 
 export interface ParentCreateWithoutInvitationsInput {
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -2287,7 +2268,6 @@ export interface StudentCreateManyWithoutStarListInput {
 }
 
 export interface StudentCreateWithoutStarListInput {
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -2321,7 +2301,7 @@ export interface ParentCreateOneWithoutOrderInput {
 }
 
 export interface ParentCreateWithoutOrderInput {
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -2353,7 +2333,6 @@ export interface StudentUpdateOneRequiredWithoutInvitationsInput {
 }
 
 export interface StudentUpdateWithoutInvitationsDataInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -2428,7 +2407,7 @@ export interface ParentUpdateWithWhereUniqueWithoutStarListInput {
 }
 
 export interface ParentUpdateWithoutStarListDataInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -2565,7 +2544,6 @@ export interface StudentUpdateOneRequiredWithoutOrderInput {
 }
 
 export interface StudentUpdateWithoutOrderDataInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -2645,7 +2623,7 @@ export interface ParentUpdateOneRequiredWithoutInvitationsInput {
 }
 
 export interface ParentUpdateWithoutInvitationsDataInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -2682,7 +2660,6 @@ export interface StudentUpdateWithWhereUniqueWithoutStarListInput {
 }
 
 export interface StudentUpdateWithoutStarListDataInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -2735,7 +2712,7 @@ export interface ParentUpdateOneRequiredWithoutOrderInput {
 }
 
 export interface ParentUpdateWithoutOrderDataInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -2836,20 +2813,6 @@ export interface StudentScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
   openid?: String;
   openid_not?: String;
   openid_in?: String[] | String;
@@ -2969,7 +2932,6 @@ export interface StudentUpdateManyWithWhereNestedInput {
 }
 
 export interface StudentUpdateManyDataInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -3025,20 +2987,20 @@ export interface ParentScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  UnionID?: String;
-  UnionID_not?: String;
-  UnionID_in?: String[] | String;
-  UnionID_not_in?: String[] | String;
-  UnionID_lt?: String;
-  UnionID_lte?: String;
-  UnionID_gt?: String;
-  UnionID_gte?: String;
-  UnionID_contains?: String;
-  UnionID_not_contains?: String;
-  UnionID_starts_with?: String;
-  UnionID_not_starts_with?: String;
-  UnionID_ends_with?: String;
-  UnionID_not_ends_with?: String;
+  openid?: String;
+  openid_not?: String;
+  openid_in?: String[] | String;
+  openid_not_in?: String[] | String;
+  openid_lt?: String;
+  openid_lte?: String;
+  openid_gt?: String;
+  openid_gte?: String;
+  openid_contains?: String;
+  openid_not_contains?: String;
+  openid_starts_with?: String;
+  openid_not_starts_with?: String;
+  openid_ends_with?: String;
+  openid_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -3128,7 +3090,7 @@ export interface ParentUpdateManyWithWhereNestedInput {
 }
 
 export interface ParentUpdateManyDataInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -3175,7 +3137,7 @@ export interface OrderUpdateManyMutationInput {
 }
 
 export interface ParentCreateInput {
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -3189,7 +3151,7 @@ export interface ParentCreateInput {
 }
 
 export interface ParentUpdateInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -3203,7 +3165,7 @@ export interface ParentUpdateInput {
 }
 
 export interface ParentUpdateManyMutationInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -3214,7 +3176,7 @@ export interface ParentUpdateManyMutationInput {
 
 export interface ParentAuthInfoCreateInput {
   parent: ParentCreateOneInput;
-  UnionID: String;
+  openid: String;
   sourceUrl?: ParentAuthInfoCreatesourceUrlInput;
   res: AuthStatus;
   info?: String;
@@ -3237,7 +3199,7 @@ export interface AdminCreateOneInput {
 
 export interface ParentAuthInfoUpdateInput {
   parent?: ParentUpdateOneRequiredInput;
-  UnionID?: String;
+  openid?: String;
   sourceUrl?: ParentAuthInfoUpdatesourceUrlInput;
   res?: AuthStatus;
   info?: String;
@@ -3252,7 +3214,7 @@ export interface ParentUpdateOneRequiredInput {
 }
 
 export interface ParentUpdateDataInput {
-  UnionID?: String;
+  openid?: String;
   phone?: String;
   name?: String;
   address?: String;
@@ -3284,7 +3246,7 @@ export interface AdminUpdateOneInput {
 }
 
 export interface AdminUpdateDataInput {
-  UnionID?: String;
+  openid?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -3296,7 +3258,7 @@ export interface AdminUpsertNestedInput {
 }
 
 export interface ParentAuthInfoUpdateManyMutationInput {
-  UnionID?: String;
+  openid?: String;
   sourceUrl?: ParentAuthInfoUpdatesourceUrlInput;
   res?: AuthStatus;
   info?: String;
@@ -3315,7 +3277,6 @@ export interface ShortTermUpdateManyMutationInput {
 }
 
 export interface StudentCreateInput {
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -3335,7 +3296,6 @@ export interface StudentCreateInput {
 }
 
 export interface StudentUpdateInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -3355,7 +3315,6 @@ export interface StudentUpdateInput {
 }
 
 export interface StudentUpdateManyMutationInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -3369,7 +3328,7 @@ export interface StudentUpdateManyMutationInput {
 }
 
 export interface StudentAuthInfoCreateInput {
-  UnionID: String;
+  openid: String;
   student: StudentCreateOneInput;
   sourceUrl?: StudentAuthInfoCreatesourceUrlInput;
   res: AuthStatus;
@@ -3387,7 +3346,7 @@ export interface StudentAuthInfoCreatesourceUrlInput {
 }
 
 export interface StudentAuthInfoUpdateInput {
-  UnionID?: String;
+  openid?: String;
   student?: StudentUpdateOneRequiredInput;
   sourceUrl?: StudentAuthInfoUpdatesourceUrlInput;
   res?: AuthStatus;
@@ -3403,7 +3362,6 @@ export interface StudentUpdateOneRequiredInput {
 }
 
 export interface StudentUpdateDataInput {
-  UnionID?: String;
   openid?: String;
   phone?: String;
   name?: String;
@@ -3432,7 +3390,7 @@ export interface StudentAuthInfoUpdatesourceUrlInput {
 }
 
 export interface StudentAuthInfoUpdateManyMutationInput {
-  UnionID?: String;
+  openid?: String;
   sourceUrl?: StudentAuthInfoUpdatesourceUrlInput;
   res?: AuthStatus;
   info?: String;
@@ -3564,15 +3522,15 @@ export interface TryOrderUpdateManyMutationInput {
 }
 
 export interface UserCreateInput {
-  UnionID: String;
+  openid: String;
 }
 
 export interface UserUpdateInput {
-  UnionID?: String;
+  openid?: String;
 }
 
 export interface UserUpdateManyMutationInput {
-  UnionID?: String;
+  openid?: String;
 }
 
 export interface emerContactUpdateManyMutationInput {
@@ -3793,7 +3751,7 @@ export interface NodeNode {
 
 export interface Admin {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   name: String;
   phone: String;
   email: String;
@@ -3801,7 +3759,7 @@ export interface Admin {
 
 export interface AdminPromise extends Promise<Admin>, Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
@@ -3811,7 +3769,7 @@ export interface AdminSubscription
   extends Promise<AsyncIterator<Admin>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -4159,7 +4117,6 @@ export interface InvitationSubscription
 
 export interface Student {
   id: ID_Output;
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -4176,7 +4133,6 @@ export interface Student {
 
 export interface StudentPromise extends Promise<Student>, Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
   openid: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
@@ -4241,7 +4197,6 @@ export interface StudentSubscription
   extends Promise<AsyncIterator<Student>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
   openid: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -4321,7 +4276,7 @@ export interface SubjectSubscription
 
 export interface Parent {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -4334,7 +4289,7 @@ export interface Parent {
 
 export interface ParentPromise extends Promise<Parent>, Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
   address: () => Promise<String>;
@@ -4377,7 +4332,7 @@ export interface ParentSubscription
   extends Promise<AsyncIterator<Parent>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4684,7 +4639,7 @@ export interface AggregateParentSubscription
 
 export interface ParentAuthInfo {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   sourceUrl: String[];
   res: AuthStatus;
   info?: String;
@@ -4695,7 +4650,7 @@ export interface ParentAuthInfoPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   parent: <T = ParentPromise>() => T;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   sourceUrl: () => Promise<String[]>;
   res: () => Promise<AuthStatus>;
   info: () => Promise<String>;
@@ -4707,7 +4662,7 @@ export interface ParentAuthInfoSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   parent: <T = ParentSubscription>() => T;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   sourceUrl: () => Promise<AsyncIterator<String[]>>;
   res: () => Promise<AsyncIterator<AuthStatus>>;
   info: () => Promise<AsyncIterator<String>>;
@@ -4882,7 +4837,7 @@ export interface AggregateStudentSubscription
 
 export interface StudentAuthInfo {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   sourceUrl: String[];
   res: AuthStatus;
   info?: String;
@@ -4892,7 +4847,7 @@ export interface StudentAuthInfoPromise
   extends Promise<StudentAuthInfo>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   student: <T = StudentPromise>() => T;
   sourceUrl: () => Promise<String[]>;
   res: () => Promise<AuthStatus>;
@@ -4904,7 +4859,7 @@ export interface StudentAuthInfoSubscription
   extends Promise<AsyncIterator<StudentAuthInfo>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   student: <T = StudentSubscription>() => T;
   sourceUrl: () => Promise<AsyncIterator<String[]>>;
   res: () => Promise<AsyncIterator<AuthStatus>>;
@@ -5212,17 +5167,17 @@ export interface AggregateTryOrderSubscription
 }
 
 export interface User {
-  UnionID: String;
+  openid: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
 }
 
 export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserConnection {
@@ -5378,7 +5333,7 @@ export interface AdminSubscriptionPayloadSubscription
 
 export interface AdminPreviousValues {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   name: String;
   phone: String;
   email: String;
@@ -5388,7 +5343,7 @@ export interface AdminPreviousValuesPromise
   extends Promise<AdminPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
@@ -5398,7 +5353,7 @@ export interface AdminPreviousValuesSubscription
   extends Promise<AsyncIterator<AdminPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -5681,7 +5636,7 @@ export interface ParentSubscriptionPayloadSubscription
 
 export interface ParentPreviousValues {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   phone: String;
   name: String;
   address: String;
@@ -5696,7 +5651,7 @@ export interface ParentPreviousValuesPromise
   extends Promise<ParentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
   address: () => Promise<String>;
@@ -5711,7 +5666,7 @@ export interface ParentPreviousValuesSubscription
   extends Promise<AsyncIterator<ParentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -5749,7 +5704,7 @@ export interface ParentAuthInfoSubscriptionPayloadSubscription
 
 export interface ParentAuthInfoPreviousValues {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   sourceUrl: String[];
   res: AuthStatus;
   info?: String;
@@ -5759,7 +5714,7 @@ export interface ParentAuthInfoPreviousValuesPromise
   extends Promise<ParentAuthInfoPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   sourceUrl: () => Promise<String[]>;
   res: () => Promise<AuthStatus>;
   info: () => Promise<String>;
@@ -5769,7 +5724,7 @@ export interface ParentAuthInfoPreviousValuesSubscription
   extends Promise<AsyncIterator<ParentAuthInfoPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   sourceUrl: () => Promise<AsyncIterator<String[]>>;
   res: () => Promise<AsyncIterator<AuthStatus>>;
   info: () => Promise<AsyncIterator<String>>;
@@ -5852,7 +5807,6 @@ export interface StudentSubscriptionPayloadSubscription
 
 export interface StudentPreviousValues {
   id: ID_Output;
-  UnionID: String;
   openid: String;
   phone: String;
   name: String;
@@ -5871,7 +5825,6 @@ export interface StudentPreviousValuesPromise
   extends Promise<StudentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
   openid: () => Promise<String>;
   phone: () => Promise<String>;
   name: () => Promise<String>;
@@ -5890,7 +5843,6 @@ export interface StudentPreviousValuesSubscription
   extends Promise<AsyncIterator<StudentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
   openid: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
@@ -5932,7 +5884,7 @@ export interface StudentAuthInfoSubscriptionPayloadSubscription
 
 export interface StudentAuthInfoPreviousValues {
   id: ID_Output;
-  UnionID: String;
+  openid: String;
   sourceUrl: String[];
   res: AuthStatus;
   info?: String;
@@ -5942,7 +5894,7 @@ export interface StudentAuthInfoPreviousValuesPromise
   extends Promise<StudentAuthInfoPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
   sourceUrl: () => Promise<String[]>;
   res: () => Promise<AuthStatus>;
   info: () => Promise<String>;
@@ -5952,7 +5904,7 @@ export interface StudentAuthInfoPreviousValuesSubscription
   extends Promise<AsyncIterator<StudentAuthInfoPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
   sourceUrl: () => Promise<AsyncIterator<String[]>>;
   res: () => Promise<AsyncIterator<AuthStatus>>;
   info: () => Promise<AsyncIterator<String>>;
@@ -6140,19 +6092,19 @@ export interface UserSubscriptionPayloadSubscription
 }
 
 export interface UserPreviousValues {
-  UnionID: String;
+  openid: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
-  UnionID: () => Promise<String>;
+  openid: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  UnionID: () => Promise<AsyncIterator<String>>;
+  openid: () => Promise<AsyncIterator<String>>;
 }
 
 export interface emerContactSubscriptionPayload {

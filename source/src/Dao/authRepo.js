@@ -8,10 +8,10 @@ async function createAuth(data,role){
             res = await prisma.createStudentAuthInfo({
                  student:{
                      connect:{
-                         UnionID:data.id
+                         openid:data.id
                      }
                  },
-                 UnionID:data.id,
+                 openid:data.id,
                  sourceUrl:{
                      set:data.sourceUrl
                  },
@@ -22,7 +22,7 @@ async function createAuth(data,role){
                      authStatus:"AUTHCOMMITED"
                  },
                  where:{
-                     UnionID:data.id
+                     openid:data.id
                  }
              })
          }else if(role === "PARENT"){
@@ -30,10 +30,10 @@ async function createAuth(data,role){
          res =  await prisma.createParentAuthInfo({
                  parent:{
                      connect:{
-                         UnionID:data.id
+                         openid:data.id
                      }
                  },
-                 UnionID: data.id,
+                 openid: data.id,
                  sourceUrl:{
                      set:data.sourceUrl
                     },
@@ -44,7 +44,7 @@ async function createAuth(data,role){
                  authStatus:"AUTHCOMMITED",
              },
              where:{
-                 UnionID:data.id
+                 openid:data.id
              }
          })
          }
@@ -73,11 +73,11 @@ async function getAuthInfo(data,role){
     try{
         if(role ==="student"){
             result = await prisma.studentAuthInfo({
-                UnionID:data.id
+                openid:data.id
             })
         }else if (role === "parent"){
             result = await prisma.parentAuthInfo({
-                UnionID:data.id
+                openid:data.id
             })
             
         }else{
@@ -109,11 +109,11 @@ async function getAuthStatus(data,role){
     try{
         if(role ==="student"){
             status = await prisma.studentAuthInfo({
-                UnionID:data.id
+                openid:data.id
             }).$fragment(studentAuthStatus)
         }else if (role === "parent"){
             status = await prisma.parentAuthInfo({
-                UnionID:data.id
+                openid:data.id
             }).$fragment(parentAuthStatus)
             
         }else{
@@ -184,12 +184,12 @@ async function updateAuthStatus(data,role){
             res:data.status,
             Auth:{
                 connect:{
-                    UnionID:data.admin
+                    openid:data.admin
                 }
             }
         },
         where:{
-            UnionID:data.id
+            openid:data.id
         }
         }   
     try{
@@ -201,7 +201,7 @@ async function updateAuthStatus(data,role){
                       publish:publish
                     },
                     where:{
-                        UnionID:authResult.student.UnionID
+                        openid:authResult.student.openid
                     }
                 }).$fragment(studentRoleResult)
             }else if(role === "parent"){
@@ -215,7 +215,7 @@ async function updateAuthStatus(data,role){
                         publish:publish
                     },
                     where:{
-                        UnionID:authResult.parent.UnionID
+                        openid:authResult.parent.openid
                     }
                 }).$fragment(parentRoleResult)
                

@@ -17,7 +17,7 @@ const studentAuthUpdateResult = `
 fragment studentAuthUpdateResult on StudentAuthInfo{
     id
     student{
-        UnionID
+        openid
       }
     res
 }
@@ -26,25 +26,25 @@ const parentAuthUpdateResult = `
 fragment parentAuthUpdateResult on ParentAuthInfo{
     id
     parent{
-     UnionID
+     openid
     }
     res
 }
 `
 const studentRoleResult = `
 fragment studentRoleResult on Student{
-    UnionID
+    openid
 }`
 const parentRoleResult = `
 fragment parentRoleResult on Parent{
-    UnionID
+    openid
 }
 `
 const orderCreateResult = `
 fragment orderCreateResult  on Order{
     id
     student{
-        UnionID,
+        openid,
         name,
         phone
     }
@@ -52,7 +52,7 @@ fragment orderCreateResult  on Order{
 `
 const studentInvitationResult = `
 fragment studentInvitation on Student{
-    UnionID
+    openid
     invitations{
         parent{
               name
@@ -71,7 +71,7 @@ fragment studentInvitation on Student{
 `
 const parentInvitationResult = `
 fragment studentInvitation on Parent{
-    UnionID
+    openid
     invitations{
         student{
           name
@@ -108,7 +108,7 @@ fragment OrderChange on  TryOder{
 `
 const studentBasicPublishInfo = 
 `fragment studentPublishInfo on Student{
-    UnionID
+    openid
     name
     university
     grades

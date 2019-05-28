@@ -42,7 +42,7 @@ function handleStarOrUnstarData(req, star) {
         data = {
             starList: {
                 connect: {
-                    UnionID:roleId
+                    openid:roleId
                 }
             }
         }
@@ -50,7 +50,7 @@ function handleStarOrUnstarData(req, star) {
         data = {
             starList: {
                 disconnect: {
-                    UnionID:roleId
+                    openid:roleId
                 }
             }
         }
@@ -70,7 +70,7 @@ async function createInvitation(req, res) {
     let roleId = req.tokenData.jti
     let query = {}
     //id
-    let UnionID = req.body.UnionID
+    let openid = req.body.openid
     let data =  {
         //邀请初始化，waiting 写死！！
         status: "WAITING",
@@ -81,36 +81,36 @@ async function createInvitation(req, res) {
         
         data.student={
             connect:{
-                UnionID: UnionID
+                openid: openid
             }
         }
         query.student={
-            UnionID:UnionID
+            openid:openid
         }
         data.parent={
             connect:{
-                UnionID:roleId             
+                openid:roleId             
             }
         }
         query.parent={
-            UnionID:roleId
+            openid:roleId
         }
     }else{
         data.student={
             connect:{
-                UnionID:roleId
+                openid:roleId
             }
         }
         query.student={
-            UnionID:roleId
+            openid:roleId
         }
         data.parent={
             connect:{
-                UnionID: UnionID
+                openid: openid
             }
         }
         query.parent={
-            UnionID:UnionID
+            openid:openid
         }
     }
     console.log(data)
@@ -127,7 +127,7 @@ async function createInvitation(req, res) {
 async function getInvitations(req,res){
     const role = req.params.role;
     const tokenData = req.tokenData;
-    let{get,data,info}= await commonRepo.getRoleInvitations({UnionID:tokenData.jti},role)
+    let{get,data,info}= await commonRepo.getRoleInvitations({openid:tokenData.jti},role)
     if(get){
         res.status(200).json({data:data,info:info})
     }else{
@@ -292,7 +292,7 @@ async function updatePublishStatus(req,res){
     console.log(req.params.status)
    const status = req.params.status==="false"?false:true
    console.log(status)
-   const update = await commonRepo.updatePublishStatus({status:status,UnionID:req.tokenData.jti},req.tokenData.role)
+   const update = await commonRepo.updatePublishStatus({status:status,openid:req.tokenData.jti},req.tokenData.role)
    if(update){
        res.status(200).json({info:"更新成功"})
    }else{

@@ -12,11 +12,11 @@ fragment tryOrderInfo on TryOrder{
     phone
     otherInfo
     parent{
-        UnionID
+        openid
         name
       }
         student{
-          UnionID
+          openid
           name
         }
       

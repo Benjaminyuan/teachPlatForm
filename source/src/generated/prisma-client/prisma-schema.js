@@ -1,7 +1,7 @@
 module.exports = {
         typeDefs: /* GraphQL */ `type Admin {
   id: ID!
-  UnionID: String!
+  openid: String!
   name: String!
   phone: String!
   email: String!
@@ -14,7 +14,7 @@ type AdminConnection {
 }
 
 input AdminCreateInput {
-  UnionID: String!
+  openid: String!
   name: String!
   phone: String!
   email: String!
@@ -33,8 +33,8 @@ type AdminEdge {
 enum AdminOrderByInput {
   id_ASC
   id_DESC
-  UnionID_ASC
-  UnionID_DESC
+  openid_ASC
+  openid_DESC
   name_ASC
   name_DESC
   phone_ASC
@@ -49,7 +49,7 @@ enum AdminOrderByInput {
 
 type AdminPreviousValues {
   id: ID!
-  UnionID: String!
+  openid: String!
   name: String!
   phone: String!
   email: String!
@@ -74,21 +74,21 @@ input AdminSubscriptionWhereInput {
 }
 
 input AdminUpdateDataInput {
-  UnionID: String
+  openid: String
   name: String
   phone: String
   email: String
 }
 
 input AdminUpdateInput {
-  UnionID: String
+  openid: String
   name: String
   phone: String
   email: String
 }
 
 input AdminUpdateManyMutationInput {
-  UnionID: String
+  openid: String
   name: String
   phone: String
   email: String
@@ -123,20 +123,20 @@ input AdminWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -186,7 +186,7 @@ input AdminWhereInput {
 
 input AdminWhereUniqueInput {
   id: ID
-  UnionID: String
+  openid: String
   name: String
   phone: String
   email: String
@@ -1546,7 +1546,7 @@ type PageInfo {
 
 type Parent {
   id: ID!
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1564,7 +1564,7 @@ type Parent {
 type ParentAuthInfo {
   id: ID!
   parent: Parent!
-  UnionID: String!
+  openid: String!
   sourceUrl: [String!]!
   res: AuthStatus!
   info: String
@@ -1579,7 +1579,7 @@ type ParentAuthInfoConnection {
 
 input ParentAuthInfoCreateInput {
   parent: ParentCreateOneInput!
-  UnionID: String!
+  openid: String!
   sourceUrl: ParentAuthInfoCreatesourceUrlInput
   res: AuthStatus!
   info: String
@@ -1598,8 +1598,8 @@ type ParentAuthInfoEdge {
 enum ParentAuthInfoOrderByInput {
   id_ASC
   id_DESC
-  UnionID_ASC
-  UnionID_DESC
+  openid_ASC
+  openid_DESC
   res_ASC
   res_DESC
   info_ASC
@@ -1612,7 +1612,7 @@ enum ParentAuthInfoOrderByInput {
 
 type ParentAuthInfoPreviousValues {
   id: ID!
-  UnionID: String!
+  openid: String!
   sourceUrl: [String!]!
   res: AuthStatus!
   info: String
@@ -1638,7 +1638,7 @@ input ParentAuthInfoSubscriptionWhereInput {
 
 input ParentAuthInfoUpdateInput {
   parent: ParentUpdateOneRequiredInput
-  UnionID: String
+  openid: String
   sourceUrl: ParentAuthInfoUpdatesourceUrlInput
   res: AuthStatus
   info: String
@@ -1646,7 +1646,7 @@ input ParentAuthInfoUpdateInput {
 }
 
 input ParentAuthInfoUpdateManyMutationInput {
-  UnionID: String
+  openid: String
   sourceUrl: ParentAuthInfoUpdatesourceUrlInput
   res: AuthStatus
   info: String
@@ -1672,20 +1672,20 @@ input ParentAuthInfoWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   parent: ParentWhereInput
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   res: AuthStatus
   res_not: AuthStatus
   res_in: [AuthStatus!]
@@ -1712,7 +1712,7 @@ input ParentAuthInfoWhereInput {
 
 input ParentAuthInfoWhereUniqueInput {
   id: ID
-  UnionID: String
+  openid: String
 }
 
 type ParentConnection {
@@ -1722,7 +1722,7 @@ type ParentConnection {
 }
 
 input ParentCreateInput {
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1756,7 +1756,7 @@ input ParentCreateOneWithoutOrderInput {
 }
 
 input ParentCreateWithoutInvitationsInput {
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1769,7 +1769,7 @@ input ParentCreateWithoutInvitationsInput {
 }
 
 input ParentCreateWithoutOrderInput {
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1782,7 +1782,7 @@ input ParentCreateWithoutOrderInput {
 }
 
 input ParentCreateWithoutStarListInput {
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1802,8 +1802,8 @@ type ParentEdge {
 enum ParentOrderByInput {
   id_ASC
   id_DESC
-  UnionID_ASC
-  UnionID_DESC
+  openid_ASC
+  openid_DESC
   phone_ASC
   phone_DESC
   name_ASC
@@ -1824,7 +1824,7 @@ enum ParentOrderByInput {
 
 type ParentPreviousValues {
   id: ID!
-  UnionID: String!
+  openid: String!
   phone: String!
   name: String!
   address: String!
@@ -1850,20 +1850,20 @@ input ParentScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   phone: String
   phone_not: String
   phone_in: [String!]
@@ -1966,7 +1966,7 @@ input ParentSubscriptionWhereInput {
 }
 
 input ParentUpdateDataInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -1980,7 +1980,7 @@ input ParentUpdateDataInput {
 }
 
 input ParentUpdateInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -1994,7 +1994,7 @@ input ParentUpdateInput {
 }
 
 input ParentUpdateManyDataInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -2004,7 +2004,7 @@ input ParentUpdateManyDataInput {
 }
 
 input ParentUpdateManyMutationInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -2051,7 +2051,7 @@ input ParentUpdateOneRequiredWithoutOrderInput {
 }
 
 input ParentUpdateWithoutInvitationsDataInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -2064,7 +2064,7 @@ input ParentUpdateWithoutInvitationsDataInput {
 }
 
 input ParentUpdateWithoutOrderDataInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -2077,7 +2077,7 @@ input ParentUpdateWithoutOrderDataInput {
 }
 
 input ParentUpdateWithoutStarListDataInput {
-  UnionID: String
+  openid: String
   phone: String
   name: String
   address: String
@@ -2130,20 +2130,20 @@ input ParentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   phone: String
   phone_not: String
   phone_in: [String!]
@@ -2239,7 +2239,7 @@ input ParentWhereInput {
 
 input ParentWhereUniqueInput {
   id: ID
-  UnionID: String
+  openid: String
   phone: String
   name: String
   email: String
@@ -2448,7 +2448,6 @@ input ShortTermWhereUniqueInput {
 
 type Student {
   id: ID!
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2471,7 +2470,7 @@ type Student {
 
 type StudentAuthInfo {
   id: ID!
-  UnionID: String!
+  openid: String!
   student: Student!
   sourceUrl: [String!]!
   res: AuthStatus!
@@ -2486,7 +2485,7 @@ type StudentAuthInfoConnection {
 }
 
 input StudentAuthInfoCreateInput {
-  UnionID: String!
+  openid: String!
   student: StudentCreateOneInput!
   sourceUrl: StudentAuthInfoCreatesourceUrlInput
   res: AuthStatus!
@@ -2506,8 +2505,8 @@ type StudentAuthInfoEdge {
 enum StudentAuthInfoOrderByInput {
   id_ASC
   id_DESC
-  UnionID_ASC
-  UnionID_DESC
+  openid_ASC
+  openid_DESC
   res_ASC
   res_DESC
   info_ASC
@@ -2520,7 +2519,7 @@ enum StudentAuthInfoOrderByInput {
 
 type StudentAuthInfoPreviousValues {
   id: ID!
-  UnionID: String!
+  openid: String!
   sourceUrl: [String!]!
   res: AuthStatus!
   info: String
@@ -2545,7 +2544,7 @@ input StudentAuthInfoSubscriptionWhereInput {
 }
 
 input StudentAuthInfoUpdateInput {
-  UnionID: String
+  openid: String
   student: StudentUpdateOneRequiredInput
   sourceUrl: StudentAuthInfoUpdatesourceUrlInput
   res: AuthStatus
@@ -2554,7 +2553,7 @@ input StudentAuthInfoUpdateInput {
 }
 
 input StudentAuthInfoUpdateManyMutationInput {
-  UnionID: String
+  openid: String
   sourceUrl: StudentAuthInfoUpdatesourceUrlInput
   res: AuthStatus
   info: String
@@ -2579,20 +2578,20 @@ input StudentAuthInfoWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   student: StudentWhereInput
   res: AuthStatus
   res_not: AuthStatus
@@ -2620,7 +2619,7 @@ input StudentAuthInfoWhereInput {
 
 input StudentAuthInfoWhereUniqueInput {
   id: ID
-  UnionID: String
+  openid: String
 }
 
 type StudentConnection {
@@ -2630,7 +2629,6 @@ type StudentConnection {
 }
 
 input StudentCreateInput {
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2670,7 +2668,6 @@ input StudentCreateOneWithoutOrderInput {
 }
 
 input StudentCreateWithoutInvitationsInput {
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2689,7 +2686,6 @@ input StudentCreateWithoutInvitationsInput {
 }
 
 input StudentCreateWithoutOrderInput {
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2708,7 +2704,6 @@ input StudentCreateWithoutOrderInput {
 }
 
 input StudentCreateWithoutStarListInput {
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2886,8 +2881,6 @@ type StudentEdge {
 enum StudentOrderByInput {
   id_ASC
   id_DESC
-  UnionID_ASC
-  UnionID_DESC
   openid_ASC
   openid_DESC
   phone_ASC
@@ -2916,7 +2909,6 @@ enum StudentOrderByInput {
 
 type StudentPreviousValues {
   id: ID!
-  UnionID: String!
   openid: String!
   phone: String!
   name: String!
@@ -2946,20 +2938,6 @@ input StudentScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
   openid: String
   openid_not: String
   openid_in: [String!]
@@ -3092,7 +3070,6 @@ input StudentSubscriptionWhereInput {
 }
 
 input StudentUpdateDataInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3112,7 +3089,6 @@ input StudentUpdateDataInput {
 }
 
 input StudentUpdateInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3132,7 +3108,6 @@ input StudentUpdateInput {
 }
 
 input StudentUpdateManyDataInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3146,7 +3121,6 @@ input StudentUpdateManyDataInput {
 }
 
 input StudentUpdateManyMutationInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3197,7 +3171,6 @@ input StudentUpdateOneRequiredWithoutOrderInput {
 }
 
 input StudentUpdateWithoutInvitationsDataInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3216,7 +3189,6 @@ input StudentUpdateWithoutInvitationsDataInput {
 }
 
 input StudentUpdateWithoutOrderDataInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3235,7 +3207,6 @@ input StudentUpdateWithoutOrderDataInput {
 }
 
 input StudentUpdateWithoutStarListDataInput {
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3294,20 +3265,6 @@ input StudentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
   openid: String
   openid_not: String
   openid_in: [String!]
@@ -3439,7 +3396,6 @@ input StudentWhereInput {
 
 input StudentWhereUniqueInput {
   id: ID
-  UnionID: String
   openid: String
   phone: String
   name: String
@@ -3818,7 +3774,7 @@ enum University {
 }
 
 type User {
-  UnionID: String!
+  openid: String!
 }
 
 type UserConnection {
@@ -3828,7 +3784,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  UnionID: String!
+  openid: String!
 }
 
 type UserEdge {
@@ -3837,8 +3793,8 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
-  UnionID_ASC
-  UnionID_DESC
+  openid_ASC
+  openid_DESC
   id_ASC
   id_DESC
   createdAt_ASC
@@ -3848,7 +3804,7 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
-  UnionID: String!
+  openid: String!
 }
 
 type UserSubscriptionPayload {
@@ -3870,35 +3826,35 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  UnionID: String
+  openid: String
 }
 
 input UserUpdateManyMutationInput {
-  UnionID: String
+  openid: String
 }
 
 input UserWhereInput {
-  UnionID: String
-  UnionID_not: String
-  UnionID_in: [String!]
-  UnionID_not_in: [String!]
-  UnionID_lt: String
-  UnionID_lte: String
-  UnionID_gt: String
-  UnionID_gte: String
-  UnionID_contains: String
-  UnionID_not_contains: String
-  UnionID_starts_with: String
-  UnionID_not_starts_with: String
-  UnionID_ends_with: String
-  UnionID_not_ends_with: String
+  openid: String
+  openid_not: String
+  openid_in: [String!]
+  openid_not_in: [String!]
+  openid_lt: String
+  openid_lte: String
+  openid_gt: String
+  openid_gte: String
+  openid_contains: String
+  openid_not_contains: String
+  openid_starts_with: String
+  openid_not_starts_with: String
+  openid_ends_with: String
+  openid_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
-  UnionID: String
+  openid: String
 }
 `
       }

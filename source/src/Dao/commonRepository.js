@@ -85,12 +85,12 @@ async function createOrder(data){
          order = prisma.createOrder({
             stuednt:{
                 connect:{
-                    UnionID: invitation.student.UnionID
+                    openid: invitation.student.openid
                 }
             },
             parent:{
                 connect:{
-                    UnionID: invitation.parent.UnionID
+                    openid: invitation.parent.openid
                 }
             },
             status:"UNPAIED"
@@ -105,7 +105,7 @@ async function createOrder(data){
 
 async function getRoleInvitations(data,role){
     let query =  {
-        UnionID:data.UnionID,               
+        openid:data.openid,               
     }
     let invitations
     try{
@@ -192,7 +192,7 @@ async function updatePublishStatus(data,role){
             publish: data.status
         },
         where:{
-            UnionID:data.UnionID
+            openid:data.openid
         }
     }
     try{
@@ -219,12 +219,12 @@ async function createTryOrder(invitationId){
                 }
             }).$fragment(`fragment  updateInvi on Invitaion{
                 parent{
-                    UnionID
+                    openid
                     address
                     phone
                 }
                 student{
-                    UnionID
+                    openid
                 }
                 
             } `)
@@ -232,12 +232,12 @@ async function createTryOrder(invitationId){
           TryOrder =   await prisma.createTryOrder({
                 parent:{
                     connect:{
-                        UnionID: res.parent.UnionID
+                        openid: res.parent.openid
                     }
                 },
                 student:{
                     connect:{
-                        UnionID: res.student.UnionID
+                        openid: res.student.openid
                     }
                 },
                 address: res.parent.address,
@@ -258,7 +258,7 @@ async function getPublishStatus(data,role){
     try{
         if(role === "STUDNET"){
             result = await prisma.student({
-                UnionID: data.id
+                openid: data.id
             }).$fragment(`
             fragment Sstatus on Student{
                 publish
@@ -266,7 +266,7 @@ async function getPublishStatus(data,role){
             `)
     }else if (role === "PARENT"){
             result = await prisma.parent({
-                UnionID: data.id
+                openid: data.id
             }).$fragment(`
             fragment Pstatus on Parent{
                 publish
@@ -282,11 +282,11 @@ async function getRoleInfo(data,role){
     try{
       if(role === "STUDENT"){
         result = await prisma.student({
-            UnionID:data.id
+            openid:data.id
         }).$fragment(studentBasicPublishInfo)
       }else if(role ==="PARENT"){
           result =  await prisma.parent({
-              UnionID:id
+              openid:id
           }).$fragment(parentBasicPublishInfo)
       }  
     }catch(e){

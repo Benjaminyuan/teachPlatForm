@@ -1,17 +1,16 @@
 type User {
   # id: ID! @unique
-  UnionID: String!@unique
+  openid:String!@unique
 }
 type Admin{
   id: ID!@unique
-  UnionID: String! @unique
+  openid: String! @unique
   name: String!@unique
   phone: String!@unique
   email: String!@unique
 }
 type Student{
   id: ID! @unique
-  UnionID: String!@unique
   openid: String! @unique
   phone: String!@unique
   name: String!@unique
@@ -42,7 +41,7 @@ type StudentDetail{
  
 type Parent{
   id: ID! @unique
-  UnionID: String!@unique
+  openid: String!@unique
   phone: String! @unique
   name: String!@unique
   address: String!
@@ -96,7 +95,7 @@ type Order{
 }
 type StudentAuthInfo{
   id: ID! @unique
-  UnionID:String!@unique
+  openid:String!@unique
   student: Student! @unique
   sourceUrl: [String!]!
   res: AuthStatus!
@@ -106,7 +105,7 @@ type StudentAuthInfo{
 type ParentAuthInfo{
   id: ID! @unique
   parent: Parent!@unique
-  UnionID:String!@unique
+  openid:String!@unique
   sourceUrl: [String!]!
   res: AuthStatus!
   info:String

@@ -44,7 +44,7 @@
 
   ```json
   {
-      "UnionID": "12333333333",
+      "openid": "12333333333",
       "openid": "122222222233",
       "name": "xn",
       "university": "HUST",
@@ -108,7 +108,7 @@
 
     ```json
     {
-        "UnionID": "1111111111",
+        "openid": "1111111111",
         "phone": "15623337359",
         "name": "袁佳",
         "address": "华中科技大学韵苑23栋",
@@ -280,7 +280,7 @@
     }
     //role parent 
     {
-       	UnionID
+       	openid
         name
         university
         grades
@@ -396,7 +396,7 @@
     ```json
     {
       "data":[{
-          UnionID
+          openid
         invitations{
             parent{
                   name
@@ -412,7 +412,7 @@
          }
     }],
     [{
-        UnionID
+        openid
         invitations{
             student{
               name
@@ -588,11 +588,11 @@
         phone
         otherInfo
         parent{
-            UnionID
+            openid
             name
           }
             student{
-              UnionID
+              openid
               name
             }
       },]
