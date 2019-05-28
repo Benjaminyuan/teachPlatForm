@@ -45,7 +45,6 @@
   ```json
   {
       "openid": "12333333333",
-      "openid": "122222222233",
       "name": "xn",
       "university": "HUST",
       "phone": "15623337359",

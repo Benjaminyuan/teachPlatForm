@@ -16,3 +16,5 @@
 [2019-05-28T13:36:02.852] [INFO] myappender - 127.0.0.1 - - "POST /signup HTTP/1.1" 200 13 "" "PostmanRuntime/7.13.0"
 [2019-05-28T13:39:43.824] [INFO] myappender - 127.0.0.1 - - "POST /signup HTTP/1.1" 200 13 "" "PostmanRuntime/7.13.0"
 [2019-05-28T13:42:51.613] [INFO] myappender - 127.0.0.1 - - "POST /signup HTTP/1.1" 200 13 "" "PostmanRuntime/7.13.0"
+[2019-05-28T16:07:33.951] [INFO] myappender - 127.0.0.1 - - "POST /student/signup HTTP/1.1" 400 16 "" "PostmanRuntime/7.13.0"
+[2019-05-28T16:08:27.405] [INFO] myappender - 127.0.0.1 - - "POST /student/signup HTTP/1.1" 200 15 "" "PostmanRuntime/7.13.0"
