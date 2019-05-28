@@ -60,6 +60,7 @@ async function getParents(skip,first,status){
    try{ 
        parent = await prisma.createParent(data)
     }catch(e){
+        console.log(e)
        return ""
    }
    return parent

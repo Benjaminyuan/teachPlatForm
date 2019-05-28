@@ -2,7 +2,7 @@ const  parentRepo  = require("../Dao/parentsRepository")
 const jwt = require("../util/jwt")
 async function signup(req,response){
     try{
-        console.log(res.body)
+        console.log(req.body)
         let parent =await parentRepo.createParent(req.body)
     if(parent){
         const {res,token} = jwt.newJwt("PARENT",parent.openid,parent.authStatus)
