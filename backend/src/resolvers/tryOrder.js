@@ -149,7 +149,7 @@ async function getAllStatus(req, res) {
 }
 async function getStatus(req, res) {
     let result
-    const id = req.params.id
+    const id = req.tokenData.jti
     try {
         result = await prisma.tryOrder({
             id: id

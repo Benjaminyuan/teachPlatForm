@@ -8,6 +8,9 @@ const admin = require("./resolvers/admin")
 const {app,Server,io,upload} = require("./app")
 const sokcet= require("./socket/chatServer")
 const tryOrder = require("./resolvers/tryOrder")
+app.get("/test",(req,res)=>{
+    res.send("running !!")
+})
 app.use('/student*', (req, res, next) => {
     console.log("handle!!")
     req.prisma = prisma

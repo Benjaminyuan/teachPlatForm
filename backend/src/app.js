@@ -16,7 +16,7 @@ log4js.configure({
         file: { type: 'file', filename: 'cheese.log' },
         myappender: {
             type: "dateFile",
-            filename: "../log/access.log",
+            filename: "../logs/access.log",
             pattern: '-yyyy-MM-dd.log',
             alwaysIncludePattern: true,
         }
