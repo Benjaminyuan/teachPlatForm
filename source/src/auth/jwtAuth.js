@@ -20,8 +20,9 @@ async function getInfoFromWeChat(code){
         method: 'GET',
         uri: url
      }
-     const data = await promiseRequest(options)
-    return data
+     const {response,body} = await promiseRequest(options)
+     console.log(body)
+    return body
 }
 
 function getAuthStatus(token){

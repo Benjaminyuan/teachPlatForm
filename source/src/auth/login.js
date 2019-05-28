@@ -24,10 +24,12 @@ async function weChatAuth(req, response) {
      * }
      */
     let user
-    data = await jwtAuth.getInfoFromWeChat(req.body.code)
-    console.log(data)
-    if (data.errcode) {
+    const data = await jwtAuth.getInfoFromWeChat(req.body.code)
+    const ob = JSON.parse(data)
+    console.log(ob.errcode)
+    if (ob.errcode) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
+        return 
     }
     exist = await userRepo.userIsExist(data.openid)
     if (exist === false) {
