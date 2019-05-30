@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'teachplatform',
+    name: 'API',
     script: './src/index.js',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
@@ -9,6 +9,8 @@ module.exports = {
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
+    out_file: "./logs/app-out-0.log",
+    error_file: "./logs/app-err-0.log",
     env: {
       NODE_ENV: 'development',
       JWTSECRET:'benji'
@@ -16,20 +18,17 @@ module.exports = {
     env_production: {
       NODE_ENV: 'production',
       JWTSECRET:'benji'
-    },
-    log_date_format: "JJ-MM-YYYY",
-    out_file: "./logs/app-out.log",
-    error_file: "./logs/app-err.log",
+    }
+  
   }],
 
   deploy : {
     production : {
-      user : 'ubuntu',
-      host : 'plus1sec.cn',
-      port: 22,
+      user : 'node',
+      host : '212.83.163.1',
       ref  : 'origin/master',
-      repo : "git@github.com:Benjaminyuan/teachPlatForm.git",
-      path : '~/teach_production',
+      repo : 'git@github.com:repo.git',
+      path : '/var/www/production',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }

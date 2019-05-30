@@ -15,7 +15,7 @@ type Student{
   phone: String!@unique
   name: String!@unique
   university: University!
-  grades: String!
+  grade: Level!
   email: String!@unique
   Gender: Gender @default(value:MALE)
   createdAt: DateTime!
@@ -61,7 +61,7 @@ type Parent{
 type BasicTermInfo{
   id: ID! @unique
   Level:Level!
-  subjects: [SubjectName]!
+  subjects: [SubjectName!]!
   pay: Int @default(value:50)
   childGender: Gender! @default(value:FEMALE)
   teacherGender: SelectGender! @default(value:BOTH)
@@ -93,6 +93,7 @@ type Order{
   parent: Parent!@relation(name:"OrderParent")
   status: OrderStatus!
 }
+
 type StudentAuthInfo{
   id: ID! @unique
   openid:String!@unique
@@ -185,10 +186,22 @@ enum AuthStatus{
 }
 # 学生等级
 enum Level{
-  PRIMARY
-  MIDDLE
-  MIDDLEHIGH
-  OTHER
+  PRI_1
+  PRI_2
+  PRI_3
+  PRI_4
+  PRI_5
+  PRI_6
+  MID_1
+  MID_2
+  MID_3
+  MIDHIGH_1
+  MIDHIGH_2
+  MIDHIGH_3
+  UNI_1
+  UNI_2
+  UNI_3
+  UNI_4
 }
 #学校
 enum University{
