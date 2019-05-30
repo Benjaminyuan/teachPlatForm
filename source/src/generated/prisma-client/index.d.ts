@@ -698,7 +698,23 @@ export type AvalibelTimeOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type Level = "PRIMARY" | "MIDDLE" | "MIDDLEHIGH" | "OTHER";
+export type Level =
+  | "PRI_1"
+  | "PRI_2"
+  | "PRI_3"
+  | "PRI_4"
+  | "PRI_5"
+  | "PRI_6"
+  | "MID_1"
+  | "MID_2"
+  | "MID_3"
+  | "MIDHIGH_1"
+  | "MIDHIGH_2"
+  | "MIDHIGH_3"
+  | "UNI_1"
+  | "UNI_2"
+  | "UNI_3"
+  | "UNI_4";
 
 export type SubjectName =
   | "CHINESE"
@@ -795,8 +811,8 @@ export type StudentOrderByInput =
   | "name_DESC"
   | "university_ASC"
   | "university_DESC"
-  | "grades_ASC"
-  | "grades_DESC"
+  | "grade_ASC"
+  | "grade_DESC"
   | "email_ASC"
   | "email_DESC"
   | "Gender_ASC"
@@ -1400,20 +1416,10 @@ export interface StudentWhereInput {
   university_not?: University;
   university_in?: University[] | University;
   university_not_in?: University[] | University;
-  grades?: String;
-  grades_not?: String;
-  grades_in?: String[] | String;
-  grades_not_in?: String[] | String;
-  grades_lt?: String;
-  grades_lte?: String;
-  grades_gt?: String;
-  grades_gte?: String;
-  grades_contains?: String;
-  grades_not_contains?: String;
-  grades_starts_with?: String;
-  grades_not_starts_with?: String;
-  grades_ends_with?: String;
-  grades_not_ends_with?: String;
+  grade?: Level;
+  grade_not?: Level;
+  grade_in?: Level[] | Level;
+  grade_not_in?: Level[] | Level;
   email?: String;
   email_not?: String;
   email_in?: String[] | String;
@@ -2122,7 +2128,7 @@ export interface StudentCreateWithoutInvitationsInput {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2201,7 +2207,7 @@ export interface StudentCreateWithoutOrderInput {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2272,7 +2278,7 @@ export interface StudentCreateWithoutStarListInput {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2337,7 +2343,7 @@ export interface StudentUpdateWithoutInvitationsDataInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2548,7 +2554,7 @@ export interface StudentUpdateWithoutOrderDataInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2664,7 +2670,7 @@ export interface StudentUpdateWithoutStarListDataInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -2859,20 +2865,10 @@ export interface StudentScalarWhereInput {
   university_not?: University;
   university_in?: University[] | University;
   university_not_in?: University[] | University;
-  grades?: String;
-  grades_not?: String;
-  grades_in?: String[] | String;
-  grades_not_in?: String[] | String;
-  grades_lt?: String;
-  grades_lte?: String;
-  grades_gt?: String;
-  grades_gte?: String;
-  grades_contains?: String;
-  grades_not_contains?: String;
-  grades_starts_with?: String;
-  grades_not_starts_with?: String;
-  grades_ends_with?: String;
-  grades_not_ends_with?: String;
+  grade?: Level;
+  grade_not?: Level;
+  grade_in?: Level[] | Level;
+  grade_not_in?: Level[] | Level;
   email?: String;
   email_not?: String;
   email_in?: String[] | String;
@@ -2936,7 +2932,7 @@ export interface StudentUpdateManyDataInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3281,7 +3277,7 @@ export interface StudentCreateInput {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3300,7 +3296,7 @@ export interface StudentUpdateInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3319,7 +3315,7 @@ export interface StudentUpdateManyMutationInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -3366,7 +3362,7 @@ export interface StudentUpdateDataInput {
   phone?: String;
   name?: String;
   university?: University;
-  grades?: String;
+  grade?: Level;
   email?: String;
   Gender?: Gender;
   expectPay?: Int;
@@ -4121,7 +4117,7 @@ export interface Student {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   createdAt: DateTimeOutput;
@@ -4137,7 +4133,7 @@ export interface StudentPromise extends Promise<Student>, Fragmentable {
   phone: () => Promise<String>;
   name: () => Promise<String>;
   university: () => Promise<University>;
-  grades: () => Promise<String>;
+  grade: () => Promise<Level>;
   email: () => Promise<String>;
   Gender: () => Promise<Gender>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -4201,7 +4197,7 @@ export interface StudentSubscription
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
-  grades: () => Promise<AsyncIterator<String>>;
+  grade: () => Promise<AsyncIterator<Level>>;
   email: () => Promise<AsyncIterator<String>>;
   Gender: () => Promise<AsyncIterator<Gender>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -5811,7 +5807,7 @@ export interface StudentPreviousValues {
   phone: String;
   name: String;
   university: University;
-  grades: String;
+  grade: Level;
   email: String;
   Gender?: Gender;
   createdAt: DateTimeOutput;
@@ -5829,7 +5825,7 @@ export interface StudentPreviousValuesPromise
   phone: () => Promise<String>;
   name: () => Promise<String>;
   university: () => Promise<University>;
-  grades: () => Promise<String>;
+  grade: () => Promise<Level>;
   email: () => Promise<String>;
   Gender: () => Promise<Gender>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -5847,7 +5843,7 @@ export interface StudentPreviousValuesSubscription
   phone: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   university: () => Promise<AsyncIterator<University>>;
-  grades: () => Promise<AsyncIterator<String>>;
+  grade: () => Promise<AsyncIterator<Level>>;
   email: () => Promise<AsyncIterator<String>>;
   Gender: () => Promise<AsyncIterator<Gender>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;

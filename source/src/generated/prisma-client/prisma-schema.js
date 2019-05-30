@@ -1081,10 +1081,22 @@ enum Invitor {
 }
 
 enum Level {
-  PRIMARY
-  MIDDLE
-  MIDDLEHIGH
-  OTHER
+  PRI_1
+  PRI_2
+  PRI_3
+  PRI_4
+  PRI_5
+  PRI_6
+  MID_1
+  MID_2
+  MID_3
+  MIDHIGH_1
+  MIDHIGH_2
+  MIDHIGH_3
+  UNI_1
+  UNI_2
+  UNI_3
+  UNI_4
 }
 
 scalar Long
@@ -2452,7 +2464,7 @@ type Student {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   createdAt: DateTime!
@@ -2633,7 +2645,7 @@ input StudentCreateInput {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2672,7 +2684,7 @@ input StudentCreateWithoutInvitationsInput {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2690,7 +2702,7 @@ input StudentCreateWithoutOrderInput {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2708,7 +2720,7 @@ input StudentCreateWithoutStarListInput {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   expectPay: Int
@@ -2889,8 +2901,8 @@ enum StudentOrderByInput {
   name_DESC
   university_ASC
   university_DESC
-  grades_ASC
-  grades_DESC
+  grade_ASC
+  grade_DESC
   email_ASC
   email_DESC
   Gender_ASC
@@ -2913,7 +2925,7 @@ type StudentPreviousValues {
   phone: String!
   name: String!
   university: University!
-  grades: String!
+  grade: Level!
   email: String!
   Gender: Gender
   createdAt: DateTime!
@@ -2984,20 +2996,10 @@ input StudentScalarWhereInput {
   university_not: University
   university_in: [University!]
   university_not_in: [University!]
-  grades: String
-  grades_not: String
-  grades_in: [String!]
-  grades_not_in: [String!]
-  grades_lt: String
-  grades_lte: String
-  grades_gt: String
-  grades_gte: String
-  grades_contains: String
-  grades_not_contains: String
-  grades_starts_with: String
-  grades_not_starts_with: String
-  grades_ends_with: String
-  grades_not_ends_with: String
+  grade: Level
+  grade_not: Level
+  grade_in: [Level!]
+  grade_not_in: [Level!]
   email: String
   email_not: String
   email_in: [String!]
@@ -3074,7 +3076,7 @@ input StudentUpdateDataInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3093,7 +3095,7 @@ input StudentUpdateInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3112,7 +3114,7 @@ input StudentUpdateManyDataInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3125,7 +3127,7 @@ input StudentUpdateManyMutationInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3175,7 +3177,7 @@ input StudentUpdateWithoutInvitationsDataInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3193,7 +3195,7 @@ input StudentUpdateWithoutOrderDataInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3211,7 +3213,7 @@ input StudentUpdateWithoutStarListDataInput {
   phone: String
   name: String
   university: University
-  grades: String
+  grade: Level
   email: String
   Gender: Gender
   expectPay: Int
@@ -3311,20 +3313,10 @@ input StudentWhereInput {
   university_not: University
   university_in: [University!]
   university_not_in: [University!]
-  grades: String
-  grades_not: String
-  grades_in: [String!]
-  grades_not_in: [String!]
-  grades_lt: String
-  grades_lte: String
-  grades_gt: String
-  grades_gte: String
-  grades_contains: String
-  grades_not_contains: String
-  grades_starts_with: String
-  grades_not_starts_with: String
-  grades_ends_with: String
-  grades_not_ends_with: String
+  grade: Level
+  grade_not: Level
+  grade_in: [Level!]
+  grade_not_in: [Level!]
   email: String
   email_not: String
   email_in: [String!]
