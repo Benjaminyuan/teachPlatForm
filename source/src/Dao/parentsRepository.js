@@ -5,16 +5,16 @@ async function findParentById(openid){
     })
 }
 async function parentExist(name,email,phone){
-    let res =  await prisma.$exists.parents({
-         AND:[
+    let res =  await prisma.$exists.parent({
+         OR:[
              {
-                 name: name
+                 name: name || ''
              },
              {
-                 email: email
+                 email: email || '',
              },
              {
-               phone: phone  
+               phone: phone ||''
              },
          ]
      })

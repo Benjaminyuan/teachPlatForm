@@ -113,8 +113,8 @@ const shortterm = {
   starList: {},
   invitations: {},
   order: {},
-  publish: "false",
-  publishTerm: {
+  publish: false,
+  publishTerm:{
       create: {
           Level: "PRIMARY",
           pay: 60,

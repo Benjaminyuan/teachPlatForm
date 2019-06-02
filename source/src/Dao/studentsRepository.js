@@ -32,15 +32,15 @@ async function findStudentById(openid){
 }
 async function studentExist(name,email,phone){
    let res =  await prisma.$exists.student({
-        AND:[
+        OR:[
             {
-                name: name
+                name: name || ""
             },
             {
-                email: email
+                email: email || ""
             },
             {
-              phone: phone  
+              phone: phone  || ""
             },
         ]
     })

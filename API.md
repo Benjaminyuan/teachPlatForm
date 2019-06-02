@@ -36,6 +36,32 @@
 
   
 
+### /user/exist
+
+* Method: POST, with token 
+
+  ```json
+  {
+    "name":String,
+    "phone":String,
+    "email":String
+  }
+  //三个字段都可以为空可以为空
+  ```
+
+  
+
+* Response
+
+  ```json
+  { 
+    "exist": Boolean, 
+    "info": "student or parent role already registed!!" 
+  }
+```
+  
+  
+
 ### /student/signup
 
 * Method: POST,  with token 
@@ -49,6 +75,7 @@
       "university": "HUST",
       "phone": "15623337359",
       "email": "xn@MediaList.com",
+    	"grade":"UNI_1"
       "authStatus": "UNCOMMITED",
       "Gender": "MALE",
       "subjects": {
@@ -57,8 +84,8 @@
                   "name": "CHINESE",
                   "level": {
                       "set": [
-                          "MIDDLE",
-                          "PRIMARY"
+                          "MID_1",
+                          "PRI_1"
                       ]
                   }
               }
@@ -119,7 +146,7 @@
         "publish": false,
         "publishTerm": {
             "create": {
-                "Level": "PRIMARY",
+                "Level": "PRI_1",
                 "pay": 60,
                 "childGender": "FEMALE",
                 "teacherGender": "BOTH",
@@ -135,7 +162,7 @@
               "shortTerm":{
                 "create":{
                   "lessonTime":1,
-                  "all":3
+                  "all":3,
                   "timeList":["2019-05-10"]
                 }
               },
@@ -240,6 +267,8 @@
 
 
 
+
+
 ### /:role/publishlist?first={value}&skip={value}
 
 - Request 
@@ -307,7 +336,115 @@
 
     
 
+### /parent/publishlist/search
 
+* Request
+
+  * POST with token 
+
+    ```json
+    {
+      "gender":["MALE","FEMALE"],
+      "university":["HUST","WHU"],
+      "subjects":["MATH","ENGLISH"],
+      "levels":["PRI_1","PRI_2"],
+    }
+    //全选请都带上
+    ```
+
+* Response
+
+  * 200
+
+    ```json
+    //role student 
+    {
+      	 address
+        name
+      	publishTerm{
+        	Level
+          pay
+          subjects
+          childGender
+          teacherGender
+          longTerm{
+            days
+            lessonTime
+            timeList{
+              day
+              detail
+            } 
+          }
+          shortTerm{
+            timeList{
+            day
+            detail 
+          }
+          }
+        }
+    }
+    
+    ```
+
+  * 400
+
+    ```json
+    {
+      "info":"参数错误"
+    }
+    ```
+
+    
+
+### /student/publishlist/search
+
+- Request
+
+  - POST with token 
+
+    ```json
+    {
+      "grades":["PRI_1","PRI_2"],
+      "gender":["MALE","FEMALE"],
+       "subjects":["MATH","ENGLISH"],
+    }
+    //如果全选择都带上，
+    ```
+
+- Response
+
+  - 200
+
+  ```json
+  //role parent 
+  {
+     	openid
+      name
+      university
+      grades
+      Gender
+      subjects{
+        name
+        level
+      }
+      expectPay
+      avalible{
+        day
+        detail
+      }
+  }
+  }
+  ```
+
+- 400
+
+  ```json
+  {
+     "info":"参数错误"
+  }
+  ```
+
+  
 
 ### /:role/info/:id
 
