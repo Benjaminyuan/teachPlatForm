@@ -961,10 +961,10 @@ export type TryOrderOrderByInput =
   | "updatedAt_DESC";
 
 export type UserOrderByInput =
-  | "openid_ASC"
-  | "openid_DESC"
   | "id_ASC"
   | "id_DESC"
+  | "openid_ASC"
+  | "openid_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1909,10 +1909,25 @@ export interface TryOrderWhereInput {
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
-  openid: String;
+  id: ID_Input;
+  openid?: String;
 }>;
 
 export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   openid?: String;
   openid_not?: String;
   openid_in?: String[] | String;
@@ -5163,16 +5178,19 @@ export interface AggregateTryOrderSubscription
 }
 
 export interface User {
+  id: ID_Output;
   openid: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
   openid: () => Promise<String>;
 }
 
 export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
   openid: () => Promise<AsyncIterator<String>>;
 }
 
@@ -6088,18 +6106,21 @@ export interface UserSubscriptionPayloadSubscription
 }
 
 export interface UserPreviousValues {
+  id: ID_Output;
   openid: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
+  id: () => Promise<ID_Output>;
   openid: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
   openid: () => Promise<AsyncIterator<String>>;
 }
 

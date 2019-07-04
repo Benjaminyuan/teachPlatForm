@@ -19,9 +19,11 @@
                         "clueName": String,//线索的名字
                         "nextSceneId": Int,//指向的下一个场景
                         "status": Boolean,//解锁状态，默认为false
-                        "sourceUrl": [
-                            String,//资源位置
-                        ]
+                       "sourceUrl": {
+                            "image":[String,...String],
+                            "voice":[String,...String],
+                            "video":[String,...String]
+               				 },
                     }
                 ],
        "scenes": [
@@ -33,15 +35,19 @@
                         "clueName": String,
                         "nextSceneId": 1,
                         "status": Boolean,
-                        "sourceUrl": [
-                            String
-                        ]
+                         "sourceUrl": {
+                  					"image":[String,...String],
+                            "voice":[String,...String],
+                            "video":[String,...String]
+               					 }
                     }
                 ],
                 "sceneName": String,//场景的名字
-                "sourceUrl": [
-                    String//资源的位置
-                ]
+                 "sourceUrl": {
+                  "image":[String,...String],
+                  "voice":[String,...String],
+                  "video":[String,...String]
+                }
             }
         ]
     }
@@ -67,18 +73,20 @@
               "clueName": "诡异的笑容",
               "nextSceneId": 1,
               "status": false,
-              "sourceUrl": [
-                  "456.mp3"
-              ]
+                "sourceUrl": {
+                "image":[String,...String],
+                "voice":[String,...String],
+                "video":[String,...String]
+              }
           }
       ],
       "sourceUrl": [
           "123.jgp"
       ],
       "name": String 
-  }
+}
   ```
-
+  
   
 
 
@@ -98,12 +106,15 @@
               "clueName": "破旧的手表",
               "nextSceneId": 1,
               "status": false,
-              "sourceUrl": [
-                  "123.jgp"
-              ]
+              "sourceUrl": {
+                "image":[String,...String],
+                "voice":[String,...String],
+                "video":[String,...String]
+              }
+                 
           }
-      ]
+    ]
   }
   ```
-
+  
   

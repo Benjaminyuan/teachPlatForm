@@ -58,6 +58,7 @@
     "exist": Boolean, 
     "info": "student or parent role already registed!!" 
   }
+  ```
 ```
   
   
@@ -102,7 +103,7 @@
       "invitations": {},
       "order": {}
   }
-  ```
+```
 
 * Response
 
@@ -267,7 +268,62 @@
 
 
 
+###/:role/info/:id
 
+* Request 
+
+  * Method:GET with token
+
+* Response
+
+  * 200
+
+    ```json
+    //student 
+    {
+       openid
+        name
+        university
+        grades
+        Gender
+        subjects{
+          name
+          level
+        }
+        expectPay
+        avalible{
+          day
+          detail
+        }
+    }
+    //parent
+    {
+      address
+        name
+      	publishTerm{
+        	Level
+          pay
+          subjects
+          childGender
+          teacherGender
+          longTerm{
+            days
+            lessonTime
+            timeList{
+              day
+              detail
+            } 
+          }
+          shortTerm{
+          lessonTime
+          all
+            timeList
+          }
+        }
+    }
+    ```
+
+    
 
 ### /:role/publishlist?first={value}&skip={value}
 
@@ -697,7 +753,37 @@
 
 * Response
 
-### /order/status/:id     /order/info/:id
+### /order/:role/:id
+
+* Requset
+
+  * Method: GET with token
+
+* Response
+
+  ```json
+  {
+  	"info":[
+  	    address
+      startTime
+      endTime
+      phone
+      otherInfo
+      parent{
+          openid
+          name
+        }
+          student{
+            openid
+            name
+          },
+  	]
+  }
+  ```
+
+  
+
+### /order/status/:id    
 
 - Request 
 
@@ -713,11 +799,19 @@
     }
     ```
 
+### /order/info/:id 
+
+* Requset
+
+  * Method: GET with token
+
+* Response
+
   * 200
 
     ```json
     {
-      [{
+    
          address
         startTime
         endTime
@@ -731,13 +825,31 @@
               openid
               name
             }
-      },]
+      }
     }
     ```
 
     
 
-### /orders/status       /orders/info
+### /order/:role/:id
+
+* Request
+
+  * Method: GET with token
+
+* Response
+
+  * 200
+
+    ```jso
+    {
+    	
+    }
+    ```
+
+    
+
+### /orders/status       
 
 - Request 
 
@@ -758,5 +870,36 @@
       "status":["status"]
     }
     ```
+
+  
+
+###  /orders/info
+
+* Request 
+  * Method: GET with 
+
+* Response 
+
+  * 200
+
+  ```
+  {
+  	"info":[
+  	    address
+      startTime
+      endTime
+      phone
+      otherInfo
+      parent{
+          openid
+          name
+        }
+          student{
+            openid
+            name
+          },
+  	]
+  }
+  ```
 
   

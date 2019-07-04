@@ -57,13 +57,14 @@ async function updateOrderstatus(req, res) {
                status 
            } 
            `)
-        if (!orderStatus) {
+        if (!orderStatus) {  
             res.status(404).json({ info: "订单不存在" })
         }
         if (status === "cancle") {
             await prisma.updateTryOrder({
                 data: {
-                    status: "CANCLED"
+                    status: "CANCLED",
+                    rejectInfo: data.rejectReason
                 },
                 where: {
                     id: data.id
@@ -78,7 +79,7 @@ async function updateOrderstatus(req, res) {
                     id: data.id
                 }
             })
-        } else if (orderStatus === "PACK" && status === "sack") {
+        } else if (orderStatus === "PACK" && status === "sack" && tokenData.role === "STUDENT") {
             await prisma.updateTryOrder({
                 data: {
                     emerContact: data.emerContact,
@@ -102,6 +103,11 @@ async function updateOrderstatus(req, res) {
         res.status(400).json({ info: "操作失败" })
     }
     res.status(200)
+}
+async function getHelp(req,res){
+    
+}
+async function setAlarm(req,res){
 
 }
 async function getTryOrderInfo(req, res) {
@@ -116,7 +122,7 @@ async function getTryOrderInfo(req, res) {
         res.status(400).json({ info: "请重试" })
         return
     }
-    res.status(200).send(result)
+    res.status(200).json(result)
 }
 async function getAllTryOrderInfo(req, res) {
     let data = req.body
@@ -131,7 +137,33 @@ async function getAllTryOrderInfo(req, res) {
         console.log(e)
         res.status(400).json({ info: "请重试" })
     }
-    res.status(200).send(result)
+    res.status(200).json({info:result})
+}
+async function getUserAllTryOrder(req,res){
+
+    const tokenData = req.tokenData
+    let result 
+    try{
+        result = tokenData === "STUDENT" ? await prisma.tryOrders({
+            where:{
+                student:{
+                    id: tokenData.jti
+                }
+            }
+        }).$fragment(infoFragment) : await prisma.tryOrders({
+            where:{
+                parent:{
+                    id: tokenData.jti
+                }
+            }
+        }).$fragment(infoFragment)
+    }catch(e){
+        console.log(e)
+        res.status(400)
+    }
+    res.status(200).json({
+        info:result,
+    })
 }
 async function getAllStatus(req, res) {
     let result
@@ -165,5 +197,6 @@ module.exports = {
     getAllTryOrderInfo,
     getTryOrderInfo,
     getAllStatus,
-    getStatus
+    getStatus,
+    getUserAllTryOrder
 }

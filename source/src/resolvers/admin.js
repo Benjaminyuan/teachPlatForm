@@ -30,8 +30,8 @@ async function getRoles(req,res){
     const first = parseInt(req.query.first)
     const role = req.params.role
     let data
-    let s = statusMap[status] || undefined
-    if(s === undefined){
+    let s = statusMap[status] || ""
+    if(s === ""){
         res.status(404).json({info:"查询条件错误"})
         return
     }

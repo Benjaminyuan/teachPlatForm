@@ -3766,6 +3766,7 @@ enum University {
 }
 
 type User {
+  id: ID!
   openid: String!
 }
 
@@ -3785,10 +3786,10 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
-  openid_ASC
-  openid_DESC
   id_ASC
   id_DESC
+  openid_ASC
+  openid_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -3796,6 +3797,7 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
+  id: ID!
   openid: String!
 }
 
@@ -3826,6 +3828,20 @@ input UserUpdateManyMutationInput {
 }
 
 input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   openid: String
   openid_not: String
   openid_in: [String!]
@@ -3846,6 +3862,7 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
+  id: ID
   openid: String
 }
 `

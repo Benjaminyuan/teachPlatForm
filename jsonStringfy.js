@@ -7,7 +7,7 @@
 //                 level: {
 //                     set: ["MIDDLE","PRIMARY"]
 //                 }
-                
+
 //             }
 //         ]
 //     }
@@ -114,36 +114,36 @@ const shortterm = {
   invitations: {},
   order: {},
   publish: false,
-  publishTerm:{
-      create: {
-          Level: "PRIMARY",
-          pay: 60,
-          childGender: "FEMALE",
-          teacherGender: "BOTH",
-          teacherReuqire: "无",
-          childStatus: "成绩非常差",
-          subjects: {
-              set: [
-                  "MATH",
-                  "CHINESE",
-                  "ENGLISH"
-              ]
-          },
-        shortTerm:{
-          create:{
-            lessonTime:2,
-            all:4,
-            timeList: {
-              set:[
-                "2019-05-31",
-                "2019-06-17"
-              ]
-            }
+  publishTerm: {
+    create: {
+      Level: "PRIMARY",
+      pay: 60,
+      childGender: "FEMALE",
+      teacherGender: "BOTH",
+      teacherReuqire: "无",
+      childStatus: "成绩非常差",
+      subjects: {
+        set: [
+          "MATH",
+          "CHINESE",
+          "ENGLISH"
+        ]
+      },
+      shortTerm: {
+        create: {
+          lessonTime: 2,
+          all: 4,
+          timeList: {
+            set: [
+              "2019-05-31",
+              "2019-06-17"
+            ]
           }
         }
-           }
+      }
+    }
   }
-  
+
 }
 console.log(JSON.stringify(shortterm))
 // console.log('-------------')
@@ -161,3 +161,5 @@ console.log(JSON.stringify(shortterm))
 //   }
 //   console.log(data)
 // })
+const j = `{"openid":"1111111111","phone":"15623337359","name":"袁佳","address":"华中科技大学韵苑23栋","email":"1459477412@qq.com","authStatus":"UNCOMMITED","starList":{},"invitations":{},"order":{},"publish":false,"publishTerm":{"create":{"Level":"PRIMARY","pay":60,"childGender":"FEMALE","teacherGender":"BOTH","teacherReuqire":"无","childStatus":"成绩非常差","subjects":{"set":["MATH","CHINESE","ENGLISH"]},"shortTerm":{"create":{"lessonTime":2,"all":4,"timeList":{"set":["2019-05-31","2019-06-17"]}}}}}}`
+6

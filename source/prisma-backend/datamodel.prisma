@@ -1,5 +1,5 @@
 type User {
-  # id: ID! @unique
+  id: ID! @unique
   openid:String!@unique
 }
 type Admin{
@@ -21,11 +21,9 @@ type Student{
   createdAt: DateTime!
   updatedAt: DateTime!
   expectPay: Int
-  #可以发布的科目
   authStatus: AuthStatus!
   subjects:[Subject!]! 
   starList: [Parent!]
-  #平台认证
   avalible:[AvalibelTime!]!
   studentDetail: StudentDetail
   invitations:[Invitation!]@relation(name:"InviteForStudent")
@@ -128,7 +126,7 @@ type TryOrder{
   address: String!
   startTime: DateTime
   endTime: DateTime
-  phone:String
+  phone: String
   otherInfo:String
   emerContact: [emerContact!]
   status: tryOrderStatus!
@@ -152,7 +150,6 @@ enum tryOrderStatus{
   CANCLED
   FINISHED
 }
-
 enum Gender{
   MALE
   FEMALE

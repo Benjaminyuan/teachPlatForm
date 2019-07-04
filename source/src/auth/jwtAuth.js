@@ -10,12 +10,6 @@ const APPID = "wxd48257c42c622c9d"
 async function getInfoFromWeChat(code){
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`
     console.log(url)
-    // await request.get(url,(err,response,body)=>{
-    //     console.log("err",err)
-    //     // console.log("response",response)
-    //     console.log("body:",body)
-    //     return body
-    // })
     const options = {
         method: 'GET',
         uri: url

@@ -53,14 +53,6 @@ async function signup(req, response) {
     response.status(400).json({ create:false })
 }
 
-/*---------------  */
-
-
-
-
-/*--简单过滤，还需改进--*/
-
-/*---------------------- */
 module.exports = {
     signup,
     updateInfo,

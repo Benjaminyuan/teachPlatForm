@@ -312,7 +312,6 @@ async function getPublishStatus(req,res){
     res.status(403).json({info:"更新失败"})
 }
 async function getRoleInfo(req,res){
-    const id = req.params.id
     const role =req.params.role
     const data = {
         id: req.tokenData.jti
