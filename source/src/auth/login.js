@@ -60,7 +60,7 @@ async function weChatAuth(req, response) {
             return 
         } else if (parentExist === true) {
             //已经注册为parent
-            parent = studentRepo.getParentById(data.openid)
+            parent = parentRepo.getParentById(data.openid)
             let { res, token } = jwt.newJwt("PARENT",data.openid,parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)

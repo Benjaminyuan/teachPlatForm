@@ -83,7 +83,7 @@ async function updateInfo(data,id){
     }
 }
 async function getParentById(openid){
-   Info =  prisma.parent({
+   const Info =  prisma.parent({
         openid:openid
     })
     return Info

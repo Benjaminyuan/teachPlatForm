@@ -83,7 +83,7 @@ async function updateInfo(data,id){
     }
 }
 async function  getStudentById(openid){
-    Info = await prisma.student({
+   const Info = await prisma.student({
         openid:openid
     })
     return Info
