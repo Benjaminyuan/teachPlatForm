@@ -13,6 +13,7 @@ app.use('/',(req,res)=>{
     console.log(req.url);
     console.log(req.body)
     console.log("----for test---")
+    next()
 })
 app.get("/test",(req,res)=>{
     res.send("running !!")
