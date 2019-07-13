@@ -111,7 +111,7 @@ const studentBasicPublishInfo =
     openid
     name
     university
-    grades
+    grade
     Gender
     subjects{
       name
