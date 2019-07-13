@@ -9,6 +9,11 @@ const search = require("./resolvers/search")
 const {app,Server,io,upload} = require("./app")
 
 const tryOrder = require("./resolvers/tryOrder")
+app.use('/',(req,res)=>{
+    console.log(req.url);
+    console.log(req.body)
+    console.log("----for test---")
+})
 app.get("/test",(req,res)=>{
     res.send("running !!")
 })
