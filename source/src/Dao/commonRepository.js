@@ -286,7 +286,7 @@ async function getRoleInfo(data,role){
         }).$fragment(studentBasicPublishInfo)
       }else if(role ==="parent"){
           result =  await prisma.parent({
-              openid:id
+              openid:data.id
           }).$fragment(parentBasicPublishInfo)
       }  
     }catch(e){
