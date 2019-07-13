@@ -89,7 +89,7 @@ app.use((req, res) => {
 const chat = io.of('/chat')
 
 
-Server.listen(8009, 'localhost', () => {
+Server.listen(8010, 'localhost', () => {
     console.log("listening")
     console.log(process.env.JWTSECRET)
 })
