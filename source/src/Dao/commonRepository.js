@@ -280,11 +280,11 @@ return result
 async function getRoleInfo(data,role){
     let result
     try{
-      if(role === "STUDENT"){
+      if(role === "student"){
         result = await prisma.student({
             openid:data.id
         }).$fragment(studentBasicPublishInfo)
-      }else if(role ==="PARENT"){
+      }else if(role ==="parent"){
           result =  await prisma.parent({
               openid:id
           }).$fragment(parentBasicPublishInfo)
