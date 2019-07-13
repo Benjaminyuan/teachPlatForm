@@ -316,7 +316,10 @@ async function getRoleInfo(req,res){
     const data = {
         id: req.tokenData.jti
     }
+    console.log(`role:${role}`)
+    console.log(`data:${data}`)
     const result = await commonRepo.getRoleInfo(data,role)
+    console.log(`getRoleInfo:${result}`)
     if(result){
         res.status(200).json({data:result})
         return 
