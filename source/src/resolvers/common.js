@@ -324,7 +324,7 @@ async function getRoleInfo(req,res){
         res.status(200).json({data:result})
         return 
     }
-    res.status(404)
+    res.status(404).json({info:"未找到"})
     return
 }
 module.exports = {

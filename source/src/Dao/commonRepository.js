@@ -290,6 +290,7 @@ async function getRoleInfo(data,role){
           }).$fragment(parentBasicPublishInfo)
       }  
     }catch(e){
+        console.log(e)
         return ""
     }
     return result
