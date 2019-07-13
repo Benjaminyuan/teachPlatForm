@@ -46,8 +46,8 @@ async function weChatAuth(req, response) {
         response.status(200).jsonp({ auth: true,id: user.openid })
     } else {
         //用户存在
-        const studentExist = studentRepo.findStudentById(data.openid)
-       const  parentExist = parentRepo.findParentById(data.openid)
+        const studentExist = await studentRepo.findStudentById(data.openid)
+       const  parentExist = await  parentRepo.findParentById(data.openid)
        console.log(`studentExist:${studentExist}`)
        console.log(`parentExist:${parentExist}`)
         if (studentExist === true) {
