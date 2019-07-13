@@ -30,7 +30,7 @@ async function weChatAuth(req, response) {
         response.status(404).jsonp({ info: "请求微信后台服务器失败" })
         return 
     }
-    exist = await userRepo.userIsExist(data.openid)
+    const exist = await userRepo.userIsExist(data.openid)
     console.log(exist)
     if(exist === -1){
         response.status(500).json({info:"请重新发送"})
@@ -46,8 +46,10 @@ async function weChatAuth(req, response) {
         response.status(200).jsonp({ auth: true,id: user.openid })
     } else {
         //用户存在
-        studentExist = studentRepo.findStudentById(data.openid)
-        parentExist = parentRepo.findParentById(data.openid)
+        const studentExist = studentRepo.findStudentById(data.openid)
+       const  parentExist = parentRepo.findParentById(data.openid)
+       console.log(`studentExist:${studentExist}`)
+       console.log(`parentExist:${parentExist}`)
         if (studentExist === true) {
             //已经注册为学生
             student = studentRepo.getStudentById(data.openid)
@@ -55,6 +57,7 @@ async function weChatAuth(req, response) {
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "STUDENT",id:data.openid})
+            return 
         } else if (parentExist === true) {
             //已经注册为parent
             parent = studentRepo.getParentById(data.openid)
@@ -62,6 +65,7 @@ async function weChatAuth(req, response) {
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "PARENT" ,id:data.openid})
+            return 
         }
         //仍然是USER
         const {res,token} = jwt.newJwt("USER", data.openid, "AUTHED")

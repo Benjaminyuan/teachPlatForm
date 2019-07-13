@@ -12,14 +12,14 @@ async function createUser(openid){
 }
 async function userIsExist(openid){
     try{
-        res = await prisma.$exists.user({
+        const res = await prisma.$exists.user({
             openid: openid
         })
         return res
     }catch(e){
         //查询失败
         console.log(e)
-        return false
+        return -1
     }
 }
 module.exports={
