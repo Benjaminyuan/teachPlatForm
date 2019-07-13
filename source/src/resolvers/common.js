@@ -314,10 +314,10 @@ async function getPublishStatus(req,res){
 async function getRoleInfo(req,res){
     const role =req.params.role
     const data = {
-        id: req.tokenData.jti
+        id: req.params.id
     }
     console.log(`role:${role}`)
-    console.log(`data:${data}`)
+    console.log(`data:${data.id}`)
     const result = await commonRepo.getRoleInfo(data,role)
     console.log(`getRoleInfo:${result}`)
     if(result){
