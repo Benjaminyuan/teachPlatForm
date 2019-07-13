@@ -49,7 +49,7 @@ async function studentExist(name,email,phone){
 async function createStudent(data){
     //未加锁，
     let student 
-    data.authStatus="UNCOMMITED"
+    data.authStatus="AUTHED"
 
    try{ 
         student = await prisma.createStudent(data)

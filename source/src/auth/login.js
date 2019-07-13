@@ -38,7 +38,7 @@ async function weChatAuth(req, response) {
     if (exist === false) {
         //用户不存在，则创建
        const  user = await userRepo.createUser(data.openid)
-        const {res,token} = jwt.newJwt("USER", user.openid, "UNCOMMITED")
+        const {res,token} = jwt.newJwt("USER", user.openid, "AUTHED")
         //此时的访问权限最低
         console.log(token)
         console.log(user)
