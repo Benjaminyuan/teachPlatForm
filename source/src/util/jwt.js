@@ -17,6 +17,7 @@ function getJwt(req){
 function newJwt(role,jti,auth){
     try{
         let playload = {iss:"Benji",sub:"auth for login",jti:jti,role: role,authStatus:auth}
+        console.log(process.env.JWTSECRET)
         token =  jwt.sign(playload,process.env.JWTSECRET)
     }catch(e){
         console.log(e)
