@@ -16,24 +16,26 @@ dispatcher = async (socket)=>{
         console.log(data)
         try{
            const chatSchema = getCollection(data)
+           console.log("-----------") 
+           console.log({
+            send: data.user.name,
+            receive: data.toUser,
+            message: data.info,
+        })
+           const chatData= new chatSchema({
+               send: data.user.name,
+               receive: data.toUser,
+               message: data.info,
+           })
+           await chatData.save(); 
             if(addr[data.toUser]){ 
-                addr[data.toUser].emit('getMsg',{info:data.info})
+                addr[data.toUser].emit('getMsg',{info:data.info,time:chatData.time})
               
             }
             // console.log(chatSchema)
             console.log("data to save ")
-            console.log({
-                send: data.user.name,
-                receive: data.toUser,
-                message: data.info,
-            })
-        console.log("-----------")
-            const chatData= new chatSchema({
-                send: data.user.name,
-                receive: data.toUser,
-                message: data.info,
-            })
-            await chatData.save(); 
+           
+       
             
         }catch(e){
             console.log(e)

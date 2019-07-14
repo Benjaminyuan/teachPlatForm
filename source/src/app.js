@@ -43,7 +43,7 @@ var storage = multer.diskStorage({
   })
    
 const  upload = multer({ storage: storage })
-mongoose.connect("mongodb://localhost:27016/chat",{autoIndex:false,useNewUrlParser:true})
+mongoose.connect("mongodb://localhost:27017/chat",{autoIndex:false,useNewUrlParser:true})
 module.exports={
     app,
     Server,
