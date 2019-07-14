@@ -70,7 +70,7 @@ type BasicTermInfo{
 }
 type ShortTerm{
   id: ID!@unique
-  lessonTime:Int!
+  lessonTime:Int!@default(value:1)
   all:Int!
   timeList:[DateTime!]!
 }
