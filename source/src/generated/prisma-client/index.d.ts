@@ -751,7 +751,7 @@ export type BasicTermInfoOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type University = "HUST" | "WHU";
+export type University = "HUST" | "WHU" | "OTHER";
 
 export type AuthStatus = "UNCOMMITED" | "AUTHCOMMITED" | "AUTHED" | "REJECTED";
 

@@ -3763,6 +3763,7 @@ input TryOrderWhereUniqueInput {
 enum University {
   HUST
   WHU
+  OTHER
 }
 
 type User {

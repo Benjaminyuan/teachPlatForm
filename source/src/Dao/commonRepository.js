@@ -255,6 +255,8 @@ async function createTryOrder(invitationId){
 }
 async function getPublishStatus(data,role){
     let result 
+    console.log(`data:${data}`)
+    console.log(`role:${role}`)
     try{
         if(role === "STUDNET"){
             result = await prisma.student({
@@ -274,6 +276,7 @@ async function getPublishStatus(data,role){
     }
 }catch(e){
     console.log(e)
+    return ''
 }
 return result
 }
