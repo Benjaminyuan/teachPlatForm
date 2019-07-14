@@ -16,8 +16,8 @@ async function parentSearch(req,res){
         let resData = []
         const des = new Set(data.levels)
         for(let stu of students){
-            for(let sub in stu.subjects){
-                for(let level in sub.level){
+            for(let sub of stu.subjects){
+                for(let level of sub.level){
                     console.log(`level:${level}`)
                     if(des.has(level)){
                         resData.push(stu)
