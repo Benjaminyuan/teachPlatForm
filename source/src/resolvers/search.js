@@ -24,6 +24,9 @@ async function parentSearch(req,res){
                 }
                 for(let level of sub.level){
                     console.log(`level:${level}`)
+                    if(add){
+                        break
+                    }
                     if(des.has(level)){
                         resData.push(stu)
                         add = true
