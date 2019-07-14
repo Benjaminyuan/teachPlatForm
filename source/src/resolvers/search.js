@@ -46,9 +46,11 @@ async function studentSearch(req,res){
             }
         }
         res.status(200).json({parents:resData})
+        return 
     }catch(e){
         console.log(e)
         res.status(400).json({info:"请输入正确的"})
+        return 
     }
 }
 function isExsit(des,test){
