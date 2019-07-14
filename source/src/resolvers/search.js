@@ -15,12 +15,14 @@ async function parentSearch(req,res){
         console.log(`students:${JSON.stringify(students)}`)
         let resData = []
         const des = new Set(data.levels)
+        const openSet = new Set()
         for(let stu of students){
             for(let sub of stu.subjects){
                 for(let level of sub.level){
                     console.log(`level:${level}`)
-                    if(des.has(level)){
+                    if(des.has(level) && !openSet.has(stu.openid)){
                         resData.push(stu)
+                        openSet.add(stu.openid)
                     }
                 }      
             }
