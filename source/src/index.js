@@ -7,7 +7,7 @@ const filter = require('./util/filter')
 const admin = require("./resolvers/admin")
 const search = require("./resolvers/search")
 const {app,Server,io,upload} = require("./app")
-
+const {dispatcher} = require('./socket/chatServer')
 const tryOrder = require("./resolvers/tryOrder")
 app.use('/',(req,res,next)=>{
     console.log(`req.url:${req.url}`);
@@ -90,7 +90,7 @@ app.use((req, res) => {
 })
 const chat = io.of('/chat')
 
-
+chat.on('connection',dispatcher)
 Server.listen(8010, 'localhost', () => {
     console.log("listening")
     console.log(process.env.JWTSECRET)
