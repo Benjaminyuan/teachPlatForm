@@ -11,7 +11,7 @@ const {dispatcher} = require('./socket/chatServer')
 const tryOrder = require("./resolvers/tryOrder")
 app.use('/',(req,res,next)=>{
     console.log(`req.url:${req.url}`);
-    console.log(`req.body:${req.body}`)
+    console.log(`req.body:${JSON.stringify(req.body)}`)
     console.log(`----for test---`)
     next()
 })
