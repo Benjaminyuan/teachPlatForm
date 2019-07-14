@@ -7,9 +7,9 @@ const app = express()
 const Server = http.Server(app)
 const io = require('socket.io')(Server)
 const path = require("path")
-// const mongoose = require("mongoose")
-// const redis = require("redis")
-// const redisClient = redis.createClient(6379)
+const mongoose = require("mongoose")
+const redis = require("redis")
+const redisClient = redis.createClient(6379)
 log4js.configure({
     appenders: {
         console: { type: 'console' },
@@ -43,12 +43,12 @@ var storage = multer.diskStorage({
   })
    
 const  upload = multer({ storage: storage })
-// mongoose.connect("mongodb://localhost:27017/chat",{autoIndex:false,useNewUrlParser:true})
+mongoose.connect("mongodb://localhost:27017/chat",{autoIndex:false,useNewUrlParser:true})
 module.exports={
     app,
     Server,
     io,
     upload,
-    // mongoose,
-    // redisClient
+    mongoose,
+    redisClient
 }
