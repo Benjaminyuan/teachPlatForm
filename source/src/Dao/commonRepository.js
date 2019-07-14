@@ -166,16 +166,16 @@ async function getPublishList(skip,first,role){
                 where:{
                     publish:true
                 },
-                skip:skip,
                 first:first,
+                skip:skip   
             }).$fragment(parentBasicPublishInfo)
         }else if(role === "parent"){
             resData = await prisma.students({
                 where:{
                     publish:true
                 },
-                skip:skip,
-                first:first
+                first:first,
+                skip:skip
             }).$fragment(studentBasicPublishInfo)
         }
     }catch(e){
