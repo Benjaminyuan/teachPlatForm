@@ -34,6 +34,7 @@ async function weChatAuth(req, response) {
     console.log(exist)
     if(exist === -1){
         response.status(500).json({info:"请重新发送"})
+        return 
     }
     if (exist === false) {
         //用户不存在，则创建
@@ -44,6 +45,7 @@ async function weChatAuth(req, response) {
         console.log(user)
         response.append("Authorization", `Bearer ${token}`)
         response.status(200).jsonp({ auth: true,id: user.openid })
+        return 
     } else {
         //用户存在
         const studentExist = await studentRepo.findStudentById(data.openid)

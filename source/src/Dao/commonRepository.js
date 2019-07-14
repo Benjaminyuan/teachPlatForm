@@ -182,6 +182,7 @@ async function getPublishList(skip,first,role){
         console.log(e)
         return resData
     }
+    console.log(`resData:${JSON.stringify(resData)}`)
     return resData
    
 
