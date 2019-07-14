@@ -305,7 +305,7 @@ async function getPublishStatus(req,res){
     const status = await commonRepo.getPublishStatus({id:id},role)
     console.log(`status:${status.publish}`)
     if(status){
-        res.status(200).join({
+        res.status(200).json({
             status:status.publish
         })
         return 
