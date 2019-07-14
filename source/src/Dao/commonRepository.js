@@ -255,7 +255,7 @@ async function createTryOrder(invitationId){
 }
 async function getPublishStatus(data,role){
     let result 
-    console.log(`data:${data}`)
+    console.log(`data:${data.id}`)
     console.log(`role:${role}`)
     try{
         if(role === "STUDNET"){

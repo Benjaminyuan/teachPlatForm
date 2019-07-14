@@ -303,7 +303,7 @@ async function getPublishStatus(req,res){
     const id = req.tokenData.jti
     const role  =req.tokenData.role
     const status = await commonRepo.getPublishStatus({id:id},role)
-    console.log(`statsu:${status}`)
+    console.log(`status:${status.publish}`)
     if(status){
         res.status(200).join({
             status:status.publish
