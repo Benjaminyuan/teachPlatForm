@@ -45,7 +45,7 @@ app.get("/auth/info/pic/:name",common.getPic)
 
 app.post("/*", (req, res, next) => {
     const status = req.tokenData.authStatus;
-    console.log(status)
+    console.log(`status:${status}`)
     console.log("auth check")
     if (status !== "AUTHED") {
         res.status(403).json({ info: "未授权访问" })
