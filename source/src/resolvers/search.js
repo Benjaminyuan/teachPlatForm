@@ -17,9 +17,12 @@ async function parentSearch(req,res){
         const des = new Set(data.levels)
         for(let stu of students){
             for(let sub in stu.subjects){
-                if(des.has(sub.level)){
-                    resData.push(stu)
-                }
+                for(let level in sub.level){
+                    console.log(`level:${level}`)
+                    if(des.has(level)){
+                        resData.push(stu)
+                    }
+                }      
             }
         }
         res.status(200).json({students:resData})
