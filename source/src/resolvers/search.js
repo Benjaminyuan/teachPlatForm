@@ -12,6 +12,7 @@ async function parentSearch(req,res){
                 }
             }
         }).$fragment(studentBasicPublishInfo)
+        console.log(`students:${JSON.stringify(students)}`)
         let resData = []
         const des = new Set(data.levels)
         for(let stu of students){
