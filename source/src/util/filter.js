@@ -17,7 +17,7 @@ function extractJwtInfo(req,res,next){
         }
         req.tokenData = parseRes
         console.log(req.tokenData)
-    console.log("jwt data extracted!!")
+        console.log("jwt data extracted!!")
         next()
     }
 

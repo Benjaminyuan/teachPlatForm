@@ -55,12 +55,14 @@ async function weChatAuth(req, response) {
             student = studentRepo.getStudentById(data.openid)
             let { res, token } = jwt.newJwt("STUDENT",data.openid, student.authstatus)
             //签名失败未处理 
+            console.log(`signup studentStatus:${parent.authstatus}`)
             response.append("Authorization", `Bearer ${token}`)
             response.status(301).jsonp({ role: "STUDENT",id:data.openid})
             return 
         } else if (parentExist === true) {
             //已经注册为parent
             parent = parentRepo.getParentById(data.openid)
+            console.log(`signup parentStatus:${parent.authstatus}`)
             let { res, token } = jwt.newJwt("PARENT",data.openid,parent.authstatus)
             //签名失败未处理 
             response.append("Authorization", `Bearer ${token}`)
