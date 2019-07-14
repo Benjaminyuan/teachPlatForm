@@ -34,7 +34,7 @@ async function studentSearch(req,res){
         const parents = await prisma.parents({
             where:{
                 publishTerm:{
-                    Level_in:data.grades,
+                    Level_in:data.levels,
                     teacherGender_in: data.genders
                 }
             }
