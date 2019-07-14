@@ -17,12 +17,16 @@ async function parentSearch(req,res){
         const des = new Set(data.levels)
         const openSet = new Set()
         for(let stu of students){
+            let add = false
             for(let sub of stu.subjects){
+                if(add){
+                    break
+                }
                 for(let level of sub.level){
                     console.log(`level:${level}`)
-                    if(des.has(level) && !openSet.has(stu.openid)){
+                    if(des.has(level)){
                         resData.push(stu)
-                        openSet.add(stu.openid)
+                        add = true
                     }
                 }      
             }
