@@ -12,7 +12,7 @@ const io = require('socket.io-client')
 // roomer.on('room',(data)=>{
 //     console.log(data)
 // })
-const chat = io('http://localhost:8009/chat')
+const chat = io('http://localhost:8010/chat')
 // chat.on('connection',(socket)=>{
 //     socket.emit('register',{user:{id:'xxxxxx111'}})
 // })
