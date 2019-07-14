@@ -52,7 +52,7 @@ async function weChatAuth(req, response) {
        console.log(`parentExist:${parentExist}`)
         if (studentExist === true) {
             //已经注册为学生
-           const  student = studentRepo.getStudentById(data.openid)
+           const  student = await studentRepo.getStudentById(data.openid)
             let { res, token } = jwt.newJwt("STUDENT",data.openid, student.authStatus)
             //签名失败未处理 
             console.log(`signup studentStatus:${parent.authStatus}`)
@@ -61,7 +61,7 @@ async function weChatAuth(req, response) {
             return 
         } else if (parentExist === true) {
             //已经注册为parent
-            const parent = parentRepo.getParentById(data.openid)
+            const parent = await parentRepo.getParentById(data.openid)
             console.log(parent)
             console.log(`signup parentStatus:${parent.authStatus}`)
             let { res, token } = jwt.newJwt("PARENT",data.openid,parent.authStatus)
