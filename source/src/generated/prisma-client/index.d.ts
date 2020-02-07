@@ -721,7 +721,7 @@ export type SubjectName =
   | "MATH"
   | "ENGLISH"
   | "PHYSICS"
-  | "CHEMSTRY"
+  | "CHEMISTRY"
   | "BIOLOGY"
   | "HISTORY"
   | "GEOGRAPHY"
